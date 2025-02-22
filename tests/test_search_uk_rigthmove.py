@@ -13,8 +13,9 @@ class TestRightmove(unittest.TestCase):
         Test the connect method
         """
         rightmove = Rightmove()
-        self.assertTrue(rightmove.connect())
+        status_code = rightmove.check_basic_request_connection()
+        self.assertEqual(status_code, 200)
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()

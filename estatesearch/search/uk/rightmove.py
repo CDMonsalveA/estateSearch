@@ -44,16 +44,13 @@ class Rightmove:
         self.url = "https://www.rightmove.co.uk/"
         pass
 
-    def connect(self):
+    def check_basic_request_connection(self):
         """
         Check if the website is reachable
-        """
-        try:
-            response = requests.get(self.url)
-            response.raise_for_status()
-            return True
-        except requests.exceptions.RequestException as e:
-            return False
-        
 
+        Returns:
+            status_code (int): The HTTP status code
+        """
+        response = requests.get(self.url)
+        return response.status_code
         
