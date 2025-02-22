@@ -13,6 +13,7 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import requests
 
+
 class Rightmove:
     """
     The Rightmove class is used to search for properties
@@ -24,17 +25,17 @@ class Rightmove:
     - Price range (min, max)
     - Number of bedrooms (min, max)
     - Type of property (
-        Any, 
-        Houses, 
-        Flats / Apartments, 
-        Bungalows, 
-        Land, Commercial Property, 
+        Any,
+        Houses,
+        Flats / Apartments,
+        Bungalows,
+        Land, Commercial Property,
         Other
         )
     - Added to site (
-        24 hours, 
-        3 days, 
-        7 days, 
+        24 hours,
+        3 days,
+        7 days,
         14 days
         )
     - Include Under Offer, Sold STC (Yes / No)
@@ -42,6 +43,7 @@ class Rightmove:
 
     def __init__(self):
         self.url = "https://www.rightmove.co.uk/"
+        self.api_url = "https://www.rightmove.co.uk/api/_search"
         pass
 
     def check_basic_request_connection(self):
@@ -53,4 +55,10 @@ class Rightmove:
         """
         response = requests.get(self.url)
         return response.status_code
-        
+
+    def check_website_content(self):
+        """
+        Checks the website content in the response
+        """
+        response = requests.get(self.url)
+        return response.text
