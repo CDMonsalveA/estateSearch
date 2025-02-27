@@ -11,72 +11,128 @@ check out the website at: https://www.rightmove.co.uk/
 and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 """
 
+
 class Rightmove:
     """
     The Rightmove class is used to search for properties
     on the Rightmove website using the following parameters:
 
-    Example URL:
-    - https://www.rightmove.co.uk/property-for-sale/find.html?searchLocation=ME2&useLocationIdentifier=true&locationIdentifier=OUTCODE%5E1619&radius=0.25&minPrice=50000&maxPrice=70000&minBedrooms=1&maxBedrooms=2&propertyTypes=detached%2Csemi-detached%2Cterraced&maxDaysSinceAdded=1&_includeSSTC=on&includeSSTC=true
-    - https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&numberOfPropertiesPerPage=24&radius=0.5&sortType=2&index=0&includeSSTC=false&viewType=LIST&channel=BUY&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport=
+    URL structure:
+    - https://www.rightmove.co.uk/
 
+        property-for-sale/||property-to-rent/
 
-    - Buy / Rent property-for-sale, property-to-rent + /find.html?
-    - Location (town, city, postcode)
-    - Radius (miles)
-    - Price range (min, max)
-    - Number of bedrooms (min, max)
-    - Type of property (
-        Any,
-        Houses,
-        Flats / Apartments,
-        Bungalows,
-        Land, Commercial Property,
-        Other
-        )
-    - Added to site (
-        24 hours,
-        3 days,
-        7 days,
-        14 days
-        )
-    - Include Under Offer, Sold STC (Yes / No)
+        find.html?||map.html?
+
+        searchLocation=[postcode||town||city||train-station||county]
+        &useLocationIdentifier=[true||false]
+        &locationIdentifier=[type%locationId]
+        &sortType=[1||2||3||4||5||6||7||8||9||10]
+        &numberOfPropertiesPerPage=[int]
+        &index=[int]
+        &channel=[BUY||RENT]
+        &areaSizeUnit=[sqft||sqm]
+        &radius=[miles]
+        &minPrice=[minPrice]
+        &maxPrice=[maxPrice]
+        &minBedrooms=[minBedrooms||studio=0]
+        &maxBedrooms=[maxBedrooms||studio=0]
+        &propertyTypes=[
+                        bungalow
+                        %2Cdetached
+                        %2Cflat
+                        %2Cland
+                        %2Cpark-home
+                        %2Csemi-detached
+                        %2Cterraced
+                        ]
+        &maxDaysSinceAdded=[1||3||7||14]
+        &_includeSSTC=[on||off]
+        &includeSSTC=[true||false]
+        &mustHave=[garden%2Cparking%2CnewHome%2Cretirement%2CsharedOwnership%2Cauction]
+        &dontShow=[newHome%2Cretirement%2CsharedOwnership&furnishTypes]
+        &furnishTypes=
+        &keywords=
     """
 
     def __init__(
         self,
-        buy_or_rent=None,
-        location=None,
-        radius=None,
-        min_price=None,
-        max_price=None,
-        min_bedrooms=None,
-        max_bedrooms=None,
-        property_types=None,
-        max_days_since_added=None,
-        include_sstc=None,
+        buy_or_rent=("buy" or "rent"),
+        location: str = None,
+        radius: float = None,
+        min_price: float = None,
+        max_price: float = None,
+        min_bedrooms: int = None,
+        max_bedrooms: int = None,
+        property_types: list = None,
+        max_days_since_added: int = None,
+        include_sstc: bool = False,
+        must_have: list = None,
+        dont_show: list = None,
     ):
         """
         Initialize the Rightmove class with the following parameters:
 
-        Args:
-            buy_or_rent (str): property-for-sale, property-to-rent
-            location (str): The location of the property (town, city, postcode)
-            radius (float): The radius in miles
-            min_price (int): The minimum price of the property
-            max_price (int): The maximum price of the property
-            min_bedrooms (int): The minimum number of bedrooms
-            max_bedrooms (int): The maximum number of bedrooms
-            property_types (list): The type of property
-            max_days_since_added (int): The maximum days since the property was added
-            include_sstc (bool): Include properties that are under offer or sold
+        :param buy_or_rent: str: The type of property to search for 
+                                ('buy' or 'rent').
+        :param location: str: The location to search for properties.
+        :param radius: float: The radius from the location to search for 
+                                properties.
+        :param min_price: float: The minimum price of the property.
+        :param max_price: float: The maximum price of the property.
+        :param min_bedrooms: int: The minimum number of bedrooms.
+        :param max_bedrooms: int: The maximum number of bedrooms.
+        :param property_types: list: The type of properties to search for.
+                                (bungalow, detached, flat, land, park-home,
+                                semi-detached, terraced).
+        :param max_days_since_added: int: The maximum number of days since 
+                                the property was added.
+        :param include_sstc: bool: Include properties that are sold subject
+                                to contract.
+        :param must_have: list: The features that the property must have.
+                                (garden, parking, newHome, retirement,
+                                sharedOwnership, auction).
+        :param dont_show: list: The features that the property must not have.
+                                (newHome, retirement, sharedOwnership).
         """
-        self.url = "https://www.rightmove.co.uk/"
-        self.buy_or_rent = None  # property-for-sale, property-to-rent + /find.html?
-        # https://www.rightmove.co.uk/property-for-sale/find.html?searchLocation=ME2&useLocationIdentifier=true&locationIdentifier=OUTCODE%5E1619&radius=0.25&minPrice=50000&maxPrice=70000&minBedrooms=1&maxBedrooms=2&propertyTypes=detached%2Csemi-detached%2Cterraced&maxDaysSinceAdded=1&_includeSSTC=on&includeSSTC=true
-        # https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&numberOfPropertiesPerPage=24&radius=0.5&sortType=2&index=0&includeSSTC=false&viewType=LIST&channel=BUY&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport=
-        self.api_url = "https://www.rightmove.co.uk/api/_search?"
 
+        self.url = "https://www.rightmove.co.uk/"
+        self.api_url = "https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&numberOfPropertiesPerPage=24&radius=0.5&sortType=2&index=0&includeSSTC=false&viewType=LIST&channel=BUY&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
+        self.house_prices_url = "https://www.rightmove.co.uk/house-prices/"
+        self.radius = radius
+        self.min_price = min_price
+        self.max_price = max_price
+        self.min_bedrooms = min_bedrooms
+        self.max_bedrooms = max_bedrooms
+        self.property_types = property_types
+        self.max_days_since_added = max_days_since_added
+        self.include_sstc = include_sstc
+        self.must_have = must_have
+        self.dont_show = dont_show
+
+        # if location:
+        #     self.location = location
+        # else:
+        #     raise ValueError("Invalid value for location.")
+
+        # if buy_or_rent == "buy":
+        #     self.buy_or_rent = "property-for-sale"
+        # elif buy_or_rent == "rent":
+        #     self.buy_or_rent = "property-to-rent"
+        # else:
+        #     raise ValueError("Invalid value for buy_or_rent.")
+    
+    def get_location_id(self):
+        """
+        Get the location ID from the
+        rightmove.co.uk/house-prices/[location].html
+        page.
+
+        :return: str: Type of location ID.
+        :return: str: The location ID.
+        """
+
+        pass
 
     def search_properties(self):
 

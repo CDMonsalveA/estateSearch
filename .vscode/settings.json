@@ -1,4 +1,11 @@
 {
+    // Editor
+    "editor.rulers": [
+        60,
+        80,
+        120
+    ],
+    // Python
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -8,6 +15,4 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
-
-
 }
