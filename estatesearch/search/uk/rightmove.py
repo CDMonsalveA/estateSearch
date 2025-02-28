@@ -159,6 +159,11 @@ class Rightmove:
         :return: str: The search URL.
         """
         location_ident = self.get_location_id()
+        property_types = (
+            "%2C".join(self.property_types) if self.property_types else None
+        )
+        must_have = "%2C".join(self.must_have) if self.must_have else None
+        dont_show = "%2C".join(self.dont_show) if self.dont_show else None
         search_url = (
             f"{self.url}"
             f"{self.buy_or_rent}/"
@@ -181,15 +186,15 @@ class Rightmove:
         if self.max_bedrooms:
             search_url += f"&maxBedrooms={self.max_bedrooms}"
         if self.property_types:
-            search_url += f"&propertyTypes={self.property_types}"
+            search_url += f"&propertyTypes={property_types}"
         if self.max_days_since_added:
             search_url += f"&maxDaysSinceAdded={self.max_days_since_added}"
         if self.include_sstc:
             search_url += f"&includeSSTC={self.include_sstc}"
         if self.must_have:
-            search_url += f"&mustHave={self.must_have}"
+            search_url += f"&mustHave={must_have}"
         if self.dont_show:
-            search_url += f"&dontShow={self.dont_show}"
+            search_url += f"&dontShow={dont_show}"
 
         search_url += "&furnishTypes=&keywords="
         search_url = search_url.replace(" ", "%20")
@@ -197,11 +202,37 @@ class Rightmove:
 
     def search_properties(self):
 
-        # create a valid URL to search for properties
-
         # Request URL
-
+        response = requests.get(self.search_url)
+        return response
         # Extract properties from the response even with a second page
 
         # Return the properties
         pass
+
+
+if __name__ == "__main__":
+    rightmove = Rightmove(
+        buy_or_rent="buy",
+        location="London",
+        radius=0.5,
+        min_price=100000,
+        max_price=500000,
+        min_bedrooms=2,
+        max_bedrooms=4,
+        property_types=[
+            "bungalow",
+            "detached",
+            "flat",
+            "land",
+            "park-home",
+            "semi-detached",
+            "terraced",
+        ],
+        max_days_since_added=14,
+        include_sstc=False,
+        must_have=["garden", "parking"],
+        dont_show=["newHome", "retirement", "sharedOwnership"],
+    )
+    print(rightmove.search_url)
+    print(rightmove.search_properties().text)
