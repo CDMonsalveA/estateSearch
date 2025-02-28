@@ -30,7 +30,7 @@ class Rightmove:
 
         searchLocation=[postcode||town||city||train-station||county]
         &useLocationIdentifier=[true||false]
-        &locationIdentifier=[type%locationId]
+        &locationIdentifier=[type^locationId]
         &sortType=[1||2||3||4||5||6||7||8||9||10]
         &numberOfPropertiesPerPage=[int]
         &index=[int]
@@ -53,7 +53,14 @@ class Rightmove:
         &maxDaysSinceAdded=[1||3||7||14]
         &_includeSSTC=[on||off]
         &includeSSTC=[true||false]
-        &mustHave=[garden%2Cparking%2CnewHome%2Cretirement%2CsharedOwnership%2Cauction]
+        &mustHave=[
+                    garden
+                    %2Cparking
+                    %2CnewHome
+                    %2Cretirement
+                    %2CsharedOwnership
+                    %2Cauction
+                ]
         &dontShow=[newHome%2Cretirement%2CsharedOwnership&furnishTypes]
         &furnishTypes=
         &keywords=
@@ -113,27 +120,27 @@ class Rightmove:
         self.include_sstc = include_sstc
         self.must_have = must_have
         self.dont_show = dont_show
-
-        self.location = location
-        self.buy_or_rent = buy_or_rent
-
-        # if location:
-        #     self.location = location
-        # else:
-        #     raise ValueError("Invalid value for location.")
-
-        # if buy_or_rent == "buy":
-        #     self.buy_or_rent = "property-for-sale"
-        # elif buy_or_rent == "rent":
-        #     self.buy_or_rent = "property-to-rent"
-        # else:
-        #     raise ValueError("Invalid value for buy_or_rent.")
+        if location:
+            self.location = location
+        else:
+            raise UserWarning("Please provide a location.")
+        if buy_or_rent == "buy":
+            self.buy_or_rent = "property-for-sale"
+        elif buy_or_rent == "rent":
+            self.buy_or_rent = "property-to-rent"
+        else:
+            self.buy_or_rent = "property-for-sale"
+            raise UserWarning(
+                "Please provide a valid buy or rent option.\n"
+                "Options:  'buy' or 'rent'.\n"
+                "Default: 'buy'."
+            )
 
     def get_location_id(self):
         """
         Get the location ID from the
         rightmove.co.uk/house-prices/[location].html
-        page.
+        page. It is inserted into the script tag in the HTML.
 
         :return: str: Type of location ID.
         :return: str: The location ID.
@@ -143,6 +150,50 @@ class Rightmove:
         location_type = re.search(r'"locationType":"(\w+)"', response.text).group(1)
         location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
         return location_type, location_id
+
+    @property
+    def search_url(self):
+        """
+        Create a valid URL to search for properties.
+
+        :return: str: The search URL.
+        """
+        location_ident = self.get_location_id()
+        search_url = (
+            f"{self.url}"
+            f"{self.buy_or_rent}/"
+            f"find.html?"
+            f"searchLocation={self.location}"
+            f"&useLocationIdentifier=true"
+            f"&locationIdentifier={location_ident[0]}^{location_ident[1]}"
+            f"&sortType=2"
+            f"&numberOfPropertiesPerPage=24"
+            f"&index=0"
+        )
+        if self.radius:
+            search_url += f"&radius={self.radius}"
+        if self.min_price:
+            search_url += f"&minPrice={self.min_price}"
+        if self.max_price:
+            search_url += f"&maxPrice={self.max_price}"
+        if self.min_bedrooms:
+            search_url += f"&minBedrooms={self.min_bedrooms}"
+        if self.max_bedrooms:
+            search_url += f"&maxBedrooms={self.max_bedrooms}"
+        if self.property_types:
+            search_url += f"&propertyTypes={self.property_types}"
+        if self.max_days_since_added:
+            search_url += f"&maxDaysSinceAdded={self.max_days_since_added}"
+        if self.include_sstc:
+            search_url += f"&includeSSTC={self.include_sstc}"
+        if self.must_have:
+            search_url += f"&mustHave={self.must_have}"
+        if self.dont_show:
+            search_url += f"&dontShow={self.dont_show}"
+
+        search_url += "&furnishTypes=&keywords="
+        search_url = search_url.replace(" ", "%20")
+        return search_url
 
     def search_properties(self):
 
