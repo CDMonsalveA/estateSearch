@@ -11,6 +11,10 @@ check out the website at: https://www.rightmove.co.uk/
 and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 """
 
+import re
+
+import requests
+
 
 class Rightmove:
     """
@@ -73,10 +77,10 @@ class Rightmove:
         """
         Initialize the Rightmove class with the following parameters:
 
-        :param buy_or_rent: str: The type of property to search for 
+        :param buy_or_rent: str: The type of property to search for
                                 ('buy' or 'rent').
         :param location: str: The location to search for properties.
-        :param radius: float: The radius from the location to search for 
+        :param radius: float: The radius from the location to search for
                                 properties.
         :param min_price: float: The minimum price of the property.
         :param max_price: float: The maximum price of the property.
@@ -85,7 +89,7 @@ class Rightmove:
         :param property_types: list: The type of properties to search for.
                                 (bungalow, detached, flat, land, park-home,
                                 semi-detached, terraced).
-        :param max_days_since_added: int: The maximum number of days since 
+        :param max_days_since_added: int: The maximum number of days since
                                 the property was added.
         :param include_sstc: bool: Include properties that are sold subject
                                 to contract.
@@ -110,6 +114,9 @@ class Rightmove:
         self.must_have = must_have
         self.dont_show = dont_show
 
+        self.location = location
+        self.buy_or_rent = buy_or_rent
+
         # if location:
         #     self.location = location
         # else:
@@ -121,7 +128,7 @@ class Rightmove:
         #     self.buy_or_rent = "property-to-rent"
         # else:
         #     raise ValueError("Invalid value for buy_or_rent.")
-    
+
     def get_location_id(self):
         """
         Get the location ID from the
@@ -131,8 +138,11 @@ class Rightmove:
         :return: str: Type of location ID.
         :return: str: The location ID.
         """
-
-        pass
+        search_url = f"{self.house_prices_url}{self.location}.html"
+        response = requests.get(search_url)
+        location_type = re.search(r'"locationType":"(\w+)"', response.text).group(1)
+        location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
+        return location_type, location_id
 
     def search_properties(self):
 
