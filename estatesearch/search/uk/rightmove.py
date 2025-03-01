@@ -64,6 +64,46 @@ class Rightmove:
         &dontShow=[newHome%2Cretirement%2CsharedOwnership&furnishTypes]
         &furnishTypes=
         &keywords=
+
+    API structure:
+    - https://www.rightmove.co.uk/api/_search?
+        locationIdentifier=[type^locationId]
+        &numberOfPropertiesPerPage=[int]
+        &channel=BUY
+        &sortType=[1||2||3||4||5||6||7||8||9||10]
+        &index=[int]
+        &radius=[miles]
+        &minPrice=[minPrice]
+        &maxPrice=[maxPrice]
+        &minBedrooms=[minBedrooms||studio=0]
+        &maxBedrooms=[maxBedrooms||studio=0]
+        &propertyTypes=[
+                        bungalow
+                        %2Cdetached
+                        %2Cflat
+                        %2Cland
+                        %2Cpark-home
+                        %2Csemi-detached
+                        %2Cterraced
+                        ]
+        &maxDaysSinceAdded=[1||3||7||14]
+        &_includeSSTC=[on||off]
+        &includeSSTC=[true||false]
+        &mustHave=[
+                    garden
+                    %2Cparking
+                    %2CnewHome
+                    %2Cretirement
+                    %2CsharedOwnership
+                    %2Cauction
+                ]
+        &dontShow=[newHome%2Cretirement%2CsharedOwnership&furnishTypes]
+
+        &viewType=LIST
+        &areaSizeUnit=sqft
+        &currencyCode=GBP
+        &isFetching=false
+        &viewport=
     """
 
     def __init__(
@@ -108,7 +148,7 @@ class Rightmove:
         """
 
         self.url = "https://www.rightmove.co.uk/"
-        self.api_url = "https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&numberOfPropertiesPerPage=24&radius=0.5&sortType=2&index=0&includeSSTC=false&viewType=LIST&channel=BUY&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
+        self.api_url = "https://www.rightmove.co.uk/api/_search?"
         self.house_prices_url = "https://www.rightmove.co.uk/house-prices/"
         self.radius = radius
         self.min_price = min_price
@@ -210,29 +250,23 @@ class Rightmove:
         # Return the properties
         pass
 
+    @property
+    def search_url_api(self):
+        """
+        Create a valid URL to search for properties using the API.
 
-if __name__ == "__main__":
-    rightmove = Rightmove(
-        buy_or_rent="buy",
-        location="London",
-        radius=0.5,
-        min_price=100000,
-        max_price=500000,
-        min_bedrooms=2,
-        max_bedrooms=4,
-        property_types=[
-            "bungalow",
-            "detached",
-            "flat",
-            "land",
-            "park-home",
-            "semi-detached",
-            "terraced",
-        ],
-        max_days_since_added=14,
-        include_sstc=False,
-        must_have=["garden", "parking"],
-        dont_show=["newHome", "retirement", "sharedOwnership"],
-    )
-    print(rightmove.search_url)
-    print(rightmove.search_properties().text)
+        :return: str: The search URL.
+        """
+
+    def search_properties_api(self):
+        pass
+
+    def get_properties(self):
+        """
+        Get the properties from the search URL.
+
+        :return: list: The properties.
+        """
+
+
+        
