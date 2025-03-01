@@ -53,7 +53,9 @@ class TestRightmove(unittest.TestCase):
         Test the connection to the Rightmove API.
         """
         rightmove = Rightmove(location="london")
-        status_code = requests.get(rightmove.api_url).status_code
+        status_code = requests.get(
+            "https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&channel=BUY"
+        ).status_code
         self.assertEqual(status_code, 200)
 
     def test_search_bar_presence(self):
