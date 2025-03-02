@@ -267,6 +267,3 @@ class Rightmove:
 
         :return: list: The properties.
         """
-
-
-        
