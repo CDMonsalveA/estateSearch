@@ -94,4 +94,29 @@ class TestRightmove(unittest.TestCase):
         shuffle(locations)
         for location, location_type, location_id in locations:
             rightmove = Rightmove(location=location)
-            self.assertEqual(rightmove.get_location_id(), (location_type, location_id))
+            self.assertEqual(rightmove.get_location_id(),
+                              (location_type, location_id))
+    
+    def test_search_url_connection(self):
+        """
+        Test the connection to the Rightmove regular search.
+        """
+        places = list(set([place[0] for place in samples]))
+        shuffle(places)
+        for place in places:
+            rightmove = Rightmove(location=place)
+            status_code = requests.get(rightmove.search_url).status_code
+            self.assertEqual(status_code, 200)
+
+
+    def test_search_url_api_connection(self):
+        """
+        Test the connection to the Rightmove API search.
+        """
+        places = list(set([place[0] for place in samples]))
+        shuffle(places)
+        for place in places:
+            rightmove = Rightmove(location=place)
+            status_code = requests.get(rightmove.search_url_api).status_code
+            self.assertEqual(status_code, 200)
+
