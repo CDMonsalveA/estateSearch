@@ -166,10 +166,13 @@ class Rightmove:
             raise UserWarning("Please provide a location.")
         if buy_or_rent == "buy":
             self.buy_or_rent = "property-for-sale"
+            self.channel = "BUY"
         elif buy_or_rent == "rent":
             self.buy_or_rent = "property-to-rent"
+            self.channel = "RENT"
         else:
             self.buy_or_rent = "property-for-sale"
+            self.channel = "BUY"
             raise UserWarning(
                 "Please provide a valid buy or rent option.\n"
                 "Options:  'buy' or 'rent'.\n"
@@ -257,6 +260,43 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        location_ident = self.get_location_id()
+        property_types = (
+            "%2C".join(self.property_types) if self.property_types else None
+        )
+        must_have = "%2C".join(self.must_have) if self.must_have else None
+        dont_show = "%2C".join(self.dont_show) if self.dont_show else None
+        search_url = (
+            f"{self.api_url}"
+            f"locationIdentifier={location_ident[0]}^{location_ident[1]}"
+            f"&numberOfPropertiesPerPage=24"
+            f"&channel={self.channel}"
+            f"&sortType=2"
+            f"&index=0"
+        )
+        if self.radius:
+            search_url += f"&radius={self.radius}"
+        if self.min_price:
+            search_url += f"&minPrice={self.min_price}"
+        if self.max_price:
+            search_url += f"&maxPrice={self.max_price}"
+        if self.min_bedrooms:
+            search_url += f"&minBedrooms={self.min_bedrooms}"
+        if self.max_bedrooms:
+            search_url += f"&maxBedrooms={self.max_bedrooms}"
+        if self.property_types:
+            search_url += f"&propertyTypes={property_types}"
+        if self.max_days_since_added:
+            search_url += f"&maxDaysSinceAdded={self.max_days_since_added}"
+        if self.include_sstc:
+            search_url += f"&includeSSTC={self.include_sstc}"
+        if self.must_have:
+            search_url += f"&mustHave={must_have}"
+        if self.dont_show:
+            search_url += f"&dontShow={dont_show}"
+        search_url += "&viewType=LIST&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
+        return search_url
+
 
     def search_properties_api(self):
         pass
@@ -267,3 +307,12 @@ class Rightmove:
 
         :return: list: The properties.
         """
+
+# if __name__ == "__main__":
+#     rightmove = Rightmove(location="london")
+#     print(rightmove.search_url)
+#     print(rightmove.search_url_api)
+#     print(rightmove.get_location_id())
+#     print(rightmove.search_properties())
+#     print(rightmove.search_properties_api())
+#     print(rightmove.get_properties())
