@@ -297,7 +297,6 @@ class Rightmove:
         search_url += "&viewType=LIST&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
         return search_url
 
-
     def search_properties_api(self):
         pass
 
@@ -307,6 +306,7 @@ class Rightmove:
 
         :return: list: The properties.
         """
+
 
 # if __name__ == "__main__":
 #     rightmove = Rightmove(location="london")
