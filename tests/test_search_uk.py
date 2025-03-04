@@ -121,3 +121,16 @@ class TestRightmove(unittest.TestCase):
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.search_url_api).status_code
             self.assertEqual(status_code, 200)
+    
+    def test_search_properties_api(self):
+        """
+        Test the search_properties_api method.
+        """
+        places = list(set([place[0] for place in samples]))
+        
+        for place in places:
+            rightmove = Rightmove(location=place)
+            properties = rightmove.search_properties_api()
+
+            print(properties)
+            self.assertTrue(len(properties) > 0)
