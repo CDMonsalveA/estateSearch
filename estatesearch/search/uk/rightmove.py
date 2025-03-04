@@ -306,13 +306,4 @@ class Rightmove:
 
         :return: list: The properties.
         """
-
-
-# if __name__ == "__main__":
-#     rightmove = Rightmove(location="london")
-#     print(rightmove.search_url)
-#     print(rightmove.search_url_api)
-#     print(rightmove.get_location_id())
-#     print(rightmove.search_properties())
-#     print(rightmove.search_properties_api())
-#     print(rightmove.get_properties())
+        pass
