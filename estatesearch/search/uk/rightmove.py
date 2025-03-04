@@ -342,6 +342,7 @@ class Rightmove:
 
         # Request URL
         response = requests.get(self.search_url_api)
+        data = json.loads(response.text)['properties']
         return response.text
 
     def get_properties(self):
