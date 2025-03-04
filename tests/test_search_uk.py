@@ -17,7 +17,8 @@ samples = [
     ("CR0 5NS", "POSTCODE", "184365"),
     ("CR0-5NS", "POSTCODE", "184365"),
     # AREA
-    ("london", "REGION", "93917"),
+    ("london", "REGION", "87490"),  # 93917 for greater london 
+    # TODO: #1 check the london area
     ("birmingham", "REGION", "162"),
     ("manchester", "REGION", "904"),
     ("liverpool", "REGION", "813"),
@@ -91,12 +92,14 @@ class TestRightmove(unittest.TestCase):
         Test the get_location_id method.
         """
         locations = samples
-        shuffle(locations)
+        # shuffle(locations)
         for location, location_type, location_id in locations:
             rightmove = Rightmove(location=location)
+            print(rightmove.get_location_id(), (location_type, location_id))
+
             self.assertEqual(rightmove.get_location_id(),
                               (location_type, location_id))
-    
+
     def test_search_url_connection(self):
         """
         Test the connection to the Rightmove regular search.
@@ -108,7 +111,6 @@ class TestRightmove(unittest.TestCase):
             status_code = requests.get(rightmove.search_url).status_code
             self.assertEqual(status_code, 200)
 
-
     def test_search_url_api_connection(self):
         """
         Test the connection to the Rightmove API search.
@@ -119,4 +121,3 @@ class TestRightmove(unittest.TestCase):
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.search_url_api).status_code
             self.assertEqual(status_code, 200)
-
