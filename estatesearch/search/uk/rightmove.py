@@ -14,6 +14,7 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 import re
 
 import requests
+import json
 
 
 class Rightmove:
@@ -179,7 +180,7 @@ class Rightmove:
                 "Default: 'buy'."
             )
 
-    def get_location_id(self):
+    def get_location_id_2(self):
         """
         Get the location ID from the
         rightmove.co.uk/house-prices/[location].html
@@ -193,6 +194,30 @@ class Rightmove:
         location_type = re.search(r'"locationType":"(\w+)"', response.text).group(1)
         location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
         return location_type, location_id
+
+    def get_location_id(self):
+        """
+        Get the location ID from the
+        https://los.rightmove.co.uk/typeahead?query=[location]
+        page.
+        
+        :return: str: Type of location ID.
+        :return: str: The location ID.
+        """
+        location_type = None
+        location_id = None
+        search_url = f"https://los.rightmove.co.uk/typeahead?query={self.location}"
+        response = requests.get(search_url)
+        data = json.loads(response.text)['matches']
+
+        # if data is empty, raise user warning, invalid location
+        if not data:
+            raise UserWarning("Invalid location. Please provide a valid location.")
+        data = data[0]
+        location_type = data['type']
+        location_id = data['id']
+        return location_type, location_id
+        
 
     @property
     def search_url(self):
@@ -215,7 +240,7 @@ class Rightmove:
             f"&useLocationIdentifier=true"
             f"&locationIdentifier={location_ident[0]}^{location_ident[1]}"
             f"&sortType=2"
-            f"&numberOfPropertiesPerPage=24"
+            f"&numberOfPropertiesPerPage=1000"
             f"&index=0"
         )
         if self.radius:
@@ -269,7 +294,7 @@ class Rightmove:
         search_url = (
             f"{self.api_url}"
             f"locationIdentifier={location_ident[0]}^{location_ident[1]}"
-            f"&numberOfPropertiesPerPage=24"
+            f"&numberOfPropertiesPerPage=1000"
             f"&channel={self.channel}"
             f"&sortType=2"
             f"&index=0"
@@ -298,7 +323,14 @@ class Rightmove:
         return search_url
 
     def search_properties_api(self):
-        pass
+        """
+        Search for properties using the API.
+        
+        :return: list: The properties."""
+
+        # Request URL
+        response = requests.get(self.search_url_api)
+        return response.text
 
     def get_properties(self):
         """
@@ -307,3 +339,38 @@ class Rightmove:
         :return: list: The properties.
         """
         pass
+
+
+if __name__ == "__main__":
+    rm = Rightmove(
+        buy_or_rent="buy",
+        location="london",
+        radius=1,
+        min_price=100000,
+        max_price=500000,
+        min_bedrooms=1,
+        max_bedrooms=2,
+        property_types=["flat"],
+        max_days_since_added=7,
+        include_sstc=False,
+        must_have=["garden", "parking"],
+        dont_show=["newHome", "retirement", "sharedOwnership"],
+    )
+
+    print(rm.get_location_id_2())
+    import json
+    import time
+
+    start_time = time.time()
+    response = rm.search_properties_api()
+    data = json.loads(response)
+
+    print(rm.search_url, "\n")
+
+    print(data.keys(), "\n")
+    print(data["properties"][0].keys(), "\n")
+    print("# of PROPERTIES", len(data["properties"]), "\n")
+    print("RESULTCOUNT", data["resultCount"], "\n")
+    print("SEARCHPARAMETERSDESCRIPTION", data["searchParametersDescription"], "\n")
+
+    print("Execution time: ", time.time() - start_time)
