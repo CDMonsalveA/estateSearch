@@ -17,7 +17,7 @@ samples = [
     ("CR0 5NS", "POSTCODE", "184365"),
     ("CR0-5NS", "POSTCODE", "184365"),
     # AREA
-    ("london", "REGION", "87490"),  # 93917 for greater london 
+    ("london", "REGION", "87490"),  # 93917 for greater london
     # TODO: #1 check the london area
     ("birmingham", "REGION", "162"),
     ("manchester", "REGION", "904"),
@@ -95,10 +95,10 @@ class TestRightmove(unittest.TestCase):
         # shuffle(locations)
         for location, location_type, location_id in locations:
             rightmove = Rightmove(location=location)
-            print(rightmove.get_location_id(), (location_type, location_id))
-
-            self.assertEqual(rightmove.get_location_id(),
-                              (location_type, location_id))
+            # print( "\n",rightmove.get_location_id(), (location_type, location_id))
+            self.assertEqual(
+                rightmove.get_location_id(), (location_type, location_id)
+            )
 
     def test_search_url_connection(self):
         """
