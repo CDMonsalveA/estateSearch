@@ -11,10 +11,10 @@ check out the website at: https://www.rightmove.co.uk/
 and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 """
 
+import json
 import re
 
 import requests
-import json
 
 
 class Rightmove:
@@ -200,24 +200,32 @@ class Rightmove:
         Get the location ID from the
         https://los.rightmove.co.uk/typeahead?query=[location]
         page.
-        
+
         :return: str: Type of location ID.
         :return: str: The location ID.
         """
-        location_type = None
-        location_id = None
-        search_url = f"https://los.rightmove.co.uk/typeahead?query={self.location}"
+        location_string = self.location
+        for ch in [" ", ",", ".", "-", "_", "(", ")", "&"]:
+            location_string = location_string.replace(ch, "+")
+
+        search_url = f"https://los.rightmove.co.uk/typeahead?query={location_string}"
         response = requests.get(search_url)
-        data = json.loads(response.text)['matches']
+        if response.status_code != 200:
+            raise UserWarning(
+                f"Invalid location: {self.location}", response.status_code
+            )
+
+        data = json.loads(response.text)["matches"]
 
         # if data is empty, raise user warning, invalid location
         if not data:
-            raise UserWarning("Invalid location. Please provide a valid location.")
+            raise UserWarning(
+                f"Invalid location: {self.location}", response.status_code
+            )
         data = data[0]
-        location_type = data['type']
-        location_id = data['id']
+        location_type = data["type"]
+        location_id = data["id"]
         return location_type, location_id
-        
 
     @property
     def search_url(self):
@@ -325,7 +333,7 @@ class Rightmove:
     def search_properties_api(self):
         """
         Search for properties using the API.
-        
+
         :return: list: The properties."""
 
         # Request URL
