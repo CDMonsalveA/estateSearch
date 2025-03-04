@@ -191,7 +191,9 @@ class Rightmove:
         """
         search_url = f"{self.house_prices_url}{self.location}.html"
         response = requests.get(search_url)
-        location_type = re.search(r'"locationType":"(\w+)"', response.text).group(1)
+        location_type = re.search(
+            r'"locationType":"(\w+)"', response.text
+        ).group(1)
         location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
         return location_type, location_id
 
@@ -208,7 +210,9 @@ class Rightmove:
         for ch in [" ", ",", ".", "-", "_", "(", ")", "&"]:
             location_string = location_string.replace(ch, "+")
 
-        search_url = f"https://los.rightmove.co.uk/typeahead?query={location_string}"
+        search_url = (
+            f"https://los.rightmove.co.uk/typeahead?query={location_string}"
+        )
         response = requests.get(search_url)
         if response.status_code != 200:
             raise UserWarning(
@@ -379,6 +383,8 @@ if __name__ == "__main__":
     print(data["properties"][0].keys(), "\n")
     print("# of PROPERTIES", len(data["properties"]), "\n")
     print("RESULTCOUNT", data["resultCount"], "\n")
-    print("SEARCHPARAMETERSDESCRIPTION", data["searchParametersDescription"], "\n")
+    print(
+        "SEARCHPARAMETERSDESCRIPTION", data["searchParametersDescription"], "\n"
+    )
 
     print("Execution time: ", time.time() - start_time)
