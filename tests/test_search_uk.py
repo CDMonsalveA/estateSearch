@@ -33,6 +33,61 @@ samples = [
     ("paddington", "REGION", "70403"),
 ]
 
+rightmove_api_keys = [
+    "id",
+    "bedrooms",
+    "bathrooms",
+    "numberOfImages",
+    "numberOfFloorplans",
+    "numberOfVirtualTours",
+    "summary",
+    "displayAddress",
+    "countryCode",
+    "location",
+    "propertyImages",
+    "propertySubType",
+    "listingUpdate",
+    "premiumListing",
+    "featuredProperty",
+    "price",
+    "customer",
+    "distance",
+    "transactionType",
+    "productLabel",
+    "commercial",
+    "development",
+    "residential",
+    "students",
+    "auction",
+    "feesApply",
+    "feesApplyText",
+    "displaySize",
+    "showOnMap",
+    "propertyUrl",
+    "contactUrl",
+    "staticMapUrl",
+    "channel",
+    "firstVisibleDate",
+    "keywords",
+    "keywordMatchType",
+    "saved",
+    "hidden",
+    "onlineViewingsAvailable",
+    "lozengeModel",
+    "hasBrandPlus",
+    "displayStatus",
+    "enquiredTimestamp",
+    "enquiryAddedTimestamp",
+    "enquiryCalledTimestamp",
+    "heading",
+    "addedOrReduced",
+    "formattedBranchName",
+    "formattedDistance",
+    "propertyTypeFullDescription",
+    "isRecent",
+    "enhancedListing",
+]
+
 
 class TestRightmove(unittest.TestCase):
     """
@@ -143,66 +198,14 @@ class TestRightmove(unittest.TestCase):
         Expected output:
         dict_keys(['id', 'bedrooms', 'bathrooms', 'numberOfImages', 'numberOfFloorplans', 'numberOfVirtualTours', 'summary', 'displayAddress', 'countryCode', 'location', 'propertyImages', 'propertySubType', 'listingUpdate', 'premiumListing', 'featuredProperty', 'price', 'customer', 'distance', 'transactionType', 'productLabel', 'commercial', 'development', 'residential', 'students', 'auction', 'feesApply', 'feesApplyText', 'displaySize', 'showOnMap', 'propertyUrl', 'contactUrl', 'staticMapUrl', 'channel', 'firstVisibleDate', 'keywords', 'keywordMatchType', 'saved', 'hidden', 'onlineViewingsAvailable', 'lozengeModel', 'hasBrandPlus', 'displayStatus', 'enquiredTimestamp', 'enquiryAddedTimestamp', 'enquiryCalledTimestamp', 'heading', 'addedOrReduced', 'formattedBranchName', 'formattedDistance', 'propertyTypeFullDescription', 'isRecent', 'enhancedListing'])
         """
-        rightmove = Rightmove(location="london")
-        response = requests.get(rightmove.search_url_api)
-        data = json.loads(response.text)
-        properties = data["properties"]
-        keys = properties[0].keys()
-        # print(keys)
-        self.assertListEqual(
-            list(keys),
-            [
-                "id",
-                "bedrooms",
-                "bathrooms",
-                "numberOfImages",
-                "numberOfFloorplans",
-                "numberOfVirtualTours",
-                "summary",
-                "displayAddress",
-                "countryCode",
-                "location",
-                "propertyImages",
-                "propertySubType",
-                "listingUpdate",
-                "premiumListing",
-                "featuredProperty",
-                "price",
-                "customer",
-                "distance",
-                "transactionType",
-                "productLabel",
-                "commercial",
-                "development",
-                "residential",
-                "students",
-                "auction",
-                "feesApply",
-                "feesApplyText",
-                "displaySize",
-                "showOnMap",
-                "propertyUrl",
-                "contactUrl",
-                "staticMapUrl",
-                "channel",
-                "firstVisibleDate",
-                "keywords",
-                "keywordMatchType",
-                "saved",
-                "hidden",
-                "onlineViewingsAvailable",
-                "lozengeModel",
-                "hasBrandPlus",
-                "displayStatus",
-                "enquiredTimestamp",
-                "enquiryAddedTimestamp",
-                "enquiryCalledTimestamp",
-                "heading",
-                "addedOrReduced",
-                "formattedBranchName",
-                "formattedDistance",
-                "propertyTypeFullDescription",
-                "isRecent",
-                "enhancedListing",
-            ],
-        )
+        places = list(set([place[0] for place in samples]))
+        shuffle(places)
+        for place in places:
+            rightmove = Rightmove(location=place, radius=1)
+            response = requests.get(rightmove.search_url_api)
+            properties = json.loads(response.text)["properties"]
+            # print(place, " ", list(properties[0].keys()))
+            # assert all the keys are present even if the order is different
+            self.assertEqual(
+                sorted(list(properties[0].keys())), sorted(rightmove_api_keys)
+            )
