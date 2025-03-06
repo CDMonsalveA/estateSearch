@@ -1,6 +1,6 @@
 import json
 import unittest
-from random import shuffle, sample
+from random import sample
 
 import requests
 
