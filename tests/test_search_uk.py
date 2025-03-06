@@ -1,3 +1,4 @@
+import json
 import unittest
 from random import shuffle
 
@@ -121,16 +122,87 @@ class TestRightmove(unittest.TestCase):
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.search_url_api).status_code
             self.assertEqual(status_code, 200)
-    
+
     def test_search_properties_api(self):
         """
         Test the search_properties_api method.
         """
         places = list(set([place[0] for place in samples]))
-        
-        for place in places:
-            rightmove = Rightmove(location=place)
-            properties = rightmove.search_properties_api()
 
-            print(properties)
+        for place in places:
+            rightmove = Rightmove(location=place, radius=1)
+            properties = rightmove.search_properties_api()
+            # print(place, rightmove.search_url,len(properties))
             self.assertTrue(len(properties) > 0)
+
+    def test_search_url_api_properties_attributes(self):
+        """
+        check the attributes 'keys' of the properties returned
+        by fetching the API
+
+        Expected output:
+        dict_keys(['id', 'bedrooms', 'bathrooms', 'numberOfImages', 'numberOfFloorplans', 'numberOfVirtualTours', 'summary', 'displayAddress', 'countryCode', 'location', 'propertyImages', 'propertySubType', 'listingUpdate', 'premiumListing', 'featuredProperty', 'price', 'customer', 'distance', 'transactionType', 'productLabel', 'commercial', 'development', 'residential', 'students', 'auction', 'feesApply', 'feesApplyText', 'displaySize', 'showOnMap', 'propertyUrl', 'contactUrl', 'staticMapUrl', 'channel', 'firstVisibleDate', 'keywords', 'keywordMatchType', 'saved', 'hidden', 'onlineViewingsAvailable', 'lozengeModel', 'hasBrandPlus', 'displayStatus', 'enquiredTimestamp', 'enquiryAddedTimestamp', 'enquiryCalledTimestamp', 'heading', 'addedOrReduced', 'formattedBranchName', 'formattedDistance', 'propertyTypeFullDescription', 'isRecent', 'enhancedListing'])
+        """
+        rightmove = Rightmove(location="london")
+        response = requests.get(rightmove.search_url_api)
+        data = json.loads(response.text)
+        properties = data["properties"]
+        keys = properties[0].keys()
+        # print(keys)
+        self.assertListEqual(
+            list(keys),
+            [
+                "id",
+                "bedrooms",
+                "bathrooms",
+                "numberOfImages",
+                "numberOfFloorplans",
+                "numberOfVirtualTours",
+                "summary",
+                "displayAddress",
+                "countryCode",
+                "location",
+                "propertyImages",
+                "propertySubType",
+                "listingUpdate",
+                "premiumListing",
+                "featuredProperty",
+                "price",
+                "customer",
+                "distance",
+                "transactionType",
+                "productLabel",
+                "commercial",
+                "development",
+                "residential",
+                "students",
+                "auction",
+                "feesApply",
+                "feesApplyText",
+                "displaySize",
+                "showOnMap",
+                "propertyUrl",
+                "contactUrl",
+                "staticMapUrl",
+                "channel",
+                "firstVisibleDate",
+                "keywords",
+                "keywordMatchType",
+                "saved",
+                "hidden",
+                "onlineViewingsAvailable",
+                "lozengeModel",
+                "hasBrandPlus",
+                "displayStatus",
+                "enquiredTimestamp",
+                "enquiryAddedTimestamp",
+                "enquiryCalledTimestamp",
+                "heading",
+                "addedOrReduced",
+                "formattedBranchName",
+                "formattedDistance",
+                "propertyTypeFullDescription",
+                "isRecent",
+                "enhancedListing",
+            ],
+        )
