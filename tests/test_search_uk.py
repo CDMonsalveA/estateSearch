@@ -1,6 +1,6 @@
 import json
 import unittest
-from random import shuffle
+from random import shuffle, sample
 
 import requests
 
@@ -8,6 +8,9 @@ from estatesearch import Rightmove
 
 unittest.TestLoader.sortTestMethodsUsing = None
 
+# Number of test samples
+n_samples = 5
+# test samples
 samples = [
     # POSTCODE
     ("SY3 9EB", "POSTCODE", "4203018"),
@@ -136,8 +139,7 @@ class TestRightmove(unittest.TestCase):
         Test the connection to the Rightmove house prices website.
         """
         places = list(set([place[0] for place in samples]))
-        shuffle(places)
-
+        places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.house_prices_url).status_code
@@ -148,7 +150,7 @@ class TestRightmove(unittest.TestCase):
         Test the get_location_id method.
         """
         locations = samples
-        # shuffle(locations)
+
         for location, location_type, location_id in locations:
             rightmove = Rightmove(location=location)
             # print( "\n",rightmove.get_location_id(), (location_type, location_id))
