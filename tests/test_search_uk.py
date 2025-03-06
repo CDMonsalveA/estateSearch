@@ -149,8 +149,7 @@ class TestRightmove(unittest.TestCase):
         """
         Test the get_location_id method.
         """
-        locations = samples
-
+        locations = sample(samples, n_samples)
         for location, location_type, location_id in locations:
             rightmove = Rightmove(location=location)
             # print( "\n",rightmove.get_location_id(), (location_type, location_id))
@@ -163,7 +162,7 @@ class TestRightmove(unittest.TestCase):
         Test the connection to the Rightmove regular search.
         """
         places = list(set([place[0] for place in samples]))
-        shuffle(places)
+        places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.search_url).status_code
@@ -174,7 +173,7 @@ class TestRightmove(unittest.TestCase):
         Test the connection to the Rightmove API search.
         """
         places = list(set([place[0] for place in samples]))
-        shuffle(places)
+        places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place)
             status_code = requests.get(rightmove.search_url_api).status_code
@@ -185,7 +184,7 @@ class TestRightmove(unittest.TestCase):
         Test the search_properties_api method.
         """
         places = list(set([place[0] for place in samples]))
-
+        places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place, radius=1)
             properties = rightmove.search_properties_api()
@@ -201,7 +200,7 @@ class TestRightmove(unittest.TestCase):
         dict_keys(['id', 'bedrooms', 'bathrooms', 'numberOfImages', 'numberOfFloorplans', 'numberOfVirtualTours', 'summary', 'displayAddress', 'countryCode', 'location', 'propertyImages', 'propertySubType', 'listingUpdate', 'premiumListing', 'featuredProperty', 'price', 'customer', 'distance', 'transactionType', 'productLabel', 'commercial', 'development', 'residential', 'students', 'auction', 'feesApply', 'feesApplyText', 'displaySize', 'showOnMap', 'propertyUrl', 'contactUrl', 'staticMapUrl', 'channel', 'firstVisibleDate', 'keywords', 'keywordMatchType', 'saved', 'hidden', 'onlineViewingsAvailable', 'lozengeModel', 'hasBrandPlus', 'displayStatus', 'enquiredTimestamp', 'enquiryAddedTimestamp', 'enquiryCalledTimestamp', 'heading', 'addedOrReduced', 'formattedBranchName', 'formattedDistance', 'propertyTypeFullDescription', 'isRecent', 'enhancedListing'])
         """
         places = list(set([place[0] for place in samples]))
-        shuffle(places)
+        places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place, radius=1)
             response = requests.get(rightmove.search_url_api)
