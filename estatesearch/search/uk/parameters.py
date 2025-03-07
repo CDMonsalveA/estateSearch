@@ -14,11 +14,11 @@ class propertiesParameters(NamedTuple):
     """
 
     id: str
-    bedrooms: str
-    bathrooms: str
-    numberOfImages: str
-    numberOfFloorplans: str
-    numberOfVirtualTours: str
+    bedrooms: int
+    bathrooms: int
+    numberOfImages: int
+    numberOfFloorplans: int
+    numberOfVirtualTours: int
     summary: str
     displayAddress: str
     countryCode: str
