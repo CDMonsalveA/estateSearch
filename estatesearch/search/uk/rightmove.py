@@ -380,5 +380,5 @@ if __name__ == "__main__":
         must_have=["garden", "parking"],
         dont_show=["newHome", "retirement", "sharedOwnership"],
     )
-    id = rightmove.search_properties_api()[0]['id']
-    print(id)
+    id = rightmove.search_properties_api()[0]
+    print(print(json.dumps(id, indent=4)))
