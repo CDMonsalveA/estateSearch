@@ -352,3 +352,33 @@ class Rightmove:
         :return: list: The properties.
         """
         pass
+
+    def get_property_details(self, id):
+        """
+        Get the property URL from the search URL.
+        https://www.rightmove.co.uk/properties/[id]#/?channel=RES_BUY
+
+        :return: str: The property URL.
+        """
+        url = f"{self.url}/properties/{id}#/?channel=RES_{self.channel}"
+        response = requests.get(url)
+        return response.status_code
+        
+
+if __name__ == "__main__":
+    rightmove = Rightmove(
+        buy_or_rent="buy",
+        location="London",
+        radius=1,
+        min_price=100000,
+        max_price=500000,
+        min_bedrooms=2,
+        max_bedrooms=3,
+        property_types=["flat"],
+        max_days_since_added=7,
+        include_sstc=False,
+        must_have=["garden", "parking"],
+        dont_show=["newHome", "retirement", "sharedOwnership"],
+    )
+    id = rightmove.search_properties_api()[0]['id']
+    print(id)
