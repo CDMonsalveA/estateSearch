@@ -20,7 +20,6 @@ import requests
 class Rightmove:
     """
     The Rightmove class is used to search for properties
-    on the Rightmove website using the following parameters:
     """
 
     def __init__(
