@@ -1,5 +1,5 @@
 """
-This module contains the Rightmove class 
+This module contains the Rightmove class
 which is used to search for properties on
 the Rightmove website.
 
@@ -258,7 +258,7 @@ class Rightmove:
 
         # Request URL
         response = requests.get(self.search_url_api)
-        data = json.loads(response.text)['properties']
+        data = json.loads(response.text)["properties"]
         return data
 
     def get_properties(self):
@@ -279,7 +279,7 @@ class Rightmove:
         url = f"{self.url}/properties/{id}#/?channel=RES_{self.channel}"
         response = requests.get(url)
         return response.status_code
-        
+
 
 if __name__ == "__main__":
     rightmove = Rightmove(
