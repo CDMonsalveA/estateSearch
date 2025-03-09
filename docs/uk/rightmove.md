@@ -3,7 +3,7 @@
 The Rightmove class is used to search for properties
 on the Rightmove website using the following parameters:
 
-## URL structure:
+## URL structure
 
 ```md
 - <https://www.rightmove.co.uk/>
@@ -50,7 +50,7 @@ on the Rightmove website using the following parameters:
     &keywords=
 ```
 
-## API structure:
+## API structure
 
 ```md
 - <https://www.rightmove.co.uk/api/_search>?
