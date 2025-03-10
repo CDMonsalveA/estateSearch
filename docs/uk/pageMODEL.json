@@ -1,0 +1,968 @@
+{
+    "propertyData": {
+        "id": "159073889",
+        "addressId": "99a9b8b832749314d5a67ef1fb6ef5f1",
+        "status": {
+            "published": true,
+            "archived": false
+        },
+        "text": {
+            "description": "<p>GUIDE PRICE £325,000 - £335,000 • RE/MAX SELECT are delighted to offer for sale this ground floor maisonette situated close to amenities and transportation links, including Bexleyheath Station. This property comprises 2 bedrooms, living room, fitted kitchen, and bathroom.</p><p></p><p>Further benefits include double glazing, gas central heating, private rear garden, and off-street parking for 2 cars.</p><p></p><p>Total Internal Area approx: 488.89 sq ft (45.42 sq m)</p>",
+            "propertyPhrase": "2 bedroom maisonette",
+            "disclaimer": "<b>Disclaimer</b> - Property reference 28788661. The information displayed about this property comprises a property advertisement. Rightmove.co.uk makes no warranty as to the accuracy or completeness of the advertisement or any linked or associated information, and Rightmove has no control over the content. This property advertisement does not constitute property particulars. The information is provided and maintained by <b>RE/MAX Select, Bexleyheath</b>.&nbsp;Please contact the selling agent or developer directly to obtain any information which may be available under the terms of The Energy Performance of Buildings (Certificates and Inspections) (England and Wales) Regulations 2007 or the Home Report if in relation to a residential property in Scotland.",
+            "auctionFeesDisclaimer": null,
+            "guidePriceDisclaimer": null,
+            "reservePriceDisclaimer": null,
+            "staticMapDisclaimerText": "Map data ©<a href=\"http://www.openstreetmap.org/copyright\" rel=\"nofollow\" target=\"_blank\" title=\"Open Street Map\">OpenStreetMap</a> contributors.",
+            "newHomesBrochureDisclaimer": "Please note that Rightmove will send the above details to RE/MAX Select only. By submitting this form, you confirm that you agree to our website <a href=\"/this-site/terms-of-use.html\">terms of use</a>, our <a href=\"/this-site/privacy-policy.html\">privacy policy</a> and understand how we store <a href=\"/this-site/cookies.html\">cookies</a> on your device.",
+            "shareText": "Check out this 2 bedroom maisonette for sale on Rightmove",
+            "shareDescription": "2 bedroom maisonette for sale in Belvedere Road, Bexleyheath, DA7 for £325,000. Marketed by RE/MAX Select, Bexleyheath",
+            "pageTitle": "2 bedroom maisonette for sale in Belvedere Road, Bexleyheath, DA7",
+            "shortDescription": "2 bedroom maisonette for sale"
+        },
+        "prices": {
+            "primaryPrice": "£325,000",
+            "secondaryPrice": null,
+            "displayPriceQualifier": "Guide Price",
+            "pricePerSqFt": null,
+            "message": null,
+            "exchangeRate": null
+        },
+        "address": {
+            "displayAddress": "Belvedere Road, Bexleyheath, DA7",
+            "countryCode": "GB",
+            "deliveryPointId": 44999485,
+            "ukCountry": "England",
+            "outcode": "DA7",
+            "incode": "4NY"
+        },
+        "keyFeatures": [],
+        "images": [
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_00_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_00_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_00_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_00_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_01_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_01_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_01_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_01_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_02_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_02_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_02_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_02_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_03_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_03_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_03_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_03_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_04_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_04_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_04_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_04_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_05_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_05_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_05_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_05_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_06_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_06_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_06_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_06_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_07_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_07_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_07_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_07_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_08_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_08_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_08_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_08_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_09_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_09_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_09_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_09_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_10_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_10_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_10_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_10_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_11_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_11_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_11_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_11_0000_max_656x437.jpeg"
+                }
+            },
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_IMG_12_0000.jpeg",
+                "caption": null,
+                "resizedImageUrls": {
+                    "size135x100": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_12_0000_max_135x100.jpeg",
+                    "size476x317": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_12_0000_max_476x317.jpeg",
+                    "size656x437": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_IMG_12_0000_max_656x437.jpeg"
+                }
+            }
+        ],
+        "floorplans": [
+            {
+                "url": "https://media.rightmove.co.uk/35k/34448/159073889/34448_28788661_FLP_00_0000.jpeg",
+                "caption": "Floorplan 1",
+                "type": "IMAGE",
+                "resizedFloorplanUrls": {
+                    "size296x197": "https://media.rightmove.co.uk/dir/35k/34448/159073889/34448_28788661_FLP_00_0000_max_296x197.jpeg"
+                }
+            }
+        ],
+        "virtualTours": [],
+        "customer": {
+            "branchId": 34448,
+            "branchName": "Bexleyheath",
+            "branchDisplayName": "RE/MAX Select, Bexleyheath",
+            "companyName": "Innovate Trade Limited",
+            "companyTradingName": "RE/MAX Select",
+            "displayAddress": "5 Pickford Lane,\r\nBexleyheath,\r\nDA7 4RD",
+            "logoPath": "https://media.rightmove.co.uk/35k/34448/branch_logo_34448_0003.jpeg",
+            "customerDescription": {
+                "truncatedDescriptionHTML": "<p>RE/MAX Select, Bexleyheath offer a different way to sell your property. We retain the services of self employed Associates who take personal responsibility for the sale of your home. From listing to completion, you have one point of contact.</p><p>www.remaxselect.co.uk</p>",
+                "isTruncated": false,
+                "descriptionHTML": "<p>RE/MAX Select, Bexleyheath offer a different way to sell your property. We retain the services of self employed Associates who take personal responsibility for the sale of your home. From listing to completion, you have one point of contact.</p><p>www.remaxselect.co.uk</p>"
+            },
+            "bannerAd": "https://media.rightmove.co.uk/35k/34448/1494255953940_bp_pd_h_r.jpg",
+            "mpuAd": "https://media.rightmove.co.uk/35k/34448/1494255962462_bp_mpu_r.jpg",
+            "customerProfileUrl": "/estate-agents/agent/REMAX-Select/Bexleyheath-34448.html",
+            "customerBannerAdProfileUrl": "/estate-agents/agent/REMAX-Select/Bexleyheath-34448.html#ram_about_us",
+            "customerMpuAdProfileUrl": "/estate-agents/agent/REMAX-Select/Bexleyheath-34448.html#ram_about_us",
+            "customerPropertiesUrl": "/property-for-sale/find/REMAX-Select/Bexleyheath.html?locationIdentifier=BRANCH%5E34448&includeSSTC=true&_includeSSTC=on",
+            "isNewHomeDeveloper": false,
+            "spotlight": null,
+            "showBrochureLeadModal": false,
+            "developmentInfo": {
+                "sitePlanUri": null,
+                "micrositeFeatures": []
+            },
+            "buildToRent": false,
+            "commercial": false,
+            "buildToRentBenefits": [],
+            "videoUrl": null,
+            "videoEnabled": false,
+            "valuationFormUrl": "/estate-agents/contactBranch.html?branchId=34448",
+            "products": {
+                "hasMicrosite": true
+            }
+        },
+        "industryAffiliations": [
+            {
+                "name": "National Association of Estate Agents",
+                "imagePath": "https://media.rightmove.co.uk/dir/customer/industry-affiliation/national-association-of-estate-agents_max_135x100.png"
+            },
+            {
+                "name": "Ombudsman for REsale Estate Agents (no OFT logo)",
+                "imagePath": "https://media.rightmove.co.uk/dir/customer/industry-affiliation/ombudsman-for-resale-estate-agent_max_135x100.png"
+            },
+            {
+                "name": "Association of Residential Letting Agents",
+                "imagePath": "https://media.rightmove.co.uk/dir/customer/industry-affiliation/association-of-residential-lettings-agent_max_135x100.png"
+            }
+        ],
+        "rooms": [
+            {
+                "name": "Entrance Hall",
+                "description": "Tile-effect flooring, storage cupboard.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Living Room",
+                "description": "14' 2\" x 11' 8\" (4.32m x 3.56m) Laminate flooring, radiator; double glazed windows; opening to kitchen.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Kitchen",
+                "description": "8' 7\" x 7' 9\" (2.61m x 2.35m) Tiled flooring; range of wall and base units with complementary worktops; stainless steel electric oven and hob; stainless steel sink with mixer tap and drainer; space and connections for fridge/freezer; space and connections for washing machine; double glazed window, double glazed door to rear garden.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Bedroom 1",
+                "description": "11' 7\" x 11' 1\" (3.53m x 3.38m) Laminate flooring, radiator, double glazed windows.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Bedroom 2",
+                "description": "11' 7\" x 11' 1\" (3.53m x 3.38m) Laminate flooring, radiator, double glazed windows.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Bathroom",
+                "description": "8' 6\" x 5' 10\" (2.60m x 1.78m) Tiled flooring, part-tiled walls; panelled bath with rainfall shower attachment and screen; vanity unit with wash-hand basin and mixer tap; w/c, double glazed frosted window to rear.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Front Driveway",
+                "description": "Off-street parking for 2 cars.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Rear Garden",
+                "description": "Paved area, lawn; mature bushes, trees, and shrubs; outdoor lighting; shed; side access.",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            },
+            {
+                "name": "Information",
+                "description": "• Lease: 930 years remaining<br />• 0.2 miles (approx) to Bexleyheath Station (direct to 5 London Terminal stations)<br />• Easy access to A2 / M25<br />• Close to sought-after schools incl 4 grammar schools<br />• 0.3 miles (approx) to Broadway Shopping Centre<br />• 0.7 miles (approx) to Crook Log Leisure Centre & Swimming Pool<br />• 0.9 miles (approx) to Danson Park & Lake<br />• Council Tax Band: C",
+                "width": null,
+                "length": null,
+                "unit": null,
+                "dimension": null
+            }
+        ],
+        "location": {
+            "latitude": 51.462772,
+            "longitude": 0.13969,
+            "circleRadiusOnMap": 0,
+            "zoomLevel": 15,
+            "pinType": "ACCURATE_POINT",
+            "showMap": true
+        },
+        "streetView": {
+            "heading": null,
+            "pitch": null,
+            "zoom": 0,
+            "latitude": 51.462772,
+            "longitude": 0.13969
+        },
+        "nearestAirports": [],
+        "nearestStations": [
+            {
+                "name": "Bexleyheath Station",
+                "types": [
+                    "NATIONAL_TRAIN"
+                ],
+                "distance": 0.26166078020785255,
+                "unit": "miles"
+            },
+            {
+                "name": "Barnehurst Station",
+                "types": [
+                    "NATIONAL_TRAIN"
+                ],
+                "distance": 0.863410765603669,
+                "unit": "miles"
+            },
+            {
+                "name": "Bexley Station",
+                "types": [
+                    "NATIONAL_TRAIN"
+                ],
+                "distance": 1.5945212509581561,
+                "unit": "miles"
+            }
+        ],
+        "showSchoolInfo": true,
+        "countryGuide": null,
+        "channel": "RES_BUY",
+        "sizings": [],
+        "brochures": [
+            {
+                "url": "https://docs.rezi.cloud/lAlwnY8k6vssnRM4LHIxzvt3SgIHRCuWBYNka_GMs1c%3d/47893847.pdf?v=0000000001b71aa6",
+                "caption": "Brochure 1"
+            }
+        ],
+        "epcGraphs": [],
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "transactionType": "BUY",
+        "tags": [],
+        "misInfo": {
+            "branchId": 34448,
+            "offerAdvertStampTypeId": null,
+            "premiumDisplay": true,
+            "premiumDisplayStampId": 12,
+            "brandPlus": true,
+            "featuredProperty": true
+        },
+        "staticMapImgUrls": {
+            "staticMapImgUrlMobile": "https://media.rightmove.co.uk/map/_generate?width=375&height=375&zoomLevel=15&latitude=51.462772&longitude=0.13969&signature=TbaXMqQKgqYSlFbPKcpEccwxgv8=",
+            "staticMapImgUrlTablet": "https://media.rightmove.co.uk/map/_generate?width=768&height=347&zoomLevel=15&latitude=51.462772&longitude=0.13969&signature=IkKlRvVS4goVzkjizEJcQk9pstM=",
+            "staticMapImgUrlDesktopSmall": "https://media.rightmove.co.uk/map/_generate?width=580&height=347&zoomLevel=15&latitude=51.462772&longitude=0.13969&signature=IdZdUJq_pGZMR4XXoFL9umRsX5Q=",
+            "staticMapImgUrlDesktopLarge": "https://media.rightmove.co.uk/map/_generate?width=761&height=347&zoomLevel=15&latitude=51.462772&longitude=0.13969&signature=xMl5RGuaIWtOrxr7i2BB87MhA74="
+        },
+        "listingHistory": {
+            "listingUpdateReason": "Added on 06/03/2025"
+        },
+        "feesApply": null,
+        "broadband": {
+            "disclaimer": "* This is the average speed from the provider with the fastest broadband package available on <a rel=\"sponsored\" href=\"https://www.comparethemarket.com\" target=\"_blank\">comparethemarket.com</a> at this postcode. The average speed displayed is based on the download speeds of at least 50% of customers at peak time (8pm to 10pm). Fibre/cable services at the postcode are subject to availability and may differ between properties within a postcode. Speeds can be affected by a range of technical and environmental factors. The speed at the property may be lower than that listed above. You can check the estimated speed and confirm availability to a property prior to purchasing on the broadband provider's website. Providers may increase charges. The information is provided and maintained by <a href=\"https://www.stickee.co.uk/\" target=\"_blank\">Stickee Technology Limited</a>.",
+            "broadbandCheckerUrl": "https://partnerships-broadband.comparethemarket.com/v1/broadband/rightmove/DA74NY?apikey=120e4613330dd78dab28f16bda3670672983f81ea62a222b9c48306ccdf2843c"
+        },
+        "contactInfo": {
+            "contactMethod": "EMAIL",
+            "telephoneNumbers": {
+                "localNumber": "020 8304 4010",
+                "internationalNumber": null,
+                "disclaimerText": null,
+                "disclaimerTitle": null,
+                "disclaimerDescription": null
+            }
+        },
+        "lettings": null,
+        "infoReelItems": [
+            {
+                "title": "PROPERTY TYPE",
+                "type": "PROPERTY_TYPE",
+                "primaryText": "Maisonette",
+                "secondaryText": "",
+                "tooltipText": ""
+            },
+            {
+                "title": "BEDROOMS",
+                "type": "BEDROOMS",
+                "primaryText": "2",
+                "secondaryText": "",
+                "tooltipText": ""
+            },
+            {
+                "title": "BATHROOMS",
+                "type": "BATHROOMS",
+                "primaryText": "1",
+                "secondaryText": "",
+                "tooltipText": ""
+            },
+            {
+                "title": "SIZE",
+                "type": "SIZE",
+                "primaryText": "Ask agent",
+                "secondaryText": "",
+                "tooltipText": ""
+            }
+        ],
+        "mortgageCalculator": {
+            "price": 325000,
+            "propertyTypeAlias": "flats_apartments"
+        },
+        "tenure": {
+            "tenureType": "LEASEHOLD",
+            "yearsRemainingOnLease": 930,
+            "message": null
+        },
+        "propertyUrls": {
+            "similarPropertiesUrl": "/property-for-sale/DA7-4NY.html?radius=0.5&minPrice=290000&maxPrice=375000&minBedrooms=2",
+            "nearbySoldPropertiesUrl": "/house-prices/da7-4ny.html"
+        },
+        "soldPropertyType": "UNKNOWN",
+        "propertySubType": "Maisonette",
+        "businessForSale": false,
+        "commercial": false,
+        "commercialUseClasses": [],
+        "affordableBuyingScheme": false,
+        "sharedOwnership": {
+            "sharedOwnershipFlag": false,
+            "ownershipPercentage": null,
+            "rentPrice": null,
+            "rentFrequency": "(for payment frequency, ask the agent)"
+        },
+        "livingCosts": {
+            "councilTaxExempt": false,
+            "councilTaxIncluded": false,
+            "annualGroundRent": null,
+            "groundRentReviewPeriodInYears": null,
+            "groundRentPercentageIncrease": null,
+            "annualServiceCharge": null,
+            "councilTaxBand": null,
+            "domesticRates": null
+        },
+        "termsOfUse": "This Application Programming Interface (API) is for the use of Rightmove Group Limited only. No other individual or business may link to, or make use of, this API without the express written permission of Rightmove's Legal Team. Any unauthorised use of this API will constitute a breach of Rightmove's Terms of Use, available at https://www.rightmove.co.uk/this-site/terms-of-use.html, and Rightmove will enforce its rights to the fullest extent permitted by law.",
+        "features": {
+            "electricity": [],
+            "broadband": [],
+            "water": [],
+            "sewerage": [],
+            "heating": [],
+            "accessibility": [],
+            "parking": [
+                {
+                    "alias": "parking",
+                    "displayText": "Yes"
+                }
+            ],
+            "garden": [
+                {
+                    "alias": "garden",
+                    "displayText": "Yes"
+                }
+            ],
+            "risks": {
+                "floodedInLastFiveYears": false,
+                "floodDefences": false,
+                "floodSources": []
+            },
+            "obligations": {
+                "listed": false,
+                "restrictions": false,
+                "requiredAccess": false,
+                "rightsOfWay": false
+            }
+        },
+        "entranceFloor": null,
+        "dfpAdInfo": {
+            "channel": "RES_BUY",
+            "targeting": [
+                {
+                    "key": "SO",
+                    "value": [
+                        "FALSE"
+                    ]
+                },
+                {
+                    "key": "R",
+                    "value": [
+                        "FALSE"
+                    ]
+                },
+                {
+                    "key": "AUCP",
+                    "value": [
+                        "FALSE"
+                    ]
+                },
+                {
+                    "key": "CCY",
+                    "value": [
+                        "GBP"
+                    ]
+                },
+                {
+                    "key": "UTo_A",
+                    "value": [
+                        "DA"
+                    ]
+                },
+                {
+                    "key": "UTo_C",
+                    "value": [
+                        "GB"
+                    ]
+                },
+                {
+                    "key": "CT",
+                    "value": [
+                        "property-for-sale"
+                    ]
+                },
+                {
+                    "key": "TT",
+                    "value": [
+                        "buy"
+                    ]
+                },
+                {
+                    "key": "BD",
+                    "value": [
+                        "2"
+                    ]
+                },
+                {
+                    "key": "PT",
+                    "value": [
+                        "flats_apartments"
+                    ]
+                },
+                {
+                    "key": "PST",
+                    "value": [
+                        "maisonette"
+                    ]
+                },
+                {
+                    "key": "RESALEPRICE",
+                    "value": [
+                        "325000"
+                    ]
+                },
+                {
+                    "key": "B",
+                    "value": [
+                        "Band6"
+                    ]
+                },
+                {
+                    "key": "B_ID",
+                    "value": [
+                        "34448"
+                    ]
+                },
+                {
+                    "key": "C_ID",
+                    "value": [
+                        "RE/MAX Select"
+                    ]
+                },
+                {
+                    "key": "FP",
+                    "value": [
+                        "Y"
+                    ]
+                },
+                {
+                    "key": "EPC",
+                    "value": [
+                        "N"
+                    ]
+                },
+                {
+                    "key": "P_ID",
+                    "value": [
+                        "159073889"
+                    ]
+                },
+                {
+                    "key": "OV",
+                    "value": [
+                        "N"
+                    ]
+                },
+                {
+                    "key": "UTo_D",
+                    "value": [
+                        "DA7"
+                    ]
+                },
+                {
+                    "key": "UTo_Inc",
+                    "value": [
+                        "4NY"
+                    ]
+                },
+                {
+                    "key": "F",
+                    "value": [
+                        "parking",
+                        "risks",
+                        "communalpool",
+                        "obligations",
+                        "garden"
+                    ]
+                },
+                {
+                    "key": "UTo_UKZ",
+                    "value": [
+                        "England"
+                    ]
+                }
+            ]
+        },
+        "reviews": null,
+        "aiLocationInfo": null
+    },
+    "metadata": {
+        "publicsiteUrl": "//www.rightmove.co.uk",
+        "cookieDomain": "rightmove.co.uk",
+        "currencyCode": "",
+        "emailAgentUrl": "/property-for-sale/contactBranch.html?backToPropertyURL=%2Fproperties%2F159073889&propertyId=159073889",
+        "facebookShareUrl": "https://facebook.com/share.php?u=https%3A%2F%2Fwww.rightmove.co.uk%2Fproperties%2F159073889%3Futm_campaign%3Dproperty-details%26utm_content%3Dbuying%26utm_medium%3Dsharing%26utm_source%3Dfacebook%23%2F%26channel%3DRES_BUY",
+        "twitterShareUrl": "https://twitter.com/share?text=Check out this 2 bedroom maisonette for sale on Rightmove&url=https%3A%2F%2Fwww.rightmove.co.uk%2Fproperties%2F159073889%3Futm_campaign%3Dproperty-details%26utm_content%3Dbuying%26utm_medium%3Dsharing%26utm_source%3Dtwitter%23%2F%26channel%3DRES_BUY",
+        "emailShareUrl": "mailto:?subject=Check%20out%20this%202%20bedroom%20maisonette%20for%20sale%20on%20Rightmove&body=Check%20out%20this%202%20bedroom%20maisonette%20for%20sale%20in%20Belvedere%20Road,%20Bexleyheath,%20DA7%20for%20%C2%A3325,000.%20Marketed%20by%20RE/MAX%20Select,%20Bexleyheath%20on%20Rightmove%0Ahttps%3A%2F%2Fwww.rightmove.co.uk%2Fproperties%2F159073889%3Futm_campaign%3Dproperty-details%26utm_content%3Dbuying%26utm_medium%3Demail%26utm_source%3Dsendtofriend%23%2F%26channel%3DRES_BUY",
+        "copyLinkUrl": "https://www.rightmove.co.uk/properties/159073889?utm_campaign=property-details&utm_content=buying&utm_medium=sharing&utm_source=copytoclipboard#/&channel=RES_BUY",
+        "whatsAppShareUrl": "https://web.whatsapp.com/send?text=Check%20out%20this%202%20bedroom%20maisonette%20for%20sale%20on%20Rightmove%0Ahttps%3A%2F%2Fwww.rightmove.co.uk%2Fproperties%2F159073889%3Futm_campaign%3Dproperty-details%26utm_content%3Dbuying%26utm_medium%3Dsharing%26utm_source%3Dwhatsapp%23%2F%26channel%3DRES_BUY",
+        "linkedInShareUrl": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.rightmove.co.uk%2Fproperties%2F159073889%3Futm_campaign%3Dproperty-details%26utm_content%3Dbuying%26utm_medium%3Dsharing%26utm_source%3Dlinkedin%23%2F%26channel%3DRES_BUY",
+        "myRightmoveUrl": "//my.rightmove.co.uk",
+        "mediaServerUrl": "//media.rightmove.co.uk",
+        "serverTimestamp": 1741407738741,
+        "deviceType": "desktop",
+        "deviceTypeForLazyLoad": "desktop",
+        "deviceOS": "other",
+        "mvtInfo": [
+            {
+                "label": "GlobalSwitches.COOKIE_BANNER_IN_APP_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "GlobalSwitches.MANAGE_RMSESSIONID_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.APPLICATION_MANAGE_RMSESSIONID_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "GoogleTagManagerSwitch.GTM_THIRD_PARTY_TAG_SWITCH",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "GoogleTagManagerSwitch.GOOGLE_TAG_MANAGER_SWITCH",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "OnlineViewingsSwitches.ONLINE_VIEWING_PAGE_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.USE_PREFER_EMAIL_CLIENT_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.APP_DOWNLOAD_BANNER_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.DEVELOPMENT_INFO_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.STAMP_DUTY_CALCULATOR_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.MORTGAGE_WIDGET_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "ActSwitches.BFR_PRE_QUAL_FORM_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "ActSwitches.NEW_HOMES_ENHANCED_LEAD_LOGIN_ENABLED",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.BROADBAND_WIDGET_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.DT_BROADBAND_MPU_ENABLED",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.UK_CREDIT_CHECK_SPONSORSHIP_AD_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.LOAD_GEO_EDGE_SCRIPT",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.CLICK_TO_SHOW_AGENT_NUMBER",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.ADDITIONAL_BROCHURE_LINK_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.MATERIAL_INFO_PHASE_B",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.PROMOTE__UPDATED_ABOUT_AGENT_SECTION_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.PROMOTE__EA_REQUEST_VALUATION_EXPERIMENT_ENABLED",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.ADD_ENQUIRY_BANNER_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.PROMOTE__USE_PUBLIFT_THIRD_PARTY_ADS",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.COUNCIL_TAX_COST",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.COMMERCIAL_BROCHURE_LEAD",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.UAW_PREFERENCES_POPUP_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.APPS_VIEWS_ENABLED",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.MY_PLACES_MVP",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.ASK_AI_SHOW_WIDGET_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "MortgageDipWebSwitches.MIP_UNAVAILABLE",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "PropertyDetailsWeb.ASK_AI_LOCATION_INFO_SOURCES_ENABLED",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "BrokerLeadWebSwitches.AFFILIATED_EXPERIMENT_ENABLED",
+                "state": "on",
+                "shouldLog": true
+            },
+            {
+                "label": "CoreProductSwitches.BROCHURE_FORM_POSTCODE_FIELD_ENABLED_COMMERCIAL",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "CoreProductSwitches.BROCHURE_FORM_POSTCODE_FIELD_ENABLED_NEW_HOMES",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "CookieBarSwitches.BLOCK_UNKNOWN_COOKIES",
+                "state": "off",
+                "shouldLog": true
+            },
+            {
+                "label": "CookieBarSwitches.ENABLE_ONE_TRUST_COOKIE_SCRIPT",
+                "state": "on",
+                "shouldLog": true
+            }
+        ],
+        "featureMvts": {
+            "PropertyDetailsWeb.REVIEWS_MVP_ENABLED": "variant"
+        },
+        "featureSwitches": {
+            "GlobalSwitches.COOKIE_BANNER_IN_APP_ENABLED": true,
+            "GlobalSwitches.MANAGE_RMSESSIONID_ENABLED": true,
+            "PropertyDetailsWeb.APPLICATION_MANAGE_RMSESSIONID_ENABLED": true,
+            "GoogleTagManagerSwitch.GTM_THIRD_PARTY_TAG_SWITCH": true,
+            "GoogleTagManagerSwitch.GOOGLE_TAG_MANAGER_SWITCH": true,
+            "OnlineViewingsSwitches.ONLINE_VIEWING_PAGE_ENABLED": true,
+            "PropertyDetailsWeb.USE_PREFER_EMAIL_CLIENT_ENABLED": true,
+            "PropertyDetailsWeb.APP_DOWNLOAD_BANNER_ENABLED": true,
+            "PropertyDetailsWeb.DEVELOPMENT_INFO_ENABLED": true,
+            "PropertyDetailsWeb.STAMP_DUTY_CALCULATOR_ENABLED": true,
+            "PropertyDetailsWeb.MORTGAGE_WIDGET_ENABLED": true,
+            "ActSwitches.BFR_PRE_QUAL_FORM_ENABLED": true,
+            "ActSwitches.NEW_HOMES_ENHANCED_LEAD_LOGIN_ENABLED": false,
+            "PropertyDetailsWeb.BROADBAND_WIDGET_ENABLED": true,
+            "PropertyDetailsWeb.DT_BROADBAND_MPU_ENABLED": false,
+            "PropertyDetailsWeb.UK_CREDIT_CHECK_SPONSORSHIP_AD_ENABLED": true,
+            "PropertyDetailsWeb.LOAD_GEO_EDGE_SCRIPT": false,
+            "PropertyDetailsWeb.CLICK_TO_SHOW_AGENT_NUMBER": true,
+            "PropertyDetailsWeb.ADDITIONAL_BROCHURE_LINK_ENABLED": true,
+            "PropertyDetailsWeb.MATERIAL_INFO_PHASE_B": true,
+            "PropertyDetailsWeb.PROMOTE__UPDATED_ABOUT_AGENT_SECTION_ENABLED": true,
+            "PropertyDetailsWeb.PROMOTE__EA_REQUEST_VALUATION_EXPERIMENT_ENABLED": false,
+            "PropertyDetailsWeb.ADD_ENQUIRY_BANNER_ENABLED": true,
+            "PropertyDetailsWeb.PROMOTE__USE_PUBLIFT_THIRD_PARTY_ADS": true,
+            "PropertyDetailsWeb.COUNCIL_TAX_COST": false,
+            "PropertyDetailsWeb.COMMERCIAL_BROCHURE_LEAD": true,
+            "PropertyDetailsWeb.UAW_PREFERENCES_POPUP_ENABLED": true,
+            "PropertyDetailsWeb.APPS_VIEWS_ENABLED": false,
+            "PropertyDetailsWeb.MY_PLACES_MVP": true,
+            "PropertyDetailsWeb.ASK_AI_SHOW_WIDGET_ENABLED": true,
+            "MortgageDipWebSwitches.MIP_UNAVAILABLE": false,
+            "PropertyDetailsWeb.ASK_AI_LOCATION_INFO_SOURCES_ENABLED": false,
+            "BrokerLeadWebSwitches.AFFILIATED_EXPERIMENT_ENABLED": true,
+            "CoreProductSwitches.BROCHURE_FORM_POSTCODE_FIELD_ENABLED_COMMERCIAL": false,
+            "CoreProductSwitches.BROCHURE_FORM_POSTCODE_FIELD_ENABLED_NEW_HOMES": false,
+            "CookieBarSwitches.BLOCK_UNKNOWN_COOKIES": false,
+            "CookieBarSwitches.ENABLE_ONE_TRUST_COOKIE_SCRIPT": true
+        },
+        "adUnitPath": {
+            "mpu1": "/5029762/Rightmove_Property_Details_Web/UK_Sales_MPU1",
+            "trackingPixel": "/5029762/Rightmove_Property_Details_Web/Tracking_Pixel",
+            "ukCreditCheckSponsorship": "/5029762/Rightmove_Property_Details_Web/UK_Sponsorship_Text-link_Property-Details",
+            "broadbandMpuPath": "/5029762/Rightmove_Property_Details_Web/UK_Sales_Broadband_MPU",
+            "broadbandMpuId": "div-gpt-ad-1715326333580-0"
+        },
+        "fuseId": {
+            "mpu1": "22037542557",
+            "trackingPixel": "22204611787",
+            "ukCreditCheckSponsorship": "22672514086",
+            "broadbandMpuId": "23024838235"
+        },
+        "backLink": {
+            "url": "",
+            "text": "",
+            "operation": 0
+        },
+        "shouldTrackGTMSuccessTracker": false,
+        "emailPreferences": {
+            "preferencesUrl": "//my.rightmove.co.uk",
+            "baseUrl": "//www.rightmove.co.uk",
+            "showModal": false,
+            "source": ""
+        },
+        "staticAssetsPath": "https://media.rightmove.co.uk/assets/a04c507a807f8bdd7543a397a71b0ac4",
+        "staticImagesAndFontsPath": "https://media.rightmove.co.uk/assets/a04c507a807f8bdd7543a397a71b0ac4",
+        "correlationId": "bf64fefe-504d-40c5-a935-d58ee05bc77b",
+        "serveEs6Bundles": true,
+        "locationProductWebHost": "https://product.rightmove.co.uk",
+        "locationSearchUrl": "https://los.rightmove.co.uk",
+        "environment": "prod",
+        "rumTransactionSampleRate": 0.0025,
+        "isHybridPage": false,
+        "googleMapsApiKey": "AIzaSyBwa0GW5JwaKOVWB7He2W-nFR2K8YLrFaM",
+        "googleMapsMapId": "5f09c79235dc5f73",
+        "mortgageCalculatorTracking": {
+            "mortgage_calculator_type": "mip"
+        }
+    },
+    "isAuthenticated": false,
+    "analyticsInfo": {
+        "analyticsBranch": {
+            "agentType": "ea_dual",
+            "branchId": 34448,
+            "branchName": "Bexleyheath",
+            "branchPostcode": null,
+            "brandName": "RE/MAX Select",
+            "companyName": "Innovate Trade Limited",
+            "companyTradingName": "RE/MAX Select",
+            "companyType": "iea",
+            "displayAddress": "5 Pickford Lane,\r\nBexleyheath,\r\nDA7 4RD",
+            "pageType": "Microsite"
+        },
+        "analyticsProperty": {
+            "added": "20250306",
+            "auctionOnly": false,
+            "beds": 2,
+            "businessForSale": false,
+            "country": "GB",
+            "currency": "GBP",
+            "floorplanCount": 1,
+            "furnishedType": "Not Specified",
+            "hasOnlineViewing": false,
+            "imageCount": 13,
+            "latitude": 51.462772,
+            "longitude": 0.13969,
+            "letAgreed": false,
+            "lettingType": "Long term",
+            "maxSizeAc": null,
+            "maxSizeFt": null,
+            "minSizeAc": null,
+            "minSizeFt": null,
+            "ownership": "Non-shared ownership",
+            "postcode": "DA7 4NY",
+            "preOwned": "Resale",
+            "price": 325000,
+            "priceQualifier": "Guide Price",
+            "propertyId": 159073889,
+            "propertySubType": "Maisonette",
+            "propertyType": "Flats / Apartments",
+            "retirement": false,
+            "selectedCurrency": null,
+            "selectedPrice": null,
+            "soldSTC": false,
+            "videoProvider": "No Video",
+            "viewType": "Current",
+            "customUri": "https://www.rightmove.co.uk/property-for-sale/properties"
+        }
+    }
+}
