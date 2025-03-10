@@ -97,6 +97,9 @@ class Rightmove:
 
     def get_location_id_2(self):
         """
+        Second method to get the location ID, accurate but slower and made
+        requests to other codes for larger areas.
+
         Get the location ID from the
         rightmove.co.uk/house-prices/[location].html
         page. It is inserted into the script tag in the HTML.
