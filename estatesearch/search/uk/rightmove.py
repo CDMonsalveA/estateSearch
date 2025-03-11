@@ -11,9 +11,10 @@ check out the website at: https://www.rightmove.co.uk/
 and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 """
 
+import asyncio
 import json
 import re
-import asyncio
+from typing import List
 
 import requests
 from httpx import AsyncClient, Response
