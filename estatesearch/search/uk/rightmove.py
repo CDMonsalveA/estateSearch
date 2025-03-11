@@ -251,40 +251,64 @@ class Rightmove:
         data = json.loads(response.text)["properties"]
         return data
 
-    def get_properties(self):
+    def get_urls_for_properties_in_search(self) -> List[str]:
         """
-        Get the properties from the search URL.
+        Get the URLs for the properties in the search.
 
-        :return: list: The properties.
+        :return: list: The URLs for the properties.
         """
-        pass
+        data = self.search_properties_api()
+        urls = []
+        for property_data in data:
+            urls.append(f"https://www.rightmove.co.uk{property_data['propertyUrl']}")
+        return urls
 
-    def get_property_details(self, id):
+    @staticmethod
+    def parse_property(data):
+        """Parse data to only necessary fields."""
+        return data
+
+    @staticmethod
+    def find_json_objects(text: str, decoder=json.JSONDecoder()):
+        """Find JSON objects in text, and generate decoded JSON data."""
+        pos = 0
+        while True:
+            match = text.find("{", pos)
+            if match == -1:
+                break
+            try:
+                result, index = decoder.raw_decode(text[match:])
+                yield result
+                pos = match + index
+            except ValueError:
+                pos = match + 1
+
+    @staticmethod
+    def extract_property(response: Response) -> dict:
+        """Extract property data from rightmove PAGE_MODEL javascript variable."""
+        selector = Selector(response.text)
+        data = selector.xpath("//script[contains(.,'PAGE_MODEL = ')]/text()").get()
+        if not data:
+            print(f"page {response.url} is not a property listing page")
+            return
+        json_data = list(Rightmove.find_json_objects(data))[0]
+        return json_data["propertyData"]
+
+    async def scrape_properties(self, urls: List[str]) -> List[dict]:
+        """Scrape Rightmove property listings for property data"""
+        to_scrape = [client.get(url) for url in urls]
+        properties = []
+        for response in asyncio.as_completed(to_scrape):
+            response = await response
+            properties.append(Rightmove.parse_property(Rightmove.extract_property(response)))
+        return properties
+    
+    def get_properties_details(self) -> List[dict]:
         """
-        Get the property URL from the search URL.
-        https://www.rightmove.co.uk/properties/[id]#/?channel=RES_BUY
+        Get the property details for the properties in the search.
 
-        :return: str: The property URL.
+        :return: list: The property details.
         """
-        url = f"{self.url}/properties/{id}#/?channel=RES_{self.channel}"
-        response = requests.get(url)
-        return response.status_code
-
-
-if __name__ == "__main__":
-    rightmove = Rightmove(
-        buy_or_rent="buy",
-        location="London",
-        radius=1,
-        min_price=100000,
-        max_price=500000,
-        min_bedrooms=2,
-        max_bedrooms=3,
-        property_types=["flat"],
-        max_days_since_added=7,
-        include_sstc=False,
-        must_have=["garden", "parking"],
-        dont_show=["newHome", "retirement", "sharedOwnership"],
-    )
-    id = rightmove.search_properties_api()[0]
-    print(print(json.dumps(id, indent=4)))
+        urls = self.get_urls_for_properties_in_search()
+        data = asyncio.run(self.scrape_properties(urls))
+        return data
