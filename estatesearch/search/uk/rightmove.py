@@ -32,6 +32,7 @@ client = AsyncClient(
     timeout=30,
 )
 
+
 class Rightmove:
     """
     The Rightmove class is used to search for properties
@@ -248,8 +249,11 @@ class Rightmove:
 
         :return: list: The properties."""
         response = requests.get(self.search_url_api)
-        data = json.loads(response.text)["properties"]
-        return data
+        try:
+            data = json.loads(response.text)["properties"]
+            return data
+        except KeyError:
+            raise UserWarning("No properties found.")
 
     def get_urls_for_properties_in_search(self) -> List[str]:
         """
@@ -260,7 +264,9 @@ class Rightmove:
         data = self.search_properties_api()
         urls = []
         for property_data in data:
-            urls.append(f"https://www.rightmove.co.uk{property_data['propertyUrl']}")
+            urls.append(
+                f"https://www.rightmove.co.uk{property_data['propertyUrl']}"
+            )
         return urls
 
     @staticmethod
@@ -287,7 +293,9 @@ class Rightmove:
     def extract_property(response: Response) -> dict:
         """Extract property data from rightmove PAGE_MODEL javascript variable."""
         selector = Selector(response.text)
-        data = selector.xpath("//script[contains(.,'PAGE_MODEL = ')]/text()").get()
+        data = selector.xpath(
+            "//script[contains(.,'PAGE_MODEL = ')]/text()"
+        ).get()
         if not data:
             print(f"page {response.url} is not a property listing page")
             return
@@ -300,9 +308,11 @@ class Rightmove:
         properties = []
         for response in asyncio.as_completed(to_scrape):
             response = await response
-            properties.append(Rightmove.parse_property(Rightmove.extract_property(response)))
+            properties.append(
+                Rightmove.parse_property(Rightmove.extract_property(response))
+            )
         return properties
-    
+
     def get_properties_details(self) -> List[dict]:
         """
         Get the property details for the properties in the search.
