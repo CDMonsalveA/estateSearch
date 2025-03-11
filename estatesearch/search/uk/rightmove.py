@@ -247,8 +247,6 @@ class Rightmove:
         Search for properties using the API.
 
         :return: list: The properties."""
-
-        # Request URL
         response = requests.get(self.search_url_api)
         data = json.loads(response.text)["properties"]
         return data
