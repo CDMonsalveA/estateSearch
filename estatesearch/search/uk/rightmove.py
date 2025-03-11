@@ -110,26 +110,6 @@ class Rightmove:
                 "Default: 'buy'."
             )
 
-    def get_location_id_2(self):
-        """
-        Second method to get the location ID, accurate but slower and made
-        requests to other codes for larger areas.
-
-        Get the location ID from the
-        rightmove.co.uk/house-prices/[location].html
-        page. It is inserted into the script tag in the HTML.
-
-        :return: str: Type of location ID.
-        :return: str: The location ID.
-        """
-        search_url = f"{self.house_prices_url}{self.location}.html"
-        response = requests.get(search_url)
-        location_type = re.search(
-            r'"locationType":"(\w+)"', response.text
-        ).group(1)
-        location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
-        return location_type, location_id
-
     def get_location_id(self):
         """
         Get the location ID from the
