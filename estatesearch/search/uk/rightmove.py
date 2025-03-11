@@ -197,10 +197,6 @@ class Rightmove:
         """Requests the search URL and returns the response."""
         response = requests.get(self.search_url)
         return response
-        # Extract properties from the response even with a second page
-
-        # Return the properties
-        pass
 
     @property
     def search_url_api(self):
