@@ -13,8 +13,10 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import json
 import re
+import asyncio
 
 import requests
+from httpx import AsyncClient, Response
 
 
 class Rightmove:
