@@ -203,14 +203,12 @@ class TestRightmove(unittest.TestCase):
 
     def test_get_location_id_with_special_characters(self):
         pass
-    
+
     def test_get_location_id_for_empty_location(self):
         pass
 
     def test_search_url_for_unknown_parameters(self):
         pass
-
-
 
     def test_api_connection(self):
         """
@@ -321,7 +319,7 @@ class TestRightmove(unittest.TestCase):
             rightmove = Rightmove(**search._asdict())
             properties = rightmove.search_properties_api()
             self.assertTrue(len(properties) > 0)
-    
+
     def test_httpx_agent_connection(self):
         pass
 
@@ -336,5 +334,3 @@ class TestRightmove(unittest.TestCase):
 
     def test_get_properties_details(self):
         pass
-            
-        
