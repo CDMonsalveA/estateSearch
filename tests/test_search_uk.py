@@ -292,6 +292,7 @@ class TestRightmove(unittest.TestCase):
         for place in places:
             rightmove = Rightmove(location=place, radius=1)
             properties = rightmove.search_properties_api()
+            print(len(properties))
             self.assertTrue(len(properties) > 0)
 
     def test_search_url_api_properties_attributes(self):
