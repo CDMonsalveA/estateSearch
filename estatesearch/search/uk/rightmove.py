@@ -206,6 +206,7 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        PROPERTIES_PER_PAGE = 499
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -215,7 +216,7 @@ class Rightmove:
         search_url = (
             f"{self.api_url}"
             f"locationIdentifier={location_ident[0]}^{location_ident[1]}"
-            f"&numberOfPropertiesPerPage=1000"
+            f"&numberOfPropertiesPerPage={PROPERTIES_PER_PAGE}"
             f"&channel={self.channel}"
             f"&sortType=2"
             f"&index=0"
@@ -248,6 +249,7 @@ class Rightmove:
         Search for properties using the API.
 
         :return: list: The properties."""
+
         response = requests.get(self.search_url_api)
         try:
             data = json.loads(response.text)["properties"]
