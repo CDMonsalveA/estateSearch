@@ -251,6 +251,8 @@ class Rightmove:
         :return: list: The properties."""
 
         response = requests.get(self.search_url_api)
+
+        
         try:
             data = json.loads(response.text)["properties"]
             return data
