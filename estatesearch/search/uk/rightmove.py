@@ -251,8 +251,10 @@ class Rightmove:
         :return: list: The properties."""
 
         response = requests.get(self.search_url_api)
-        total_results = int(json.loads(response.text)["resultCount"].replace(",", ""))
-        print(f"Total results: {total_results}")        
+        total_results = int(
+            json.loads(response.text)["resultCount"].replace(",", "")
+        )
+
         try:
             data = json.loads(response.text)["properties"]
             return data
@@ -326,6 +328,7 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
+
 
 if __name__ == "__main__":
     rightmove = Rightmove(
