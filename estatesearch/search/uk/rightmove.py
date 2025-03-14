@@ -251,8 +251,8 @@ class Rightmove:
         :return: list: The properties."""
 
         response = requests.get(self.search_url_api)
-
-        
+        total_results = int(json.loads(response.text)["resultCount"])
+        print(f"Total results: {total_results}")        
         try:
             data = json.loads(response.text)["properties"]
             return data
@@ -326,3 +326,20 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
+
+if __name__ == "__main__":
+    rightmove = Rightmove(
+        buy_or_rent="buy",
+        location="London",
+        radius=0.5,
+        min_price=100000,
+        max_price=500000,
+        min_bedrooms=2,
+        max_bedrooms=3,
+        property_types=["flat"],
+        max_days_since_added=14,
+        include_sstc=False,
+        must_have=["garden", "parking"],
+        dont_show=["newHome", "retirement", "sharedOwnership"],
+    )
+    properties = rightmove.search_properties_api()
