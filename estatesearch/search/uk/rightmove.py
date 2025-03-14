@@ -254,7 +254,7 @@ class Rightmove:
         total_results = int(
             json.loads(response.text)["resultCount"].replace(",", "")
         )
-
+        print(f"Total results: {total_results}")
         try:
             data = json.loads(response.text)["properties"]
             return data
