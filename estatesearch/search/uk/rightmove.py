@@ -251,7 +251,7 @@ class Rightmove:
         :return: list: The properties."""
 
         response = requests.get(self.search_url_api)
-        total_results = int(json.loads(response.text)["resultCount"])
+        total_results = int(json.loads(response.text)["resultCount"].replace(",", ""))
         print(f"Total results: {total_results}")        
         try:
             data = json.loads(response.text)["properties"]
