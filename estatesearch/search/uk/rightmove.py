@@ -200,13 +200,13 @@ class Rightmove:
         return response
 
     @property
-    def search_url_api(self):
+    def search_url_api(self, properties_per_page=499):
         """
         Create a valid URL to search for properties using the API.
 
         :return: str: The search URL.
         """
-        PROPERTIES_PER_PAGE = 499
+        PROPERTIES_PER_PAGE = properties_per_page
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
