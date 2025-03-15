@@ -13,7 +13,9 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import asyncio
 import json
+import random
 import re
+import time
 from typing import List
 
 import requests
@@ -92,6 +94,7 @@ class Rightmove:
         self.include_sstc = include_sstc
         self.must_have = must_have
         self.dont_show = dont_show
+        self.properties_per_page = 499
         if location:
             self.location = location
         else:
@@ -200,13 +203,12 @@ class Rightmove:
         return response
 
     @property
-    def search_url_api(self, properties_per_page=499):
+    def search_url_api(self):
         """
         Create a valid URL to search for properties using the API.
 
         :return: str: The search URL.
         """
-        PROPERTIES_PER_PAGE = properties_per_page
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -216,10 +218,8 @@ class Rightmove:
         search_url = (
             f"{self.api_url}"
             f"locationIdentifier={location_ident[0]}^{location_ident[1]}"
-            f"&numberOfPropertiesPerPage={PROPERTIES_PER_PAGE}"
             f"&channel={self.channel}"
             f"&sortType=2"
-            f"&index=0"
         )
         if self.radius:
             search_url += f"&radius={self.radius}"
@@ -250,14 +250,54 @@ class Rightmove:
 
         :return: list: The properties."""
 
-        response = requests.get(self.search_url_api)
-        total_results = int(
-            json.loads(response.text)["resultCount"].replace(",", "")
-        )
-        print(f"Total results: {total_results}")
+        url = f"{self.search_url_api}&index=0&numberOfPropertiesPerPage={self.properties_per_page}"
+        response = requests.get(url)
         try:
-            data = json.loads(response.text)["properties"]
-            return data
+            total_results = int(
+                json.loads(response.text)["resultCount"].replace(",", "")
+            )
+            # print(f"total_results: {total_results}")
+            properties = json.loads(response.text)["properties"]
+
+            if total_results > self.properties_per_page:
+                API_LIMIT = 1247
+                for i in range(
+                    self.properties_per_page,
+                    total_results,
+                    self.properties_per_page,
+                ):
+                    # print("i", i)
+                    # stop = False
+                    lower_limit = i
+                    upper_limit = self.properties_per_page
+                    if i > API_LIMIT:
+                        break
+                    # if i + self.properties_per_page >= API_LIMIT:
+                    #     gap_until_limit = API_LIMIT - i
+                    #     lower_limit = i
+                    #     upper_limit = gap_until_limit
+                    #     print("gap_until_limit", gap_until_limit)
+                    # if i >= API_LIMIT:
+                    #     lower_limit = API_LIMIT
+                    #     upper_limit = self.properties_per_page
+                    #     print("i", i)
+                    #     stop = True
+                    url = f"{self.search_url_api}&index={lower_limit}&numberOfPropertiesPerPage={upper_limit}"
+                    # print(url)
+                    # print(f"getting properties {lower_limit} to {lower_limit + upper_limit}")
+                    response = requests.get(url)
+                    # print(f"# of properties: {len(json.loads(response.text)['properties'])}")
+                    properties += json.loads(response.text)["properties"]
+                    # if stop:
+                    #     break
+            # Check number of duplicates in id
+            # ids = [property["id"] for property in properties]
+            # duplicates = len(ids) - len(set(ids))
+            # if duplicates > 0:
+            #     print(f"Warning: {duplicates} duplicates found in the search results.")
+            if total_results != len(properties):
+                print(f"Warning: {total_results} total results but it was only possible to get {len(properties)} results.")
+            return properties
         except KeyError:
             raise UserWarning("No properties found.")
 
@@ -273,6 +313,8 @@ class Rightmove:
             urls.append(
                 f"https://www.rightmove.co.uk{property_data['propertyUrl']}"
             )
+        # get unique urls
+        urls = list(set(urls))
         return urls
 
     @staticmethod
@@ -333,16 +375,10 @@ class Rightmove:
 if __name__ == "__main__":
     rightmove = Rightmove(
         buy_or_rent="buy",
-        location="London",
+        location="kent",
         radius=0.5,
         min_price=100000,
         max_price=500000,
-        min_bedrooms=2,
-        max_bedrooms=3,
-        property_types=["flat"],
-        max_days_since_added=14,
-        include_sstc=False,
-        must_have=["garden", "parking"],
-        dont_show=["newHome", "retirement", "sharedOwnership"],
     )
     properties = rightmove.search_properties_api()
+    print(len(properties))
