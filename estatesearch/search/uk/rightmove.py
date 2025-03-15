@@ -14,11 +14,11 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 import asyncio
 import json
 from typing import List
+from urllib.parse import urlencode
 
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
-from urllib.parse import urlencode
 
 client = AsyncClient(
     headers={
