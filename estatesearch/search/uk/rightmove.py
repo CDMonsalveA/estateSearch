@@ -18,6 +18,7 @@ from typing import List
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
+from urllib.parse import urlencode
 
 client = AsyncClient(
     headers={
