@@ -252,54 +252,56 @@ class Rightmove:
 
         url = f"{self.search_url_api}&index=0&numberOfPropertiesPerPage={self.properties_per_page}"
         response = requests.get(url)
-        try:
-            total_results = int(
-                json.loads(response.text)["resultCount"].replace(",", "")
-            )
-            # print(f"total_results: {total_results}")
-            properties = json.loads(response.text)["properties"]
+        if response.status_code != 200:
+            print(f"No properties found for the search: {self.search_url_api}")
+            return []
+        total_results = int(
+            json.loads(response.text)["resultCount"].replace(",", "")
+        )
+        # print(f"total_results: {total_results}")
+        properties = json.loads(response.text)["properties"]
 
-            if total_results > self.properties_per_page:
-                API_LIMIT = 1247
-                for i in range(
-                    self.properties_per_page,
-                    total_results,
-                    self.properties_per_page,
-                ):
-                    # print("i", i)
-                    # stop = False
-                    lower_limit = i
-                    upper_limit = self.properties_per_page
-                    if i > API_LIMIT:
-                        break
-                    # if i + self.properties_per_page >= API_LIMIT:
-                    #     gap_until_limit = API_LIMIT - i
-                    #     lower_limit = i
-                    #     upper_limit = gap_until_limit
-                    #     print("gap_until_limit", gap_until_limit)
-                    # if i >= API_LIMIT:
-                    #     lower_limit = API_LIMIT
-                    #     upper_limit = self.properties_per_page
-                    #     print("i", i)
-                    #     stop = True
-                    url = f"{self.search_url_api}&index={lower_limit}&numberOfPropertiesPerPage={upper_limit}"
-                    # print(url)
-                    # print(f"getting properties {lower_limit} to {lower_limit + upper_limit}")
-                    response = requests.get(url)
-                    # print(f"# of properties: {len(json.loads(response.text)['properties'])}")
-                    properties += json.loads(response.text)["properties"]
-                    # if stop:
-                    #     break
-            # Check number of duplicates in id
-            # ids = [property["id"] for property in properties]
-            # duplicates = len(ids) - len(set(ids))
-            # if duplicates > 0:
-            #     print(f"Warning: {duplicates} duplicates found in the search results.")
-            if total_results != len(properties):
-                print(f"Warning: {total_results} total results but it was only possible to get {len(properties)} results.")
-            return properties
-        except KeyError:
-            raise UserWarning("No properties found.")
+        if total_results > self.properties_per_page:
+            API_LIMIT = 1247
+            for i in range(
+                self.properties_per_page,
+                total_results,
+                self.properties_per_page,
+            ):
+                # print("i", i)
+                # stop = False
+                lower_limit = i
+                upper_limit = self.properties_per_page
+                if i > API_LIMIT:
+                    break
+                # if i + self.properties_per_page >= API_LIMIT:
+                #     gap_until_limit = API_LIMIT - i
+                #     lower_limit = i
+                #     upper_limit = gap_until_limit
+                #     print("gap_until_limit", gap_until_limit)
+                # if i >= API_LIMIT:
+                #     lower_limit = API_LIMIT
+                #     upper_limit = self.properties_per_page
+                #     print("i", i)
+                #     stop = True
+                url = f"{self.search_url_api}&index={lower_limit}&numberOfPropertiesPerPage={upper_limit}"
+                # print(url)
+                # print(f"getting properties {lower_limit} to {lower_limit + upper_limit}")
+                response = requests.get(url)
+                # print(f"# of properties: {len(json.loads(response.text)['properties'])}")
+                properties += json.loads(response.text)["properties"]
+                # if stop:
+                #     break
+        # Check number of duplicates in id
+        # ids = [property["id"] for property in properties]
+        # duplicates = len(ids) - len(set(ids))
+        # if duplicates > 0:
+        #     print(f"Warning: {duplicates} duplicates found in the search results.")
+        if total_results != len(properties):
+            print(
+                f"Warning: {total_results} total results but it was only possible to get {len(properties)} results."
+            )
+        return properties
 
     def get_urls_for_properties_in_search(self) -> List[str]:
         """
