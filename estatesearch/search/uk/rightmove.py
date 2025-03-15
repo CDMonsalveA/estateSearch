@@ -297,9 +297,9 @@ class Rightmove:
         # duplicates = len(ids) - len(set(ids))
         # if duplicates > 0:
         #     print(f"Warning: {duplicates} duplicates found in the search results.")
-        if total_results != len(properties):
+        if total_results > len(properties):
             print(
-                f"Warning: {total_results} total results but it was only possible to get {len(properties)} results."
+                f"\nWarning: {total_results} total results but it was only possible to get {len(properties)} results."
             )
         return properties
 
