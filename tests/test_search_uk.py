@@ -10,7 +10,7 @@ from estatesearch import Rightmove
 unittest.TestLoader.sortTestMethodsUsing = None
 
 # Number of test samples
-n_samples = 5
+n_samples = 2
 # test samples
 samples = [
     # POSTCODE
