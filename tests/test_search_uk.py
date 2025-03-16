@@ -280,6 +280,7 @@ class TestRightmove(unittest.TestCase):
         places = sample(places, n_samples)
         for place in places:
             rightmove = Rightmove(location=place)
+            # print(rightmove.search_url_api)
             status_code = requests.get(rightmove.search_url_api).status_code
             self.assertEqual(status_code, 200)
 
