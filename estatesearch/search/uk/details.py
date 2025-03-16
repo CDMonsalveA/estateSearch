@@ -4,10 +4,12 @@ Definition of the parameters to be obtained from the web portals.
 
 from typing import NamedTuple
 
+
 class property_details(NamedTuple):
     """
     Named tuple to store the details of the property.
     """
+
     origin: str
     url: str
     id: str
@@ -22,6 +24,8 @@ class property_details(NamedTuple):
     description: str
     title: str
     price: str
+    priceType: str
+    price_currency: str
     price_sqft: float
     address: str
     latitude: float
