@@ -18,19 +18,19 @@ class property_details(NamedTuple):
     propertyPhrase: str
     description: str
     pageTitle: str
-    text: dict # description, PropertyPhrase, disclaimer, auctionFeesDisclaimer, auctionFeesDisclaimer, guidePriceDisclaimer, reservePriceDisclaimer, newHomesBrochure, pageTitle, shortDescription
+    text: dict  # description, PropertyPhrase, disclaimer, auctionFeesDisclaimer, auctionFeesDisclaimer, guidePriceDisclaimer, reservePriceDisclaimer, newHomesBrochure, pageTitle, shortDescription
     primaryPrice: str
     secondaryPrice: str
     displayPriceQualifier: str
     pricePerSqFt: str
-    address: str #displayAddress
+    address: str  # displayAddress
     postcode: str
     keyFeatures: list
-    images: dict #imageUrls, caption
+    images: dict  # imageUrls, caption
     broschures: dict
-    floorplans: str #url
-    video: str #url
-    sellerInfo: dict # customer
+    floorplans: str  # url
+    video: str  # url
+    sellerInfo: dict  # customer
     rooms: dict
     latitude: str
     longitude: str
@@ -62,7 +62,6 @@ class property_details(NamedTuple):
     affordableBuyingScheme: bool
     sharedOwnership: dict
     retirement: bool
-    
 
     councilTaxExempt: bool
     councilTaxIncluded: bool
@@ -73,18 +72,12 @@ class property_details(NamedTuple):
     councilTaxBand: str
     domesticRates: str
 
-    features: dict # electricity, broadband, water, sewerage, heating, accessibility, parking, garde, risks, obligations
+    features: dict  # electricity, broadband, water, sewerage, heating, accessibility, parking, garde, risks, obligations
 
     EPC: str
 
     isAuthenticated: bool
-    
+
     added: str
     auctionOnly: bool
     preOwned: str
-
-
-
-
-
-
