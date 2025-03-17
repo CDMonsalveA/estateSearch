@@ -13,7 +13,7 @@ class property_details(NamedTuple):
     origin: str
     url: str
     id: str
-    available: bool
+    published: bool
     archived: bool
     phone: str
     bedrooms: int
@@ -28,9 +28,12 @@ class property_details(NamedTuple):
     price_currency: str
     price_sqft: float
     address: str
+    postcode: str
+    country: str
     latitude: float
     longitude: float
-    tenancy: str
+    tenureType: str
+    yearsRemainingOnLease: int
     comercial: bool
     buildToRent: bool
     furnished: bool
