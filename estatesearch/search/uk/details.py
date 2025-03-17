@@ -15,39 +15,76 @@ class property_details(NamedTuple):
     id: str
     published: bool
     archived: bool
-    phone: str
+    propertyPhrase: str
+    description: str
+    pageTitle: str
+    text: dict # description, PropertyPhrase, disclaimer, auctionFeesDisclaimer, auctionFeesDisclaimer, guidePriceDisclaimer, reservePriceDisclaimer, newHomesBrochure, pageTitle, shortDescription
+    primaryPrice: str
+    secondaryPrice: str
+    displayPriceQualifier: str
+    pricePerSqFt: str
+    address: str #displayAddress
+    postcode: str
+    keyFeatures: list
+    images: dict #imageUrls, caption
+    broschures: dict
+    floorplans: str #url
+    video: str #url
+    sellerInfo: dict # customer
+    rooms: dict
+    latitude: str
+    longitude: str
+    pinType: str
+    nearestAirports: list
+    nearestStations: list
+    sizings: dict
+
+    epcGraphs: dict
     bedrooms: int
     bathrooms: int
-    type: str
-    property_type: str
+    transactionType: str
     tags: list
-    description: str
-    title: str
-    price: str
-    priceType: str
-    price_currency: str
-    price_sqft: float
-    address: str
-    postcode: str
-    country: str
-    latitude: float
-    longitude: float
+    listingHistory: dict
+
+    feesApply: bool
+
+    contactInfo: dict
+
+    lettings: dict
+
     tenureType: str
     yearsRemainingOnLease: int
+
+    propertyType: str
+    propertySubType: str
+    businessForSale: bool
     comercial: bool
-    buildToRent: bool
-    furnished: bool
-    features: dict
-    history: dict
-    photos: list
-    floorplans: list
-    agency: dict
-    industryAffiliations: list
-    nearest_airports: list
-    nearest_stations: list
-    sizings: list
-    brochures: list
-    transactionType: str
-    feesApply: bool
-    lettings: bool
-    livingCosts: dict
+    affordableBuyingScheme: bool
+    sharedOwnership: dict
+    retirement: bool
+    
+
+    councilTaxExempt: bool
+    councilTaxIncluded: bool
+    annualGroundRent: str
+    groundRentReviewPeriodInYears: int
+    groundRentPercentageIncrease: str
+    annualServiceCharge: str
+    councilTaxBand: str
+    domesticRates: str
+
+    features: dict # electricity, broadband, water, sewerage, heating, accessibility, parking, garde, risks, obligations
+
+    EPC: str
+
+    isAuthenticated: bool
+    
+    added: str
+    auctionOnly: bool
+    preOwned: str
+
+
+
+
+
+
