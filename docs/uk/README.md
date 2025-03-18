@@ -56,3 +56,18 @@ The data will be collected using web scraping techniques and APIs where availabl
 ## Step 2: Data Downloading
 
 The data will be downloaded from the sources listed above. The data will be stored in a database for further analysis.
+
+Proposed data management system:
+
+|Pros vs. Cons|JSON|SQLite|PostgreSQL|MongoDB|
+|---|---|---|---|---|
+|Pros|Easy to read and write, lightweight, no setup required|Lightweight, easy to set up, no external dependencies|Powerful, supports complex queries, good for large datasets|Flexible schema, good for unstructured data|
+|Cons|Not suitable for large datasets, no support for complex queries|Limited to small datasets, not suitable for complex queries|Requires setup and maintenance, more complex to use|Requires setup and maintenance, more complex to use|
+
+- [ ] JSON: Data will be stored in JSON format for easy readability and portability.
+- [ ] SQLite: Data will be stored in SQLite format for lightweight storage and easy setup. This is suitable for small datasets and simple queries.
+- [ ] PostgreSQL: Data will be stored in PostgreSQL format for powerful querying and support for large datasets. This is suitable for complex queries and large datasets.
+- [ ] MongoDB: Data will be stored in MongoDB format for flexible schema and support for unstructured data. This is suitable for large datasets and complex queries.
+- [ ] CSV: Data will be stored in CSV format for easy readability and portability. This is suitable for small datasets and simple queries.
+
+## Step 3: Data Processing
