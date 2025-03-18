@@ -20,6 +20,8 @@ import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
 
+from .details import PropertyDetails
+
 client = AsyncClient(
     headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
@@ -154,6 +156,7 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        # TODO: #8 change the way the url is created to improve readability
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -298,6 +301,7 @@ class Rightmove:
     @staticmethod
     def parse_property(data):
         """Parse data to only necessary fields."""
+
         return data
 
     @staticmethod

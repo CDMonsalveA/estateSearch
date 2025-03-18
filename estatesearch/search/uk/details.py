@@ -5,7 +5,7 @@ Definition of the parameters to be obtained from the web portals.
 from typing import NamedTuple
 
 
-class property_details(NamedTuple):
+class PropertyDetails(NamedTuple):
     """
     Named tuple to store the details of the property.
     """
