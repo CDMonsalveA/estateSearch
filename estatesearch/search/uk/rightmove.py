@@ -211,6 +211,7 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        # TODO: #9 change the way the url is created to improve readability
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -301,7 +302,7 @@ class Rightmove:
     @staticmethod
     def parse_property(data):
         """Parse data to only necessary fields."""
-
+        # TODO: #10 Parse the data to match the PropertyDetails class using jmespath
         return data
 
     @staticmethod
