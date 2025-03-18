@@ -1,4 +1,58 @@
 # UNITED KINGDOM
 
 [Home Professionals Docs](https://mirror-painter-56a.notion.site/20af153f59ff4fa5aa0afcfb0d6d05ce?v=f29c02a3f9df4338b4f69704a0611248)
+
 <!-- TODO: #2 Add main strategy for properties in the uk -->
+
+The following document outlines the main strategy for properties in the UK. It is a work in progress and will be updated as we refine our approach. The strategy is based on the estateSearch algorithm, which is designed to identify high-quality real estate opportunities in the UK market.
+
+## Step 1: Data Collection
+
+Collect data from various sources, including property listings, market trends, and demographic information.
+
+Here are some of the sources we will be using:
+
+- Property Portals:
+
+  - [ ] [Rightmove](https://www.rightmove.co.uk/)
+  - [ ] [Zoopla](https://www.zoopla.co.uk/)
+  - [ ] [OnTheMarket](https://www.onthemarket.com/)
+  - [ ] [PrimeLocation](https://www.primelocation.com/)
+  - [ ] [PropertyPal](https://www.propertypal.com/)
+  - [ ] [PropertyNews](https://www.propertynews.com/)
+  - [ ] [Nestoria](https://www.nestoria.co.uk/)
+
+- Auction Houses Websites:
+
+  - [ ] [Savills](https://www.savills.co.uk/auctions)
+  - [ ] [Allsop](https://www.allsop.co.uk/auctions)
+  - [ ] [Pugh & Co](https://www.pugh-auctions.com/)
+  - [ ] [BidX1](https://bidx1.com/)
+  - [ ] [Auction House](https://www.auctionhouse.co.uk/)
+  - [ ] [SVA Property Auctions](https://www.svaprop.com/)
+  - [ ] [Barnard Marcus](https://www.barnardmarcusauctions.co.uk/)
+  - [ ] [Clive Emson](https://www.cliveemson.co.uk/)
+  - [ ] [McHugh & Co](https://www.mchughandco.com/)
+  - [ ] [SDL Property Auctions](https://www.sdlauctions.co.uk/)
+  - [ ] [Auction House London](https://www.auctionhouselondon.co.uk/)
+  - [ ] [Auction House Scotland](https://www.auctionhousescotland.co.uk/)
+  - [ ] [Auction House Wales](https://www.auctionhousewales.co.uk/)
+  - [ ] [Auction House Northern Ireland](https://www.auctionhouseni.com/)
+  - [ ] [Auction House Ireland](https://www.auctionhouseireland.com/)
+
+- Market Data:
+
+  - [ ] [Land Registry](https://www.gov.uk/government/organisations/land-registry)
+  - [ ] [Office for National Statistics (ONS)](https://www.ons.gov.uk/)
+  - [ ] [UK House Price Index](https://www.gov.uk/government/collections/uk-house-price-index-reports)
+
+- Demographic Data:
+
+  - [ ] [UK Census Data](https://www.ons.gov.uk/census)
+  - [ ] [Local Authority Data](https://data.london.gov.uk/dataset/local-authority-data)
+
+The data will be collected using web scraping techniques and APIs where available. The data will be stored in a database for further analysis.
+
+## Step 2: Data Downloading
+
+The data will be downloaded from the sources listed above. The data will be stored in a database for further analysis.
