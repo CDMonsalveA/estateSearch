@@ -111,6 +111,7 @@ class Rightmove:
                 "Options:  'buy' or 'rent'.\n"
                 "Default: 'buy'."
             )
+        self.properties_details = None
 
     def get_location_id(self):
         """
@@ -347,6 +348,7 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
+    
 
 
 if __name__ == "__main__":
