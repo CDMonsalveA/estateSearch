@@ -14,8 +14,8 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 import asyncio
 import json
 from typing import List
-from urllib.parse import urlencode
 
+import jmespath
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
@@ -348,7 +348,6 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
-    
 
 
 if __name__ == "__main__":
