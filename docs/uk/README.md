@@ -149,3 +149,12 @@ Once the data is collected, it will be processed to extract relevant information
   - [ ] leaseExtensionCost: The lease extension cost of the property.
   <!-- Income -->
   - [ ] rentalIncome: The rental income of the property.
+
+### Extra Step: Legal Pack Analysis
+
+The legal pack analysis is a crucial step in the property analysis process. It involves reviewing the legal documents related to the property, including the title deeds, lease agreements, and any other relevant documents. This step is essential to ensure that there are no legal issues or complications associated with the property.
+
+At the moment, we are not able to automate this step. However, we will be working on automating this step in the future. In the meantime, we recommend that you review the legal documents carefully and seek legal advice if necessary.
+
+## Step 4: Data Analysis
+
