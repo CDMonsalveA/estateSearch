@@ -108,6 +108,10 @@ Once the data is collected, it will be processed to extract relevant information
 
   - [ ] images: The images of the property
   - [ ] floorPlan: The floor plan of the property
+  - [ ] video: The video of the property
+  - [ ] virtualTour: The virtual tour of the property
+  - [ ] 3DModel: The 3D model of the property
+  - [ ] EPC: The Energy Performance Certificate of the property
 
 - Market Related Data: Used to determine the market value of the property.
 
@@ -134,6 +138,7 @@ Once the data is collected, it will be processed to extract relevant information
   - [ ] solicitorFee: The solicitor fee of the property.
   - [ ] otherFees: The other fees of the property.
   <!-- Other Costs -->
+  - [ ] councilTax: The council tax of the property.
   - [ ] ServiceCharge: The service charge of the property.
   - [ ] groundRent: The ground rent of the property.
   - [ ] insuranceCost: The insurance cost of the property.
