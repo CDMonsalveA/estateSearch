@@ -71,3 +71,76 @@ Proposed data management system:
 - [ ] CSV: Data will be stored in CSV format for easy readability and portability. This is suitable for small datasets and simple queries.
 
 ## Step 3: Data Processing
+
+Once the data is collected, it will be processed to extract relevant information. The basic information needed for a property analysis includes:
+
+- Rearch Related Data: Used to determine duplicates and filter out irrelevant data or fraudulent listings.
+
+  - [ ] origin: The source of the data (e.g., Rightmove, Zoopla, etc.)
+  - [ ] dateOfExtraction: The date the data was extracted
+  - [ ] latitude: The latitude of the property location
+  - [ ] longitude: The longitude of the property location
+  - [ ] propertyId: The unique identifier for the property
+  - [ ] propertyName: The name of the property (e.g., "3 bedroom flat")
+  - [ ] metaData: Additional metadata about the property (e.g., number of bedrooms, bathrooms, etc.)
+
+- Property Related Data: Used to caracterize the property.
+
+  - [ ] propertyType: The type of property (e.g., flat, house, etc.)
+  - [ ] price: The price of the property
+  - [ ] address: The address of the property
+  - [ ] postcode: The postcode of the property
+  - [ ] description: The description of the property
+  - [ ] bedrooms: The number of bedrooms in the property
+  - [ ] bathrooms: The number of bathrooms in the property
+  - [ ] tenure: The tenure of the property (e.g., freehold, leasehold, etc.)
+  - [ ] yearsRemainingOnLease: The number of years remaining on the lease
+  - [ ] size: The size of the property (e.g., square feet, square meters, etc.)
+  - [ ] commercial: Whether the property is commercial or residential
+  - [ ] overATrade: Whether the property is over a trade
+  - [ ] newBuild: Whether the property is a new build
+  - [ ] retirement: Whether the property is for retirement
+  - [ ] nonStandardConstruction: Whether the property is of non-standard construction (e.g., timber frame, steel frame, concrete, etc.)
+  - [ ] councilState: whether the property is a council state
+  - [ ] distanceToSearchPoint: The distance of the property to the search point.
+
+- Media Related Data: Used to show the property and use computer vision.
+
+  - [ ] images: The images of the property
+  - [ ] floorPlan: The floor plan of the property
+
+- Market Related Data: Used to determine the market value of the property.
+
+  - [ ] marketComparables: List of comparable properties in the market
+  - [ ] marketPrices: Estimated market prices for the property
+  - [ ] marketTrends: Market trends for the property
+  - [ ] marketRentals: Rental prices for the property or similar properties
+  - [ ] marketForecast: Forecasted market trends for the property
+  - [ ] marketAnalysis: Analysis of the market for the property
+
+- Costs Related Data: Used to determine the costs of the property.
+
+  - [ ] purchasePrice: The purchase price of the property.
+  - [ ] comparablePrice: The comparable price of the property.
+  - [ ] bridgeOrFinanceCosts: The bridge or finance costs of the property.
+  - [ ] stampDutyCost: The stamp duty of the property.
+  - [ ] legalCosts: The legal costs of the property.
+  - [ ] mortgageCost: The mortgage cost of the property.
+  <!-- Fees -->
+  - [ ] financeFee: The finance fee of the property.
+  - [ ] financingCost: The financing cost of the property.
+  - [ ] auctioneerFee: The auctioneer fee of the property.
+  - [ ] sellersFee: The sellers fee of the property.
+  - [ ] solicitorFee: The solicitor fee of the property.
+  - [ ] otherFees: The other fees of the property.
+  <!-- Other Costs -->
+  - [ ] ServiceCharge: The service charge of the property.
+  - [ ] groundRent: The ground rent of the property.
+  - [ ] insuranceCost: The insurance cost of the property.
+  - [ ] maintenanceCost: The maintenance cost of the property.
+  - [ ] managementCost: The management cost of the property.
+  <!-- Other Costs to Add Value -->
+  - [ ] renovationCost: The renovation cost of the property.
+  - [ ] leaseExtensionCost: The lease extension cost of the property.
+  <!-- Income -->
+  - [ ] rentalIncome: The rental income of the property.
