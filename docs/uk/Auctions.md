@@ -2,8 +2,6 @@
 
 Auction Houses
 
-# Auction House London
-
 [Auction House London](https://www.auctionhouselondon.co.uk/)
 
 [Savills](https://www.notion.so/Savills-d2b94f2f82484168bbb7bef4fb6378fc?pvs=21)
