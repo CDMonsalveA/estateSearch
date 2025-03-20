@@ -157,4 +157,3 @@ The legal pack analysis is a crucial step in the property analysis process. It i
 At the moment, we are not able to automate this step. However, we will be working on automating this step in the future. In the meantime, we recommend that you review the legal documents carefully and seek legal advice if necessary.
 
 ## Step 4: Data Analysis
-
