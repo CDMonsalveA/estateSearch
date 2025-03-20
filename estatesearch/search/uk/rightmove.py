@@ -11,10 +11,26 @@ check out the website at: https://www.rightmove.co.uk/
 and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 """
 
+import asyncio
 import json
-import re
+from typing import List
+from urllib.parse import urlencode
 
 import requests
+from httpx import AsyncClient, Response
+from parsel import Selector
+
+client = AsyncClient(
+    headers={
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.9,lt;q=0.8,et;q=0.7,de;q=0.6",
+    },
+    follow_redirects=True,
+    http2=True,  # enable http2 to reduce block chance
+    timeout=30,
+)
 
 
 class Rightmove:
@@ -76,6 +92,7 @@ class Rightmove:
         self.include_sstc = include_sstc
         self.must_have = must_have
         self.dont_show = dont_show
+        self.properties_per_page = 499
         if location:
             self.location = location
         else:
@@ -94,26 +111,6 @@ class Rightmove:
                 "Options:  'buy' or 'rent'.\n"
                 "Default: 'buy'."
             )
-
-    def get_location_id_2(self):
-        """
-        Second method to get the location ID, accurate but slower and made
-        requests to other codes for larger areas.
-
-        Get the location ID from the
-        rightmove.co.uk/house-prices/[location].html
-        page. It is inserted into the script tag in the HTML.
-
-        :return: str: Type of location ID.
-        :return: str: The location ID.
-        """
-        search_url = f"{self.house_prices_url}{self.location}.html"
-        response = requests.get(search_url)
-        location_type = re.search(
-            r'"locationType":"(\w+)"', response.text
-        ).group(1)
-        location_id = re.search(r'"locationId":(\d+)', response.text).group(1)
-        return location_type, location_id
 
     def get_location_id(self):
         """
@@ -199,14 +196,9 @@ class Rightmove:
         return search_url
 
     def search_properties(self):
-
-        # Request URL
+        """Requests the search URL and returns the response."""
         response = requests.get(self.search_url)
         return response
-        # Extract properties from the response even with a second page
-
-        # Return the properties
-        pass
 
     @property
     def search_url_api(self):
@@ -224,10 +216,8 @@ class Rightmove:
         search_url = (
             f"{self.api_url}"
             f"locationIdentifier={location_ident[0]}^{location_ident[1]}"
-            f"&numberOfPropertiesPerPage=1000"
             f"&channel={self.channel}"
             f"&sortType=2"
-            f"&index=0"
         )
         if self.radius:
             search_url += f"&radius={self.radius}"
@@ -258,45 +248,114 @@ class Rightmove:
 
         :return: list: The properties."""
 
-        # Request URL
-        response = requests.get(self.search_url_api)
-        data = json.loads(response.text)["properties"]
+        url = f"{self.search_url_api}&index=0&numberOfPropertiesPerPage={self.properties_per_page}"
+        response = requests.get(url)
+        if response.status_code != 200:
+            print(f"No properties found for the search: {self.search_url_api}")
+            return []
+        total_results = int(
+            json.loads(response.text)["resultCount"].replace(",", "")
+        )
+        properties = json.loads(response.text)["properties"]
+
+        if total_results > self.properties_per_page:
+            API_LIMIT = 1247
+            for i in range(
+                self.properties_per_page,
+                total_results,
+                self.properties_per_page,
+            ):
+
+                lower_limit = i
+                upper_limit = self.properties_per_page
+                if i > API_LIMIT:
+                    break
+                url = f"{self.search_url_api}&index={lower_limit}&numberOfPropertiesPerPage={upper_limit}"
+                response = requests.get(url)
+                properties += json.loads(response.text)["properties"]
+        if total_results > len(properties):
+            print(
+                f"\nWarning: {total_results} total results but it was only possible to get {len(properties)} results."
+            )
+        return properties
+
+    def get_urls_for_properties_in_search(self) -> List[str]:
+        """
+        Get the URLs for the properties in the search.
+
+        :return: list: The URLs for the properties.
+        """
+        data = self.search_properties_api()
+        urls = []
+        for property_data in data:
+            urls.append(
+                f"https://www.rightmove.co.uk{property_data['propertyUrl']}"
+            )
+        urls = list(set(urls))
+        return urls
+
+    @staticmethod
+    def parse_property(data):
+        """Parse data to only necessary fields."""
         return data
 
-    def get_properties(self):
-        """
-        Get the properties from the search URL.
+    @staticmethod
+    def find_json_objects(text: str, decoder=json.JSONDecoder()):
+        """Find JSON objects in text, and generate decoded JSON data."""
+        pos = 0
+        while True:
+            match = text.find("{", pos)
+            if match == -1:
+                break
+            try:
+                result, index = decoder.raw_decode(text[match:])
+                yield result
+                pos = match + index
+            except ValueError:
+                pos = match + 1
 
-        :return: list: The properties.
-        """
-        pass
+    @staticmethod
+    def extract_property(response: Response) -> dict:
+        """Extract property data from rightmove PAGE_MODEL javascript variable."""
+        selector = Selector(response.text)
+        data = selector.xpath(
+            "//script[contains(.,'PAGE_MODEL = ')]/text()"
+        ).get()
+        if not data:
+            print(f"page {response.url} is not a property listing page")
+            return
+        json_data = list(Rightmove.find_json_objects(data))[0]
+        return json_data["propertyData"]
 
-    def get_property_details(self, id):
-        """
-        Get the property URL from the search URL.
-        https://www.rightmove.co.uk/properties/[id]#/?channel=RES_BUY
+    async def scrape_properties(self, urls: List[str]) -> List[dict]:
+        """Scrape Rightmove property listings for property data"""
+        to_scrape = [client.get(url) for url in urls]
+        properties = []
+        for response in asyncio.as_completed(to_scrape):
+            response = await response
+            properties.append(
+                Rightmove.parse_property(Rightmove.extract_property(response))
+            )
+        return properties
 
-        :return: str: The property URL.
+    def get_properties_details(self) -> List[dict]:
         """
-        url = f"{self.url}/properties/{id}#/?channel=RES_{self.channel}"
-        response = requests.get(url)
-        return response.status_code
+        Get the property details for the properties in the search.
+
+        :return: list: The property details.
+        """
+        urls = self.get_urls_for_properties_in_search()
+        data = asyncio.run(self.scrape_properties(urls))
+        return data
 
 
 if __name__ == "__main__":
     rightmove = Rightmove(
         buy_or_rent="buy",
-        location="London",
-        radius=1,
+        location="kent",
+        radius=0.5,
         min_price=100000,
         max_price=500000,
-        min_bedrooms=2,
-        max_bedrooms=3,
-        property_types=["flat"],
-        max_days_since_added=7,
-        include_sstc=False,
-        must_have=["garden", "parking"],
-        dont_show=["newHome", "retirement", "sharedOwnership"],
     )
-    id = rightmove.search_properties_api()[0]
-    print(print(json.dumps(id, indent=4)))
+    properties = rightmove.search_properties_api()
+    print(len(properties))
