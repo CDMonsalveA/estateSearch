@@ -347,15 +347,3 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
-
-
-if __name__ == "__main__":
-    rightmove = Rightmove(
-        buy_or_rent="buy",
-        location="kent",
-        radius=0.5,
-        min_price=100000,
-        max_price=500000,
-    )
-    properties = rightmove.search_properties_api()
-    print(len(properties))
