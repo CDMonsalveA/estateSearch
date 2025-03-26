@@ -74,7 +74,7 @@ Proposed data management system:
 
 Once the data is collected, it will be processed to extract relevant information. The basic information needed for a property analysis includes:
 
-- Rearch Related Data: Used to determine duplicates and filter out irrelevant data or fraudulent listings.
+- Search Related Data: Used to determine duplicates and filter out irrelevant data or fraudulent listings.
 
   - [ ] origin: The source of the data (e.g., Rightmove, Zoopla, etc.)
   - [ ] dateOfExtraction: The date the data was extracted
