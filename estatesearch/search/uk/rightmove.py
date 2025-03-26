@@ -13,12 +13,22 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import asyncio
 import json
+import logging
 from typing import List
 from urllib.parse import urlencode
 
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
+
+from estatesearch.search.searchConfig import SearchParams
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 client = AsyncClient(
     headers={
@@ -40,18 +50,7 @@ class Rightmove:
 
     def __init__(
         self,
-        buy_or_rent=("buy" or "rent"),
-        location: str = None,
-        radius: float = None,
-        min_price: float = None,
-        max_price: float = None,
-        min_bedrooms: int = None,
-        max_bedrooms: int = None,
-        property_types: list = None,
-        max_days_since_added: int = None,
-        include_sstc: bool = False,
-        must_have: list = None,
-        dont_show: list = None,
+        SearchParams: SearchParams = SearchParams(),
     ):
         """
         Initialize the Rightmove class with the following parameters:
@@ -82,6 +81,20 @@ class Rightmove:
         self.url = "https://www.rightmove.co.uk/"
         self.api_url = "https://www.rightmove.co.uk/api/_search?"
         self.house_prices_url = "https://www.rightmove.co.uk/house-prices/"
+
+        radius = SearchParams.radius
+        buy_or_rent = SearchParams.buy_rent
+        location = SearchParams.location
+        min_price = SearchParams.min_price
+        max_price = SearchParams.max_price
+        min_bedrooms = SearchParams.min_bedrooms
+        max_bedrooms = SearchParams.max_bedrooms
+        property_types = SearchParams.property_type
+        max_days_since_added = SearchParams.max_days_since_added
+        include_sstc = SearchParams.include_sstc
+        must_have = SearchParams.must_have
+        dont_show = SearchParams.dont_show
+
         self.radius = radius
         self.min_price = min_price
         self.max_price = max_price
