@@ -4,9 +4,27 @@ This module controls the flow of the application, including loading configuratio
 searching for properties, and saving results.
 It serves as the entry point for the application and coordinates the various components.
 """
+
+import datetime
 import json
-from estatesearch.search.searchConfig import SearchParams
+import logging
+import pathlib
+
 from estatesearch.search.search import SearchManager
+from estatesearch.search.searchConfig import SearchParams
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("estate_search.log"),
+        logging.StreamHandler(),
+    ],
+)
+
+logger = logging.getLogger(__name__)
+
 
 def main():
     """
@@ -15,15 +33,30 @@ def main():
     including loading configuration, searching for properties, and saving results.
     """
     # Search / Fetch the data
-    params = SearchParams(location="London", buy_rent="buy", max_days_since_added=1,
-                          max_price=500000,)
-    search_results = SearchManager(params)
-
+    params = SearchParams(
+        location="London",
+        buy_rent="buy",
+        max_days_since_added=1,
+        max_price=500000,
+        max_bedrooms=2,
+        min_bedrooms=2,
+    )
+    logger.info(f"Searching for properties in {params.location}...")
+    logger.info(f"Search parameters: {params}")
+    search_results = json.loads(SearchManager(params))
+    logger.info(
+        f"Search completed. Found {sum(len(v['properties']) for v in search_results['SearchResults'].values())} properties."
+    )
     # Download / Save the data
-    # Save the search results to a JSON file
-    json_results = json.loads(search_results)
-    with open("search_results.json", "w") as f:
-        json.dump(json_results, f, indent=4)
+
+    logger.info("Saving search results to JSON...")
+    file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
+    logger.info(f"Saving results to {file_name}...")
+    pathlib.Path("results").mkdir(parents=True, exist_ok=True)
+    with open(f"results/{file_name}", "w") as f:
+        json.dump(search_results, f, indent=4)
+    logger.info(f"results saved at results/{file_name}")
+
     # Process / Clean, Filter, Transform
     # Analyze / Visualize, Report, Statistics, Machine Learning, etc.
     # Present / UI, Web, API, etc.
