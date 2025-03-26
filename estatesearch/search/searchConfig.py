@@ -27,7 +27,6 @@ class SearchParams(NamedTuple):
         dont_show (str): A list of features that the property must not have.
         verbose (int): Verbosity level for logging (0: no output, 1: some output, 2: detailed output).
     """
-
     country = "uk"
     location: str = "London"
     buy_rent: str = "buy"  # "buy" or "rent"

@@ -1,7 +1,6 @@
 import json
 import unittest
 from random import sample
-from typing import NamedTuple
 
 import requests
 
@@ -121,7 +120,6 @@ rightmove_api_keys = [
 
 search_samples = [
     SearchParams(
-        country="uk",
         location="london",
         buy_rent="buy",
         radius=1,
