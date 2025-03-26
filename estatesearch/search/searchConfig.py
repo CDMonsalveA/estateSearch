@@ -2,7 +2,7 @@
 This module defines the parameters and settings used for searching properties.
 """
 
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 
 class SearchParams(NamedTuple):
@@ -39,9 +39,17 @@ class SearchParams(NamedTuple):
     max_price: int = 10000000  # int(0,inf)>min_price||None
     min_bedrooms: int = 0  # int(0,5)<max_bedrooms||studio=0 || None
     max_bedrooms: int = 10  # int(0,5)>min_bedrooms||studio=0 || None
-    max_days_since_added: int = 14  # 1, 3, 7, 14
-    include_sstc: bool = True
-    must_have: list = []
-    dont_show: list = []  #
+    max_days_since_added: int = 14  # 1, 3, 7, 14 and only theese
+    include_sstc: bool = True  # True or False
+    must_have: list = []  # [] || any combination of only these:
+    # garden, parking, newHome, retirement, sharedOwnership, auction
+    dont_show: list = []  # [] || any combination of only these:
+    # newHome, retirement, sharedOwnership, furnishTypes
+    # keywords: str = ""  # str of keywords, separated by commas
     verbose: int = 0
     # 0: no output, 1: some output, 2: detailed output, 3: debug output
+
+    def __str__(self):
+        """Return a string representation of the search parameters."""
+        return f"Search properties in {self.country} for {self.buy_rent}\n \
+                in {self.location}"
