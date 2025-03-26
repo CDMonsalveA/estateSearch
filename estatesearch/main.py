@@ -13,7 +13,6 @@ def main():
     including loading configuration, searching for properties, and saving results.
     """
     # Search / Fetch the data
-    
     # Download / Save the data
     # Process / Clean, Filter, Transform
     # Analyze / Visualize, Report, Statistics, Machine Learning, etc.
