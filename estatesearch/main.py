@@ -18,7 +18,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("estate_search.log"),
+        logging.FileHandler(pathlib.Path("logs") / f"app_{datetime.datetime.now().date()}.log"),
         logging.StreamHandler(),
     ],
 )
@@ -34,7 +34,7 @@ def main():
     """
     # Search / Fetch the data
     params = SearchParams(
-        location="London",
+        location="Kent",
         buy_rent="buy",
         max_days_since_added=1,
         max_price=500000,
@@ -53,7 +53,7 @@ def main():
     file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
     logger.info(f"Saving results to {file_name}...")
     pathlib.Path("results").mkdir(parents=True, exist_ok=True)
-    with open(f"results/{file_name}", "w") as f:
+    with open(pathlib.Path("results") / file_name, "w") as f:
         json.dump(search_results, f, indent=4)
     logger.info(f"results saved at results/{file_name}")
 

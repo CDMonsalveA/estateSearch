@@ -9,16 +9,16 @@ from estatesearch.search.searchConfig import SearchParams
 from estatesearch.search.uk.rightmove import Rightmove
 
 # Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format="%(asctime)s - %(levelname)s - %(message)s",
+# )
 logger = logging.getLogger(__name__)
 
 
 def SearchManager(
     params: SearchParams,
-) -> Dict[str, List]:
+) -> str:
     """
     Search manager for the estate search application.
 
