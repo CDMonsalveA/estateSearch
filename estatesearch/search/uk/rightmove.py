@@ -13,22 +13,13 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import asyncio
 import json
-import logging
-from typing import List
-from urllib.parse import urlencode
+from typing import Any, List
 
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
 
 from estatesearch.search.searchConfig import SearchParams
-
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-logger = logging.getLogger(__name__)
 
 client = AsyncClient(
     headers={
@@ -255,7 +246,7 @@ class Rightmove:
         search_url += "&viewType=LIST&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
         return search_url
 
-    def search_properties_api(self):
+    def search_properties_api(self) -> List[dict[str, Any]]:
         """
         Search for properties using the API.
 
@@ -299,7 +290,7 @@ class Rightmove:
         :return: list: The URLs for the properties.
         """
         data = self.search_properties_api()
-        urls = []
+        urls: List[str] = []
         for property_data in data:
             urls.append(
                 f"https://www.rightmove.co.uk{property_data['propertyUrl']}"
@@ -336,7 +327,7 @@ class Rightmove:
         ).get()
         if not data:
             print(f"page {response.url} is not a property listing page")
-            return
+            return {}
         json_data = list(Rightmove.find_json_objects(data))[0]
         return json_data["propertyData"]
 
