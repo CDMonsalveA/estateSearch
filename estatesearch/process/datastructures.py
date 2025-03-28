@@ -1,11 +1,13 @@
 """Collection of data structures used in the estate search application."""
 
-from typing import Any, Dict, List, NamedTuple, Optional, Tuple
+from typing import Any, Dict, List, NamedTuple, Optional
+
 
 class Media(NamedTuple):
     """
     Media information about a property.
     """
+
     images: List[str]
     floorPlans: Optional[List[str]]
     videos: Optional[List[str]]
@@ -15,14 +17,16 @@ class Media(NamedTuple):
     brochures: Optional[List[str]]
     maps: Optional[List[str]]
 
-    
+
 class MarketData(NamedTuple):
     """
     Market data information about a property.
     """
+
     marketComparables: List[Dict[str, Any]]
     rightmoveEstimate: Optional[float]
     soldPrices: Optional[List[Dict[str, int]]]
+
 
 class PropertyInfo(NamedTuple):
     """
@@ -98,11 +102,5 @@ class PropertyInfo(NamedTuple):
 
     rentalIncome: Optional[float]
     rentalIncomeType: Optional[str]
-    
 
     isGoodDeal: Optional[bool]
-
-
-    
-
-    
