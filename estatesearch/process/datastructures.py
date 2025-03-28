@@ -48,7 +48,7 @@ class PropertyInfo(NamedTuple):
     description: str
     bedrooms: int
     bathrooms: int
-    tenure: str
+    tenure: Optional[str]
     yearsRemainingOnLease: Optional[int]
     size: Optional[float]
     sizeUnit: Optional[str]

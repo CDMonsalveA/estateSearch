@@ -1,7 +1,5 @@
 """Module to save the search results to a JSON file."""
 
-import json
-
 
 def save_to_json():
     pass
