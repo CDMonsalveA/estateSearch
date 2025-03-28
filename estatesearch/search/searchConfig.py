@@ -2,7 +2,7 @@
 This module defines the parameters and settings used for searching properties.
 """
 
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, Optional
 
 
 class SearchParams(NamedTuple):
@@ -31,22 +31,26 @@ class SearchParams(NamedTuple):
     country = "uk"  # str of a country, (e.g. "uk", "co")
     location: str = "London"  # str of a location, postcode, or train station
     buy_rent: str = "buy"  # "buy" or "rent"
-    radius: float = 1  # in miles
-    property_type: list = []
+    radius: Optional[float] = None  # in miles
+    property_type: Optional[str] = None
     # [] || any combination of only these:
     # bungalow, detached, flat, land, park-home, semi-detached, terraced
-    min_price: int = 0  # int(0,inf)<max_price||None
-    max_price: int = 10000000  # int(0,inf)>min_price||None
-    min_bedrooms: int = 0  # int(0,5)<max_bedrooms||studio=0 || None
-    max_bedrooms: int = 10  # int(0,5)>min_bedrooms||studio=0 || None
-    max_days_since_added: int = 14  # 1, 3, 7, 14 and only theese
-    include_sstc: bool = True  # True or False
-    must_have: list = []  # [] || any combination of only these:
+    min_price: Optional[int] = None  # int(0,inf)<=max_price||None
+    max_price: Optional[int] = None  # int(0,inf)>=min_price||None
+    min_bedrooms: Optional[int] = (
+        None  # int(0,5)<=max_bedrooms||studio=0 || None
+    )
+    max_bedrooms: Optional[int] = (
+        None  # int(0,5)>=min_bedrooms||studio=0 || None
+    )
+    max_days_since_added: Optional[int] = None  # 1, 3, 7, 14 and only theese
+    include_sstc: Optional[bool] = None  # True or False
+    must_have: Optional[list] = None  # [] || any combination of only these:
     # garden, parking, newHome, retirement, sharedOwnership, auction
-    dont_show: list = []  # [] || any combination of only these:
+    dont_show: Optional[list] = None  # [] || any combination of only these:
     # newHome, retirement, sharedOwnership, furnishTypes
     # keywords: str = ""  # str of keywords, separated by commas
-    verbose: int = 0
+    verbose: Optional[int] = 0  # int(0,3) verbosity level
     # 0: no output, 1: some output, 2: detailed output, 3: debug output
 
     def __str__(self):
