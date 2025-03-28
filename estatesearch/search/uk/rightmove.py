@@ -15,11 +15,14 @@ import asyncio
 import json
 from typing import Any, List
 
+import jmespath
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
 
 from estatesearch.search.searchConfig import SearchParams
+
+from .details import PropertyDetails
 
 client = AsyncClient(
     headers={
@@ -115,6 +118,7 @@ class Rightmove:
                 "Options:  'buy' or 'rent'.\n"
                 "Default: 'buy'."
             )
+        self.properties_details = None
 
     def get_location_id(self):
         """
@@ -157,6 +161,7 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        # TODO: #8 change the way the url is created to improve readability
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -211,6 +216,7 @@ class Rightmove:
 
         :return: str: The search URL.
         """
+        # TODO: #9 change the way the url is created to improve readability
         location_ident = self.get_location_id()
         property_types = (
             "%2C".join(self.property_types) if self.property_types else None
@@ -301,6 +307,7 @@ class Rightmove:
     @staticmethod
     def parse_property(data):
         """Parse data to only necessary fields."""
+        # TODO: #10 Parse the data to match the PropertyDetails class using jmespath
         return data
 
     @staticmethod
