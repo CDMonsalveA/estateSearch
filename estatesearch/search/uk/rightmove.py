@@ -13,12 +13,14 @@ and the robots.txt file at: https://www.rightmove.co.uk/robots.txt
 
 import asyncio
 import json
-from typing import List
+from typing import Any, List
 
 import jmespath
 import requests
 from httpx import AsyncClient, Response
 from parsel import Selector
+
+from estatesearch.search.searchConfig import SearchParams
 
 from .details import PropertyDetails
 
@@ -42,18 +44,7 @@ class Rightmove:
 
     def __init__(
         self,
-        buy_or_rent=("buy" or "rent"),
-        location: str = None,
-        radius: float = None,
-        min_price: float = None,
-        max_price: float = None,
-        min_bedrooms: int = None,
-        max_bedrooms: int = None,
-        property_types: list = None,
-        max_days_since_added: int = None,
-        include_sstc: bool = False,
-        must_have: list = None,
-        dont_show: list = None,
+        SearchParams: SearchParams = SearchParams(),
     ):
         """
         Initialize the Rightmove class with the following parameters:
@@ -84,6 +75,20 @@ class Rightmove:
         self.url = "https://www.rightmove.co.uk/"
         self.api_url = "https://www.rightmove.co.uk/api/_search?"
         self.house_prices_url = "https://www.rightmove.co.uk/house-prices/"
+
+        radius = SearchParams.radius
+        buy_or_rent = SearchParams.buy_rent
+        location = SearchParams.location
+        min_price = SearchParams.min_price
+        max_price = SearchParams.max_price
+        min_bedrooms = SearchParams.min_bedrooms
+        max_bedrooms = SearchParams.max_bedrooms
+        property_types = SearchParams.property_type
+        max_days_since_added = SearchParams.max_days_since_added
+        include_sstc = SearchParams.include_sstc
+        must_have = SearchParams.must_have
+        dont_show = SearchParams.dont_show
+
         self.radius = radius
         self.min_price = min_price
         self.max_price = max_price
@@ -247,7 +252,7 @@ class Rightmove:
         search_url += "&viewType=LIST&areaSizeUnit=sqft&currencyCode=GBP&isFetching=false&viewport="
         return search_url
 
-    def search_properties_api(self):
+    def search_properties_api(self) -> List[dict[str, Any]]:
         """
         Search for properties using the API.
 
@@ -291,7 +296,7 @@ class Rightmove:
         :return: list: The URLs for the properties.
         """
         data = self.search_properties_api()
-        urls = []
+        urls: List[str] = []
         for property_data in data:
             urls.append(
                 f"https://www.rightmove.co.uk{property_data['propertyUrl']}"
@@ -329,7 +334,7 @@ class Rightmove:
         ).get()
         if not data:
             print(f"page {response.url} is not a property listing page")
-            return
+            return {}
         json_data = list(Rightmove.find_json_objects(data))[0]
         return json_data["propertyData"]
 
@@ -353,15 +358,3 @@ class Rightmove:
         urls = self.get_urls_for_properties_in_search()
         data = asyncio.run(self.scrape_properties(urls))
         return data
-
-
-if __name__ == "__main__":
-    rightmove = Rightmove(
-        buy_or_rent="buy",
-        location="kent",
-        radius=0.5,
-        min_price=100000,
-        max_price=500000,
-    )
-    properties = rightmove.search_properties_api()
-    print(len(properties))

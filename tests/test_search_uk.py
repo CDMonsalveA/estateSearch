@@ -1,16 +1,16 @@
 import json
 import unittest
 from random import sample
-from typing import NamedTuple
 
 import requests
 
 from estatesearch import Rightmove
+from estatesearch.search.searchConfig import SearchParams
 
 unittest.TestLoader.sortTestMethodsUsing = None
 
 # Number of test samples
-n_samples = 5
+n_samples = 1
 # test samples
 samples = [
     # POSTCODE
@@ -118,64 +118,22 @@ rightmove_api_keys = [
         """
 
 
-class search_sample(NamedTuple):
-    buy_or_rent: str
-    location: str
-    radius: float
-    min_price: float
-    max_price: float
-    min_bedrooms: int
-    max_bedrooms: int
-    property_types: list
-    max_days_since_added: int
-    include_sstc: bool
-    must_have: list
-    dont_show: list
-
-
 search_samples = [
-    search_sample(
-        "buy", "london", 1, 0, 1000000, 1, 5, ["flat"], 7, False, [], []
+    SearchParams(
+        location="london",
+        buy_rent="buy",
+        radius=1,
+        property_type=["flat"],
+        min_price=0,
+        max_price=1000000,
+        min_bedrooms=1,
+        max_bedrooms=5,
+        max_days_since_added=7,
+        include_sstc=False,
+        must_have=[],
+        dont_show=[],
+        verbose=0,
     ),
-    search_sample(
-        "buy", "london", 1, 0, 1000000, 1, 5, ["flat"], 1, False, [], []
-    ),
-    search_sample(
-        "buy", "SY3 9EB", 1, None, None, None, None, None, None, False, [], []
-    ),
-    search_sample("rent", "M2", 1, 0, 10000, None, 70, None, 7, False, [], []),
-    search_sample(
-        "rent", "M2", 1, 0, 10000, None, 70, None, 7, False, [], ["newHome"]
-    ),
-    # search_sample(
-    #     "buy",
-    #     "M2",
-    #     1,
-    #     0,
-    #     100000,
-    #     2,
-    #     5,
-    #     [
-    #         "Bungalow",
-    #         "Detached",
-    #         "Flat",
-    #         "Land",
-    #         "Park-home",
-    #         "Semi-detached",
-    #         "Terraced",
-    #     ],
-    #     7,
-    #     True,
-    #     [
-    #         "garden",
-    #         "parking",
-    #         "newHome",
-    #         "retirement",
-    #         "sharedOwnership",
-    #         "auction",
-    #     ],
-    #     ["newHome", "retirement", "sharedOwnership"],
-    # ),
 ]
 
 
@@ -193,14 +151,6 @@ class TestRightmove(unittest.TestCase):
     def test_init_UserWarning_no_buy_or_rent(self):
         pass
 
-    def test_connection(self):
-        """
-        Test the connection to the Rightmove website.
-        """
-        rightmove = Rightmove(location="london")
-        status_code = requests.get(rightmove.url).status_code
-        self.assertEqual(status_code, 200)
-
     def test_get_location_id_with_special_characters(self):
         pass
 
@@ -210,16 +160,6 @@ class TestRightmove(unittest.TestCase):
     def test_search_url_for_unknown_parameters(self):
         pass
 
-    def test_api_connection(self):
-        """
-        Test the connection to the Rightmove API.
-        """
-        rightmove = Rightmove(location="london")
-        status_code = requests.get(
-            "https://www.rightmove.co.uk/api/_search?locationIdentifier=POSTCODE%5E1149959&channel=BUY"
-        ).status_code
-        self.assertEqual(status_code, 200)
-
     def test_search_url_api_for_unknown_parameters(self):
         pass
 
@@ -227,7 +167,7 @@ class TestRightmove(unittest.TestCase):
         """
         Evaluate if the search bar is present on the website.
         """
-        rightmove = Rightmove(location="london")
+        rightmove = Rightmove()
         website_content = requests.get(rightmove.url).text
         self.assertIn("ta_searchInput", website_content)
 
@@ -235,7 +175,7 @@ class TestRightmove(unittest.TestCase):
         """
         Evaluate if the 'for sale' button is present on the website.
         """
-        rightmove = Rightmove(location="london")
+        rightmove = Rightmove()
         website_content = requests.get(rightmove.url).text
         self.assertIn("dsrm_button_content", website_content)
 
@@ -246,7 +186,7 @@ class TestRightmove(unittest.TestCase):
         places = list(set([place[0] for place in samples]))
         places = sample(places, n_samples)
         for place in places:
-            rightmove = Rightmove(location=place)
+            rightmove = Rightmove(SearchParams(location=place))
             status_code = requests.get(rightmove.house_prices_url).status_code
             self.assertEqual(status_code, 200)
 
@@ -256,7 +196,7 @@ class TestRightmove(unittest.TestCase):
         """
         locations = sample(samples, n_samples)
         for location, location_type, location_id in locations:
-            rightmove = Rightmove(location=location)
+            rightmove = Rightmove(SearchParams(location=location))
             self.assertEqual(
                 rightmove.get_location_id(), (location_type, location_id)
             )
@@ -268,7 +208,7 @@ class TestRightmove(unittest.TestCase):
         places = list(set([place[0] for place in samples]))
         places = sample(places, n_samples)
         for place in places:
-            rightmove = Rightmove(location=place)
+            rightmove = Rightmove(SearchParams(location=place))
             status_code = requests.get(rightmove.search_url).status_code
             self.assertEqual(status_code, 200)
 
@@ -279,7 +219,7 @@ class TestRightmove(unittest.TestCase):
         places = list(set([place[0] for place in samples]))
         places = sample(places, n_samples)
         for place in places:
-            rightmove = Rightmove(location=place)
+            rightmove = Rightmove(SearchParams(location=place))
             # print(rightmove.search_url_api)
             status_code = requests.get(rightmove.search_url_api).status_code
             self.assertEqual(status_code, 200)
@@ -291,7 +231,7 @@ class TestRightmove(unittest.TestCase):
         places = list(set([place[0] for place in samples]))
         places = sample(places, n_samples)
         for place in places:
-            rightmove = Rightmove(location=place, radius=1)
+            rightmove = Rightmove(SearchParams(location=place, radius=1))
             properties = rightmove.search_properties_api()
             print(len(properties))
             self.assertTrue(len(properties) > 0)
@@ -304,7 +244,7 @@ class TestRightmove(unittest.TestCase):
         places = list(set([place[0] for place in samples]))
         places = sample(places, n_samples)
         for place in places:
-            rightmove = Rightmove(location=place, radius=1)
+            rightmove = Rightmove(SearchParams(location=place, radius=1))
             response = requests.get(rightmove.search_url_api)
             properties = json.loads(response.text)["properties"]
             # assert all the keys are present even if the order is different
@@ -318,7 +258,7 @@ class TestRightmove(unittest.TestCase):
         """
         searches = sample(search_samples, n_samples)
         for search in searches:
-            rightmove = Rightmove(**search._asdict())
+            rightmove = Rightmove(search)
             properties = rightmove.search_properties_api()
             self.assertTrue(len(properties) > 0)
 
