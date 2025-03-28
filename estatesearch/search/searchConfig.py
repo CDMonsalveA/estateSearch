@@ -2,7 +2,7 @@
 This module defines the parameters and settings used for searching properties.
 """
 
-from typing import Any, NamedTuple, Optional
+from typing import NamedTuple, Optional
 
 
 class SearchParams(NamedTuple):
@@ -10,8 +10,8 @@ class SearchParams(NamedTuple):
     Search parameters for the estate search application.
 
     Attributes:
-        country (str): The country to search in (e.g., "uk", "co")
-        buy_rent (str): Indicates whether the search is for buying or renting.
+        country (str): The country code from the following list: "uk", "co".
+        buy_rent (str): If searching for "buy" or "rent" properties.
         location (str): The location to search for properties.
         radius (float): The search radius in miles.
         property_type (str): The type of property (e.g., house, flat).
@@ -45,9 +45,13 @@ class SearchParams(NamedTuple):
     )
     max_days_since_added: Optional[int] = None  # 1, 3, 7, 14 and only theese
     include_sstc: Optional[bool] = None  # True or False
-    must_have: Optional[list] = None  # [] || any combination of only these:
+    must_have: Optional[list[str]] = (
+        None  # [] || any combination of only these:
+    )
     # garden, parking, newHome, retirement, sharedOwnership, auction
-    dont_show: Optional[list] = None  # [] || any combination of only these:
+    dont_show: Optional[list[str]] = (
+        None  # [] || any combination of only these:
+    )
     # newHome, retirement, sharedOwnership, furnishTypes
     # keywords: str = ""  # str of keywords, separated by commas
     verbose: Optional[int] = 0  # int(0,3) verbosity level
