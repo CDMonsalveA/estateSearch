@@ -19,5 +19,5 @@
         "--line-length",
         "80"
     ],
-    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.typeCheckingMode": "standard",
 }
