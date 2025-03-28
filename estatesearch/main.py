@@ -16,9 +16,14 @@ from estatesearch.search.searchConfig import SearchParams
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
+    filename=pathlib.Path("logs") / f"app_{datetime.datetime.now().date()}.log",
+    filemode="a",
+    datefmt="%Y-%m-%d %H:%M:%S",
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(pathlib.Path("logs") / f"app_{datetime.datetime.now().date()}.log"),
+        logging.FileHandler(
+            pathlib.Path("logs") / f"app_{datetime.datetime.now().date()}.log"
+        ),
         logging.StreamHandler(),
     ],
 )
@@ -34,10 +39,10 @@ def main():
     """
     # Search / Fetch the data
     params = SearchParams(
-        location="Kent",
-        buy_rent="buy",
+        location="London",
+        buy_rent="rent",
+        max_days_since_added=1,
         radius=0,
-
     )
     logger.info(f"Searching for properties in {params.location}...")
     logger.info(f"Search parameters: {params}")
@@ -61,6 +66,9 @@ def main():
     # Select / Filter, Sort, Rank, etc.
     # Export / Save, Share, Publish, etc.
 
+    logger.info("Processing completed.")
+    logger.info("Exiting the application.")
+    logger.addHandler(logging.StreamHandler())
     pass
 
 
