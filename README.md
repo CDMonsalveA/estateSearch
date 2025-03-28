@@ -17,6 +17,10 @@ The steps needed to collect and analyze real estate data using this package are 
 - [ ] **Automate**: Automate the process of collecting and analyzing real estate data.
 - [ ] **Integrate**: Integrate the package with other tools and services.
 
+## Documentation
+
+The documentation for this package is available at [docs/README.md](docs/README.md).
+
 ## Contributing
 
 If you would like to contribute to this project, please see [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
