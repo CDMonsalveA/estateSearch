@@ -36,10 +36,8 @@ def main():
     params = SearchParams(
         location="Kent",
         buy_rent="buy",
-        max_days_since_added=1,
-        max_price=500000,
-        max_bedrooms=2,
-        min_bedrooms=2,
+        radius=0,
+
     )
     logger.info(f"Searching for properties in {params.location}...")
     logger.info(f"Search parameters: {params}")
