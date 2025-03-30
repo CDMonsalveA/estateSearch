@@ -26,16 +26,8 @@ The steps needed to collect and analyze real estate data using this package are 
 
   - [ ] **Clean**: Clean the data to remove any irrelevant information.
   - [ ] **Transform**: Transform the data to make it more usable.
-  - [ ] **Enrich**: Enrich the data with additional information.
-  - [ ] **Normalize**: Normalize the data to make it more consistent.
-  - [ ] **Aggregate**: Aggregate the data to make it more manageable.
   - [ ] **Filter**: Filter the data to remove any unwanted information.
   - [ ] **Sort**: Sort the data to make it more readable.
-  - [ ] **Group**: Group the data to make it more organized.
-  - [ ] **Summarize**: Summarize the data to make it more concise.
-  - [ ] **Use LLM**: Large Language Model to generate new data.
-  - [ ] **Use GAN**: Generative Adversarial Network to make new data.
-  - [ ] **Use NN**: To understand the images.
 
 - [ ] **Analyze**: Analyze the data to identify the best properties.
 
