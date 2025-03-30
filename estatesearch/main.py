@@ -68,7 +68,7 @@ def main():
 
     logger.info("Processing completed.")
     logger.info("Exiting the application.")
-    logger.addHandler(logging.StreamHandler())
+
     pass
 
 

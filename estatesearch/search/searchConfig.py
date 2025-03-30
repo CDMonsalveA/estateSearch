@@ -14,17 +14,19 @@ class SearchParams(NamedTuple):
         buy_rent (str): If searching for "buy" or "rent" properties.
         location (str): The location to search for properties.
         radius (float): The search radius in miles.
-        property_type (str): The type of property (e.g., house, flat).
-        min_price (int): The minimum price of the property.
-        max_price (int): The maximum price of the property.
-        min_bedrooms (int): The minimum number of bedrooms.
-        max_bedrooms (int): The maximum number of bedrooms.
-        min_bathrooms (int): The minimum number of bathrooms.
-        max_bathrooms (int): The maximum number of bathrooms.
-        max_days_since_added (int): The maximum number of days since added.
+        property_type (list[str]): A list of property types to search for.
+            Any combination of the following:
+            "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
+        min_price (int): The minimum price of the property. allows 0, inf or None, always 0<=min_price<=max_price.
+        max_price (int): The maximum price of the property. allows 0, inf or None, always 0<=min_price<=max_price.
+        min_bedrooms (int): The minimum number of bedrooms. allows from 0 (studio) to 5 or None, always 0<=min_bedrooms<=max_bedrooms.
+        max_bedrooms (int): The maximum number of bedrooms. allows from 0 (studio) to 5 or None, always 0<=min_bedrooms<=max_bedrooms.
+        max_days_since_added (int): The maximum number of days since added. Only allows 1, 3, 7, 14.
         include_sstc (bool): Whether to include properties marked as SSTC (Sold Subject To Contract).
-        must_have (str): A list of features that the property must have.
-        dont_show (str): A list of features that the property must not have.
+        must_have (list[str]): A list of features that the property must have. Only allows any combination of the following:
+            "garden", "parking", "newHome", "retirement", "sharedOwnership", "auction".
+        dont_show (list[str]): A list of features that the property must not have. Only allows any combination of the following:
+            "newHome", "retirement", "sharedOwnership", "furnishTypes".
         verbose (int): Verbosity level for logging (0: no output, 1: some output, 2: detailed output).
     """
 
@@ -32,7 +34,7 @@ class SearchParams(NamedTuple):
     location: str = "London"  # str of a location, postcode, or train station
     buy_rent: str = "buy"  # "buy" or "rent"
     radius: Optional[float] = None  # in miles
-    property_type: Optional[str] = None
+    property_type: Optional[list[str]] = None
     # [] || any combination of only these:
     # bungalow, detached, flat, land, park-home, semi-detached, terraced
     min_price: Optional[int] = None  # int(0,inf)<=max_price||None
