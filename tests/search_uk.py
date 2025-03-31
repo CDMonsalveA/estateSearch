@@ -6,8 +6,7 @@ import requests
 
 from estatesearch import Rightmove
 from estatesearch.search.searchConfig import SearchParams
-
-unittest.TestLoader.sortTestMethodsUsing = None
+from data.rightmove_samples import location_ids_examples
 
 # Number of test samples
 n_samples = 1
@@ -23,7 +22,6 @@ samples = [
     ("CR0-5NS", "POSTCODE", "184365"),
     # AREA
     ("london", "REGION", "87490"),  # 93917 for greater london
-    # TODO: #1 check the london area
     ("birmingham", "REGION", "162"),
     ("manchester", "REGION", "904"),
     ("liverpool", "REGION", "813"),

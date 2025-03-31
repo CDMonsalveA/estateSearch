@@ -57,6 +57,7 @@ class SearchParams(NamedTuple):
     # newHome, retirement, sharedOwnership, furnishTypes
     # keywords: str = ""  # str of keywords, separated by commas
     verbose: Optional[int] = 0  # int(0,3) verbosity level
+    limit: Optional[int] = None  # int(0,inf) limit of properties to return
     # 0: no output, 1: some output, 2: detailed output, 3: debug output
 
     def __str__(self):
