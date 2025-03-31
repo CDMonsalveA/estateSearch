@@ -73,7 +73,6 @@ class UKSearchEngines(unittest.TestCase):
         """
         Test the API keys for Rightmove.
         """
-        logger.debug("\n")
         for search in searches:
             logger.debug(f"Testing location: {search.location}")
             rightmove = Rightmove(search)
@@ -89,7 +88,6 @@ class UKSearchEngines(unittest.TestCase):
         """
         Test the SearchManager function.
         """
-        logger.info("\n")
         search = SearchParams(location="London", limit=10)
         search_manager = SearchManager(search)
         self.assertIsInstance(search_manager, str, "SearchManager is not a string.")
