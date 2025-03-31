@@ -99,6 +99,8 @@ class Rightmove:
         self.include_sstc = include_sstc
         self.must_have = must_have
         self.dont_show = dont_show
+        self.limit = SearchParams.limit
+        self.verbose = SearchParams.verbose
         self.properties_per_page = 499
         if location:
             self.location = location
@@ -356,5 +358,10 @@ class Rightmove:
         :return: list: The property details.
         """
         urls = self.get_urls_for_properties_in_search()
+        if self.limit:
+            urls = urls[: self.limit]
+        if not urls:
+            print(f"No properties found for the search: {self.search_url_api}")
+
         data = asyncio.run(self.scrape_properties(urls))
         return data
