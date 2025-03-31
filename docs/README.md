@@ -1,5 +1,7 @@
 # Real Estate Data Collection and Analysis Package
 
+This package is designed to collect and analyze real estate data from various sources. It provides a set of tools and functions to search for properties, download data, process and analyze the data, and visualize the results. The package is built using Python and is designed to be easy to use and flexible.
+
 ## Functionality
 
 The steps needed to collect and analyze real estate data using this package are as follows:
