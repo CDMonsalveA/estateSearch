@@ -46,7 +46,7 @@ def main():
     )
     logger.info(f"Searching for properties in {params.location}...")
     logger.info(f"Search parameters: {params}")
-    search_results = json.loads(SearchManager(params))
+    search_results = json.loads(SearchManager(params).search())
     logger.info(
         f"Search completed. Found {sum(len(v['properties']) for v in search_results['SearchResults'].values())} properties."
     )
