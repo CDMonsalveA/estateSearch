@@ -9,9 +9,11 @@ import datetime
 import json
 import logging
 import pathlib
-
+# Search
 from estatesearch.search.search import SearchManager
 from estatesearch.search.searchConfig import SearchParams
+# Download / Save
+from estatesearch.download.download import DownloadManager
 
 # Configure logging
 logging.basicConfig(
@@ -33,7 +35,7 @@ def main():
     """
     # Search / Fetch the data
     params = SearchParams(
-        location="London",
+        location="Kent",
         buy_rent="rent",
         max_days_since_added=1,
         radius=0,
@@ -46,13 +48,19 @@ def main():
     )
     # Download / Save the data
 
-    logger.info("Saving search results to JSON...")
+    # logger.info("Saving search results to JSON...")
+    # file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
+    # logger.info(f"Saving results to {file_name}...")
+    # pathlib.Path("results").mkdir(parents=True, exist_ok=True)
+    # with open(pathlib.Path("results") / file_name, "w") as f:
+    #     json.dump(search_results, f, indent=4)
+    # logger.info(f"results saved at results/{file_name}")
     file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
-    logger.info(f"Saving results to {file_name}...")
-    pathlib.Path("results").mkdir(parents=True, exist_ok=True)
-    with open(pathlib.Path("results") / file_name, "w") as f:
-        json.dump(search_results, f, indent=4)
-    logger.info(f"results saved at results/{file_name}")
+    DownloadManager(search_results=search_results, filename=file_name, filepath="results").to_json()
+
+                    
+
+
 
     # Process / Clean, Filter, Transform
     # Analyze / Visualize, Report, Statistics, Machine Learning, etc.

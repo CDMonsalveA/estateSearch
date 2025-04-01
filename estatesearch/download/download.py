@@ -18,7 +18,7 @@ class DownloadManager:
 
     def __init__(
         self,
-        search_results,
+        search_results: dict,
         filename: str = f"{datetime.now().date}.json",
         filepath: str = "results",
     ) -> None:
@@ -34,7 +34,7 @@ class DownloadManager:
         self.results_dir = pathlib.Path(filepath)
         self.results_dir.mkdir(parents=True, exist_ok=True)
 
-    def to_json(self, filename=f"{datetime.now().date}.json") -> None:
+    def to_json(self) -> None:
         """
         Save the search results to a JSON file.
 
@@ -42,7 +42,6 @@ class DownloadManager:
             filename (str): The name of the file to save the results to.
             If not provided, the default filename will be used.
         """
-        self.filename = pathlib.Path(filename)
         file_path = self.results_dir / self.filename
         logger.info(f"Saving search results to {file_path}...")
         file_path.parent.mkdir(parents=True, exist_ok=True)
