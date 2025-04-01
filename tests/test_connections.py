@@ -2,9 +2,10 @@
 
 import json
 import logging
-import unittest
-import time
 import random
+import time
+import unittest
+from typing import Any
 
 import requests
 from data.rightmove_samples import (
@@ -62,7 +63,9 @@ class UKSearchEngines(unittest.TestCase):
         Test the get_location_id method.
         """
         for location in location_ids_examples:
-            rightmove = Rightmove(SearchParams(location=location.searchText, radius=2))
+            rightmove = Rightmove(
+                SearchParams(location=location.searchText, radius=2)
+            )
             self.assertEqual(
                 rightmove.get_location_id(),
                 (location.locationType, location.locationID),
@@ -77,22 +80,30 @@ class UKSearchEngines(unittest.TestCase):
             logger.debug(f"Testing location: {search.location}")
             rightmove = Rightmove(search)
             response = requests.get(rightmove.search_url_api)
-            self.assertEqual(response.status_code, 200, "API keys not reachable.")
+            self.assertEqual(
+                response.status_code, 200, "API keys not reachable."
+            )
             properties = json.loads(response.text)["properties"]
             self.assertEqual(
                 sorted(list(properties[0].keys())),
-                sorted(rightmove_api_keys), "API keys mismatch."
+                sorted(rightmove_api_keys),
+                "API keys mismatch.",
             )
-    
+
     def test_SearchManager(self):
         """
         Test the SearchManager function.
         """
         search = SearchParams(location="London", limit=10)
         search_manager = SearchManager(search)
-        self.assertIsInstance(search_manager, str, "SearchManager is not a string.")
-        search_results = json.loads(search_manager)
-        self.assertIn("SearchResults", search_results, "SearchResults not found.")
+        search_results = search_manager.search()
+        self.assertIsInstance(
+            search_results, str, "SearchManager is not a string."
+        )
+        search_results = json.loads(search_results)
+        self.assertIn(
+            "SearchResults", search_results, "SearchResults not found."
+        )
         self.assertIn("SearchParams", search_results, "SearchParams not found.")
         self.assertIn("SearchDate", search_results, "SearchDate not found.")
         self.assertIn("Version", search_results, "Version not found.")
@@ -100,5 +111,14 @@ class UKSearchEngines(unittest.TestCase):
             len(search_results["SearchResults"]) > 0, "SearchResults is empty."
         )
 
-
-            
+        # search = SearchParams(location="London", limit=10)
+        # search_manager = SearchManager(search)
+        # self.assertIsInstance(search_manager, str, "SearchManager is not a string.")
+        # search_results = json.loads(search_manager)
+        # self.assertIn("SearchResults", search_results, "SearchResults not found.")
+        # self.assertIn("SearchParams", search_results, "SearchParams not found.")
+        # self.assertIn("SearchDate", search_results, "SearchDate not found.")
+        # self.assertIn("Version", search_results, "Version not found.")
+        # self.assertTrue(
+        #     len(search_results["SearchResults"]) > 0, "SearchResults is empty."
+        # )
