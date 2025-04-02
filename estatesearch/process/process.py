@@ -31,8 +31,7 @@ class DataProcessor:
         self.register_path = Path(self.stm_dir) / "registered_files.txt"
         self.registered_files = []
 
-        self.stm_data = None
-        self.ltm_data = None
+        self.data = None
 
     def read_json(self, file_path) -> dict:
         """Read a JSON file and return the data."""
@@ -86,7 +85,7 @@ class DataProcessor:
             file for file in stm_files if file.name not in registered_files
         ]
         return unread_files
-    
+
     def ltm_unread_files_list(self) -> list:
         """Get the list of unread files."""
         ltm_files = self.ltm_files_list()
@@ -95,5 +94,3 @@ class DataProcessor:
             file for file in ltm_files if file.name not in registered_files
         ]
         return unread_files
-    
-    
