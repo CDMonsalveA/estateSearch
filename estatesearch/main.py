@@ -9,11 +9,13 @@ import datetime
 import json
 import logging
 import pathlib
+
+# Download / Save
+from estatesearch.download.download import DownloadManager
+
 # Search
 from estatesearch.search.search import SearchManager
 from estatesearch.search.searchConfig import SearchParams
-# Download / Save
-from estatesearch.download.download import DownloadManager
 
 # Configure logging
 logging.basicConfig(
@@ -47,20 +49,10 @@ def main():
         f"Search completed. Found {sum(len(v['properties']) for v in search_results['SearchResults'].values())} properties."
     )
     # Download / Save the data
-
-    # logger.info("Saving search results to JSON...")
-    # file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
-    # logger.info(f"Saving results to {file_name}...")
-    # pathlib.Path("results").mkdir(parents=True, exist_ok=True)
-    # with open(pathlib.Path("results") / file_name, "w") as f:
-    #     json.dump(search_results, f, indent=4)
-    # logger.info(f"results saved at results/{file_name}")
     file_name = f"search_results_{params.location}_{params.buy_rent}_{datetime.datetime.now().date()}.json"
-    DownloadManager(search_results=search_results, filename=file_name, filepath="results").to_json()
-
-                    
-
-
+    DownloadManager(
+        search_results=search_results, filename=file_name, filepath="results"
+    ).to_json()
 
     # Process / Clean, Filter, Transform
     # Analyze / Visualize, Report, Statistics, Machine Learning, etc.

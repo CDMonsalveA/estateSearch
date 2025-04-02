@@ -28,7 +28,7 @@ class DownloadManager:
         Args:
             search_results (dict): The search results to be downloaded.
         """
-
+        logger.info("Initializing DownloadManager...")
         self.search_results = search_results
         self.filename = filename
         self.results_dir = pathlib.Path(filepath)
