@@ -53,7 +53,7 @@ class TestDownloadManager(unittest.TestCase):
         download_manager = DownloadManager(
             self.search_results, self.filename, self.filepath
         )
-        download_manager.to_json(self.filename)
+        download_manager.to_json()
         # Check if the file was created
 
         test_file = pathlib.Path(self.filepath) / self.filename
