@@ -110,15 +110,3 @@ class UKSearchEngines(unittest.TestCase):
         self.assertTrue(
             len(search_results["SearchResults"]) > 0, "SearchResults is empty."
         )
-
-        # search = SearchParams(location="London", limit=10)
-        # search_manager = SearchManager(search)
-        # self.assertIsInstance(search_manager, str, "SearchManager is not a string.")
-        # search_results = json.loads(search_manager)
-        # self.assertIn("SearchResults", search_results, "SearchResults not found.")
-        # self.assertIn("SearchParams", search_results, "SearchParams not found.")
-        # self.assertIn("SearchDate", search_results, "SearchDate not found.")
-        # self.assertIn("Version", search_results, "Version not found.")
-        # self.assertTrue(
-        #     len(search_results["SearchResults"]) > 0, "SearchResults is empty."
-        # )
