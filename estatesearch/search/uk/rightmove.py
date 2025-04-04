@@ -33,7 +33,7 @@ client = AsyncClient(
     },
     follow_redirects=True,
     http2=True,  # enable http2 to reduce block chance
-    timeout=30,
+    timeout=200,
 )
 
 
