@@ -1,1 +1,0 @@
-<!-- TODO: #6 #5 Create a Contributing policy -->
