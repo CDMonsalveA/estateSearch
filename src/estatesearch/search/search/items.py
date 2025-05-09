@@ -12,4 +12,5 @@ class SearchItem(scrapy.Item):
     pass
 
 class PropertyItem(scrapy.Item):
+    
     pass

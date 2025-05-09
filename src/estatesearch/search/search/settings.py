@@ -9,7 +9,7 @@
 
 BOT_NAME = "search"
 
-SPIDER_MODULES = ["search.spiders", "search.spiders.uk"]
+SPIDER_MODULES = ["search.spiders"]
 NEWSPIDER_MODULE = "search.spiders"
 
 
