@@ -3,8 +3,7 @@ from urllib.parse import urlencode
 
 import requests
 import scrapy
-import scrapy.utils
-import scrapy.utils.response
+
 
 
 class RightmoveSpider(scrapy.Spider):
@@ -17,7 +16,7 @@ class RightmoveSpider(scrapy.Spider):
     search_location: str = "London"  # Location to search for properties
     search_radius: float = 0  # Radius of the search in miles
     search_property_type: list[str] | None = (
-        None  # A list of any from "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
+        ["bungalow", "detached", "flat"]  # A list of any from "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
     )
     search_min_price: int | None = None  # Minimum price of the property
     search_max_price: int | None = None  # Maximum price of the property
@@ -47,9 +46,27 @@ class RightmoveSpider(scrapy.Spider):
     API_LIMIT: int = 1247  # Maximum lower index for the API request
 
     def parse(self, response):
-        api_url = self.search_url()
-        # return the raw response from the API
-        yield {"api": requests.get(api_url).text}
+        api_url = self.search_url() + f"&index=0&numberOfPropertiesPerPage={self.API_PROPERTIES_PER_PAGE}"
+        response = json.loads(requests.get(api_url).text)
+        total_results = int(response["resultCount"].replace(",", ""))
+
+        properties = response["properties"]
+        if total_results > self.API_PROPERTIES_PER_PAGE:
+            for i in range(self.API_PROPERTIES_PER_PAGE, total_results, self.API_PROPERTIES_PER_PAGE):
+                if i > self.API_LIMIT:
+                    break
+                lower_index = i
+                offset = self.API_PROPERTIES_PER_PAGE
+                api_url = self.search_url() + f"&index={lower_index}&numberOfPropertiesPerPage={offset}"
+                properties += json.loads(requests.get(api_url).text)["properties"]
+        
+        self.log(f"Total results: {total_results}, Properties fetched: {len(properties)}")
+        for property in properties:
+            item = {}
+            for key, value in property.items():
+                item[key] = value
+            yield item
+                
 
 
     # ---- Functions that help with the search process ---
@@ -83,7 +100,7 @@ class RightmoveSpider(scrapy.Spider):
             k: v for k, v in search_params.items() if v is not None
         }
         # Encode the search parameters
-
+        # List are joined with %2C
         encoded_params = urlencode(search_params, doseq=True)
         # Construct the search URL
         return f"{self.API_BASE_URL}{encoded_params}"
