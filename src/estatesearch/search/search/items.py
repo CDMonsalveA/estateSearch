@@ -34,7 +34,6 @@ class PropertyItem(scrapy.Item):
     auction = scrapy.Field()  # auction
     feesApply = scrapy.Field()  # feesApply
     displaySize = scrapy.Field()  # displaySize
-    propertyUrl = scrapy.Field()  # propertyUrl
     firstVisibleDate = scrapy.Field()  # firstVisibleDate
     propertyTypeFullDescription = scrapy.Field()  # propertyTypeFullDescription
     isRecent = scrapy.Field()  # isRecent
@@ -43,7 +42,7 @@ class PropertyItem(scrapy.Item):
     status = scrapy.Field()  # .status .published
     price_displayPriceQualifier = scrapy.Field()
     brochure_url = scrapy.Field()  # brochures > url -- first
-    epcGRAPH = scrapy.Field()  # epcGraph
+    epcGraph = scrapy.Field()  # epcGraph
     feesApply = scrapy.Field()  # feesApply
     lettings = scrapy.Field()  # lettings
     tenure_type = scrapy.Field()  # tenure > ternureType
