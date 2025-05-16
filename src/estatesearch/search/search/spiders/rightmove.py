@@ -98,25 +98,66 @@ class RightmoveSpider(scrapy.Spider):
             property_item = PropertyItem()
             image_item = PropertyImageItem()
             location_item = PropertyLocationItem()
-            self.assignBasicInfo(property_data, property_item, image_item)
+            room_item = PropertyRoomItem()
+            nearest_station_item = PropertyNearestStationItem()
+            nearest_airport_item = PropertyNearestAirportItem()
+            living_cost_item = PropertyLivingCostItem()
+            feature_item = PropertyFeatureItem()
+            self.assignBasicInfo(
+                property_data,
+                property_item,
+                image_item,
+                location_item,
+                room_item,
+                nearest_station_item,
+                nearest_airport_item,
+                living_cost_item,
+                feature_item,
+            )
 
             yield scrapy.Request(
                 url=property_item["url"],
                 callback=self.parse_property,
                 errback=self.parse_property_error,
-                meta={"property_item": property_item, "image_item": image_item},
+                meta={
+                    "property_item": property_item,
+                    "image_item": image_item,
+                    "location_item": location_item,
+                    "room_item": room_item,
+                    "nearest_station_item": nearest_station_item,
+                    "nearest_airport_item": nearest_airport_item,
+                    "living_cost_item": living_cost_item,
+                    "feature_item": feature_item,
+                },
             )
 
     async def parse_property(self, response):
         property_item = response.meta["property_item"]
         image_item = response.meta["image_item"]
+        location_item = response.meta["location_item"]
+        room_item = response.meta["room_item"]
+        nearest_station_item = response.meta["nearest_station_item"]
+        nearest_airport_item = response.meta["nearest_airport_item"]
+        living_cost_item = response.meta["living_cost_item"]
+        feature_item = response.meta["feature_item"]
+
         data = response.xpath(
             "//script[contains(.,'PAGE_MODEL = ')]/text()"
         ).get()
         # Extract the JSON data from the script tag
         data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
         # Assign the data to the propertyData
-        self.assignAdvancedInfo(data, property_item, image_item)
+        self.assignAdvancedInfo(
+            data,
+            property_item,
+            image_item,
+            location_item,
+            room_item,
+            nearest_station_item,
+            nearest_airport_item,
+            living_cost_item,
+            feature_item,
+        )
 
         yield property_item
         yield image_item
@@ -195,7 +236,20 @@ class RightmoveSpider(scrapy.Spider):
         location = location.lower()
         return location
 
-    def assignBasicInfo(self, property_data, property_item, image_item):
+    # ------ Functions to improve readability ------
+    def assignBasicInfo(
+        self,
+        property_data,
+        property_item,
+        image_item,
+        location_item,
+        room_item,
+        nearest_station_item,
+        nearest_airport_item,
+        living_cost_item,
+        feature_item,
+    ):
+
         property_item["source"] = self.name
         property_item["url"] = (
             "https://www.rightmove.co.uk" + property_data["propertyUrl"]
@@ -251,7 +305,19 @@ class RightmoveSpider(scrapy.Spider):
                 image_item["caption"] = image["caption"]
                 image_item["type"] = "search"
 
-    def assignAdvancedInfo(self, data, property_item, image_item):
+    def assignAdvancedInfo(
+        self,
+        data,
+        property_item,
+        image_item,
+        location_item,
+        room_item,
+        nearest_station_item,
+        nearest_airport_item,
+        living_cost_item,
+        feature_item,
+    ):
+
         property_item["status"] = data["propertyData"].get("status")
         property_item["price_displayPriceQualifier"] = data["propertyData"][
             "prices"
