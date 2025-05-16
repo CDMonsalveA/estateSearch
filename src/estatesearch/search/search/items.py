@@ -6,15 +6,10 @@
 import scrapy
 
 
-class SearchItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-
 class PropertyItem(scrapy.Item):
 
     source = scrapy.Field()
+    url = scrapy.Field()  # propertyUrl
     id = scrapy.Field()
     transactionType = scrapy.Field()  # transactionType
     bedrooms = scrapy.Field()
@@ -82,7 +77,6 @@ class PropertyImageItem(scrapy.Item):
     isVideo = scrapy.Field()
     isVirtualTour = scrapy.Field()
     isInteractiveFloorplan = scrapy.Field()
-    pass
 
 
 class PropertyLocationItem(scrapy.Item):
@@ -98,7 +92,6 @@ class PropertyLocationItem(scrapy.Item):
 
     # FROM pageMODEL propertyData Per each property page
     pinType = scrapy.Field()  # location > pinType
-    pass
 
 
 class PropertyRoomItem(scrapy.Item):
@@ -118,7 +111,6 @@ class PropertyNearestAirportItem(scrapy.Item):
     name = scrapy.Field()  # nearestAirports > name
     distance = scrapy.Field()  # nearestAirports > distance
     unit = scrapy.Field()  # nearestAirports > unit
-    pass
 
 
 class PropertyNearestStationItem(scrapy.Item):
@@ -127,7 +119,6 @@ class PropertyNearestStationItem(scrapy.Item):
     name = scrapy.Field()  # nearestStations > name
     distance = scrapy.Field()  # nearestStations > distance
     unit = scrapy.Field()  # nearestStations > unit
-    pass
 
 
 class PropertyLivingCostItem(scrapy.Item):
