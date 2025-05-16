@@ -29,9 +29,7 @@ class RightmoveSpider(scrapy.Spider):
 
     # search attributes
     search_buy_or_rent: str = "buy"  # "buy" or "rent"
-    search_location: str = (
-        "London"  # Location to search for properties
-    )
+    search_location: str = "London"  # Location to search for properties
     search_radius: float = 0  # Radius of the search in miles
     search_property_type: list[str] | None = (
         []
@@ -39,7 +37,9 @@ class RightmoveSpider(scrapy.Spider):
     search_min_price: int | None = None  # Minimum price of the property
     search_max_price: int | None = None  # Maximum price of the property
     search_min_bedrooms: int | None = None  # Minimum number of bedrooms
-    search_max_bedrooms: int | None = None  # Maximum number of bedrooms up to 5 or
+    search_max_bedrooms: int | None = (
+        None  # Maximum number of bedrooms up to 5 or
+    )
     search_max_days_since_added: int | None = (
         None  # Maximum number of days since added Only allows 1, 3, 7, 14
     )
@@ -96,26 +96,30 @@ class RightmoveSpider(scrapy.Spider):
 
         for property_data in properties_api_data:
             property_item = PropertyItem()
-            self.assignBasicInfo(property_data, property_item)
+            image_item = PropertyImageItem()
+            location_item = PropertyLocationItem()
+            self.assignBasicInfo(property_data, property_item, image_item)
 
             yield scrapy.Request(
                 url=property_item["url"],
                 callback=self.parse_property,
                 errback=self.parse_property_error,
-                meta={"property_item": property_item},
+                meta={"property_item": property_item, "image_item": image_item},
             )
 
     async def parse_property(self, response):
         property_item = response.meta["property_item"]
+        image_item = response.meta["image_item"]
         data = response.xpath(
             "//script[contains(.,'PAGE_MODEL = ')]/text()"
         ).get()
         # Extract the JSON data from the script tag
         data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
         # Assign the data to the propertyData
-        self.assignAdvancedInfo(property_item, data)
+        self.assignAdvancedInfo(data, property_item, image_item)
 
         yield property_item
+        yield image_item
 
     async def parse_property_error(self, failure):
         # Handle the error here
@@ -123,6 +127,7 @@ class RightmoveSpider(scrapy.Spider):
             f"Failed to parse property: {failure.request.url} - {failure.value}"
         )
         yield failure.request.meta["property_item"]
+        yield failure.request.meta["image_item"]
 
     # ------ Functions to create the search URL ------
     def search_url(self) -> str:
@@ -190,7 +195,7 @@ class RightmoveSpider(scrapy.Spider):
         location = location.lower()
         return location
 
-    def assignBasicInfo(self, property_data, property_item):
+    def assignBasicInfo(self, property_data, property_item, image_item):
         property_item["source"] = self.name
         property_item["url"] = (
             "https://www.rightmove.co.uk" + property_data["propertyUrl"]
@@ -234,7 +239,19 @@ class RightmoveSpider(scrapy.Spider):
         ]
         property_item["isRecent"] = property_data["isRecent"]
 
-    def assignAdvancedInfo(self, property_item, data):
+        #### Assign the data to the imageItem ####
+
+        images = property_data["propertyImages"].get("images")
+        if images:
+            for image in images:
+                image_item["id"] = property_data["id"]
+                image_item["imageUrl"] = (
+                    "https://media.rightmove.co.uk/dir/" + image["url"]
+                )
+                image_item["caption"] = image["caption"]
+                image_item["type"] = "search"
+
+    def assignAdvancedInfo(self, data, property_item, image_item):
         property_item["status"] = data["propertyData"].get("status")
         property_item["price_displayPriceQualifier"] = data["propertyData"][
             "prices"
@@ -307,3 +324,26 @@ class RightmoveSpider(scrapy.Spider):
         property_item["soldSTC"] = data["analyticsInfo"][
             "analyticsProperty"
         ].get("soldSTC")
+
+        #### Assign the date to the imageItem ####
+        images = data["propertyData"].get("images")
+        if images:
+            for image in images:
+                image_item["id"] = data["propertyData"]["id"]
+                image_item["imageUrl"] = image.get("url")
+                image_item["caption"] = image.get("caption")
+                image_item["type"] = "image"
+        floorplans = data["propertyData"].get("floorplans")
+        if floorplans:
+            for floorplan in floorplans:
+                image_item["id"] = data["propertyData"]["id"]
+                image_item["imageUrl"] = floorplan.get("url")
+                image_item["caption"] = floorplan.get("caption")
+                image_item["type"] = "floorplan"
+        virtualTours = data["propertyData"].get("virtualTours")
+        if virtualTours:
+            for virtualTour in virtualTours:
+                image_item["id"] = data["propertyData"]["id"]
+                image_item["imageUrl"] = virtualTour.get("url")
+                image_item["caption"] = virtualTour.get("caption")
+                image_item["type"] = "virtualTour"

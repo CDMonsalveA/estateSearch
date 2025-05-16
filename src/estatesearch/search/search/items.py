@@ -70,12 +70,8 @@ class PropertyItem(scrapy.Item):
 class PropertyImageItem(scrapy.Item):
     id = scrapy.Field()
     imageUrl = scrapy.Field()
-    order = scrapy.Field()
-    isPrimary = scrapy.Field()
-    isFloorplan = scrapy.Field()
-    isVideo = scrapy.Field()
-    isVirtualTour = scrapy.Field()
-    isInteractiveFloorplan = scrapy.Field()
+    caption = scrapy.Field()
+    type = scrapy.Field()
 
 
 class PropertyLocationItem(scrapy.Item):
