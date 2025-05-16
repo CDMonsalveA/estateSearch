@@ -1,29 +1,45 @@
 import json
+import logging
+import re
 from urllib.parse import urlencode
 
 import requests
 import scrapy
 
+from ..items import (
+    PropertyFeatureItem,
+    PropertyImageItem,
+    PropertyItem,
+    PropertyLivingCostItem,
+    PropertyLocationItem,
+    PropertyNearestAirportItem,
+    PropertyNearestStationItem,
+    PropertyRoomItem,
+)
 
 
 class RightmoveSpider(scrapy.Spider):
     name = "rightmove"
     allowed_domains = ["www.rightmove.co.uk"]
     start_urls = ["https://www.rightmove.co.uk/"]
+    # Set the user agent to a random one
+    # custom_settings = {
+    #     "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+    # }
 
     # search attributes
     search_buy_or_rent: str = "buy"  # "buy" or "rent"
-    search_location: str = "London"  # Location to search for properties
+    search_location: str = (
+        "Maidstone, Kent"  # Location to search for properties
+    )
     search_radius: float = 0  # Radius of the search in miles
     search_property_type: list[str] | None = (
-        ["bungalow", "detached", "flat"]  # A list of any from "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
-    )
-    search_min_price: int | None = None  # Minimum price of the property
-    search_max_price: int | None = None  # Maximum price of the property
-    search_min_bedrooms: int | None = None  # Minimum number of bedrooms
-    search_max_bedrooms: int | None = (
-        None  # Maximum number of bedrooms up to 5 or
-    )
+        []
+    )  # A list of any from "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
+    search_min_price: int | None = 90000  # Minimum price of the property
+    search_max_price: int | None = 90000  # Maximum price of the property
+    search_min_bedrooms: int | None = 2  # Minimum number of bedrooms
+    search_max_bedrooms: int | None = 2  # Maximum number of bedrooms up to 5 or
     search_max_days_since_added: int | None = (
         None  # Maximum number of days since added Only allows 1, 3, 7, 14
     )
@@ -45,31 +61,67 @@ class RightmoveSpider(scrapy.Spider):
     )
     API_LIMIT: int = 1247  # Maximum lower index for the API request
 
-    def parse(self, response):
-        api_url = self.search_url() + f"&index=0&numberOfPropertiesPerPage={self.API_PROPERTIES_PER_PAGE}"
+    def start_requests(self):
+        """Start the search, and get all the search that the API can provide"""
+        # Perform a first search to get the total number of results
+        api_url = (
+            self.search_url()
+            + f"&index=0&numberOfPropertiesPerPage={self.API_PROPERTIES_PER_PAGE}"
+        )
+        response = scrapy.Request(url=api_url)
+        # Parse the response to get the total number of results
         response = json.loads(requests.get(api_url).text)
         total_results = int(response["resultCount"].replace(",", ""))
+        self.log(f"Total results: {total_results}", level=logging.INFO)
 
-        properties = response["properties"]
-        if total_results > self.API_PROPERTIES_PER_PAGE:
-            for i in range(self.API_PROPERTIES_PER_PAGE, total_results, self.API_PROPERTIES_PER_PAGE):
-                if i > self.API_LIMIT:
-                    break
-                lower_index = i
-                offset = self.API_PROPERTIES_PER_PAGE
-                api_url = self.search_url() + f"&index={lower_index}&numberOfPropertiesPerPage={offset}"
-                properties += json.loads(requests.get(api_url).text)["properties"]
+        urls = []
+
+        for i in range(0, total_results, self.API_PROPERTIES_PER_PAGE):
+            if i > self.API_LIMIT:
+                break
+            lower_index = i
+            offset = self.API_PROPERTIES_PER_PAGE
+            api_url = (
+                self.search_url()
+                + f"&index={lower_index}&numberOfPropertiesPerPage={offset}"
+            )
+            urls.append(api_url)
+            self.log(f"API URL: {api_url}")
+            yield scrapy.Request(url=api_url, callback=self.parse)
+
+    async def parse(self, response):
+        """Parse the response and extract the properties"""
+        properties_api_data = json.loads(response.text)["properties"]
+        self.log(f"Properties API data length: {len(properties_api_data)}")
+
+        for property_data in properties_api_data:
+            property_item = PropertyItem()
+            self.assignBasicInfo(property_data, property_item)
+
+            yield scrapy.Request(
+                url=property_item["url"],
+                callback=self.parse_property,
+                errback=self.parse_property_error,
+                meta={"property_item": property_item},
+            )
+
+    async def parse_property(self, response):
+        property_item = response.meta["property_item"]
+        data = response.xpath(
+            "//script[contains(.,'PAGE_MODEL = ')]/text()"
+        ).get()
+        # Extract the JSON data from the script tag
+        data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
+        # Assign the data to the property item
         
-        self.log(f"Total results: {total_results}, Properties fetched: {len(properties)}")
-        for property in properties:
-            item = {}
-            for key, value in property.items():
-                item[key] = value
-            yield item
-                
+    async def parse_property_error(self, failure):
+        # Handle the error here
+        self.logger.warning(
+            f"Failed to parse property: {failure.request.url} - {failure.value}"
+        )
+        yield failure.request.meta["property_item"]
 
-
-    # ---- Functions that help with the search process ---
+    # ------ Functions to create the search URL ------
     def search_url(self) -> str:
         """
         Generate the search URL for the Rightmove API based on the search parameters.
@@ -134,3 +186,48 @@ class RightmoveSpider(scrapy.Spider):
             location = location.replace(char, "+")
         location = location.lower()
         return location
+
+    def assignBasicInfo(self, property_data, property_item):
+        property_item["source"] = self.name
+        property_item["url"] = (
+            "https://www.rightmove.co.uk" + property_data["propertyUrl"]
+        )
+        property_item["id"] = property_data["id"]
+        property_item["transactionType"] = property_data["transactionType"]
+        property_item["bedrooms"] = property_data["bedrooms"]
+        property_item["bathrooms"] = property_data["bathrooms"]
+        property_item["numberOfImages"] = property_data["numberOfImages"]
+        property_item["numberOfFloorplans"] = property_data[
+            "numberOfFloorplans"
+        ]
+        property_item["displayAddress"] = property_data["displayAddress"]
+        property_item["propertyType"] = property_data["propertySubType"]
+        property_item["summary"] = property_data["summary"]
+        property_item["listingUpdateReason"] = property_data["listingUpdate"][
+            "listingUpdateReason"
+        ]
+        property_item["price"] = property_data["price"]["amount"]
+        property_item["price_frequency"] = property_data["price"]["frequency"]
+        property_item["price_currencyCode"] = property_data["price"][
+            "currencyCode"
+        ]
+
+        property_item["contactTelephone"] = property_data["customer"][
+            "contactTelephone"
+        ]
+        property_item["contact_branchDisplayName"] = property_data[
+            "customer"
+        ].get("contactBranchDisplayName")
+        property_item["commercial"] = property_data["commercial"]
+        property_item["development"] = property_data["development"]
+        property_item["residential"] = property_data["residential"]
+        property_item["students"] = property_data["students"]
+        property_item["auction"] = property_data["auction"]
+        property_item["feesApply"] = property_data["feesApply"]
+        property_item["displaySize"] = property_data["displaySize"]
+        property_item["propertyUrl"] = property_data["propertyUrl"]
+        property_item["firstVisibleDate"] = property_data["firstVisibleDate"]
+        property_item["propertyTypeFullDescription"] = property_data[
+            "propertyTypeFullDescription"
+        ]
+        property_item["isRecent"] = property_data["isRecent"]
