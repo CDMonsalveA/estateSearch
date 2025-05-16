@@ -30,16 +30,16 @@ class RightmoveSpider(scrapy.Spider):
     # search attributes
     search_buy_or_rent: str = "buy"  # "buy" or "rent"
     search_location: str = (
-        "Maidstone, Kent"  # Location to search for properties
+        "London"  # Location to search for properties
     )
     search_radius: float = 0  # Radius of the search in miles
     search_property_type: list[str] | None = (
         []
     )  # A list of any from "bungalow", "detached", "flat", "land", "park-home", "semi-detached", "terraced".
-    search_min_price: int | None = 90000  # Minimum price of the property
-    search_max_price: int | None = 90000  # Maximum price of the property
-    search_min_bedrooms: int | None = 2  # Minimum number of bedrooms
-    search_max_bedrooms: int | None = 2  # Maximum number of bedrooms up to 5 or
+    search_min_price: int | None = None  # Minimum price of the property
+    search_max_price: int | None = None  # Maximum price of the property
+    search_min_bedrooms: int | None = None  # Minimum number of bedrooms
+    search_max_bedrooms: int | None = None  # Maximum number of bedrooms up to 5 or
     search_max_days_since_added: int | None = (
         None  # Maximum number of days since added Only allows 1, 3, 7, 14
     )
@@ -112,8 +112,11 @@ class RightmoveSpider(scrapy.Spider):
         ).get()
         # Extract the JSON data from the script tag
         data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
-        # Assign the data to the property item
-        
+        # Assign the data to the propertyData
+        self.assignAdvancedInfo(property_item, data)
+
+        yield property_item
+
     async def parse_property_error(self, failure):
         # Handle the error here
         self.logger.warning(
@@ -225,9 +228,82 @@ class RightmoveSpider(scrapy.Spider):
         property_item["auction"] = property_data["auction"]
         property_item["feesApply"] = property_data["feesApply"]
         property_item["displaySize"] = property_data["displaySize"]
-        property_item["propertyUrl"] = property_data["propertyUrl"]
         property_item["firstVisibleDate"] = property_data["firstVisibleDate"]
         property_item["propertyTypeFullDescription"] = property_data[
             "propertyTypeFullDescription"
         ]
         property_item["isRecent"] = property_data["isRecent"]
+
+    def assignAdvancedInfo(self, property_item, data):
+        property_item["status"] = data["propertyData"].get("status")
+        property_item["price_displayPriceQualifier"] = data["propertyData"][
+            "prices"
+        ].get("displayPriceQualifier")
+        property_item["brochure_url"] = (
+            data["propertyData"].get("brochures")[0].get("url")
+            if data["propertyData"].get("brochures")
+            else None
+        )
+        property_item["epcGraph"] = (
+            data["propertyData"]["epcGraphs"][0].get("url")
+            if data["propertyData"].get("epcGraphs")
+            else None
+        )
+        property_item["feesApply"] = data["propertyData"].get("feesApply")
+        property_item["lettings"] = data["propertyData"].get("lettings")
+        property_item["tenure_type"] = data["propertyData"]["tenure"].get(
+            "tenureType"
+        )
+        property_item["tenure_years"] = data["propertyData"]["tenure"].get(
+            "yearsRemainingOnLease"
+        )
+        property_item["propertySubType"] = data["propertyData"].get(
+            "propertySubType"
+        )
+
+        # Assign the data to the analyticsInfo
+        property_item["displayAddress"] = data["analyticsInfo"][
+            "analyticsBranch"
+        ].get("displayAddress")
+        property_item["postcode"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("postcode")
+        property_item["added"] = data["analyticsInfo"]["analyticsProperty"].get(
+            "added"
+        )
+        property_item["auctionOnly"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("auctionOnly")
+        property_item["businessForSale"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("businessForSale")
+        property_item["letAgreed"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("letAgreed")
+        property_item["lettingType"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("lettingType")
+        property_item["ownership"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("ownership")
+        property_item["preOwned"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("preOwned")
+        property_item["price_pageModel"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("price")
+        property_item["priceQualifier"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("priceQualifier")
+        property_item["propertyType"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("propertyType")
+        property_item["propertySubType"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("propertySubType")
+        property_item["retirement"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("retirement")
+        property_item["soldSTC"] = data["analyticsInfo"][
+            "analyticsProperty"
+        ].get("soldSTC")
