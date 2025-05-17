@@ -114,6 +114,18 @@ class RightmoveSpider(scrapy.Spider):
                 living_cost_item,
                 feature_item,
             )
+            # Assign the data to the ImageItem
+            images = property_data["propertyImages"].get("images")
+            if images:
+                for image in images:
+                    image_item["id"] = property_data["id"]
+                    image_item["imageUrl"] = (
+                        "https://media.rightmove.co.uk/dir/"
+                        + image.get("url")
+                    )
+                    image_item["caption"] = image["caption"]
+                    image_item["type"] = "search"
+                    yield image_item
 
             yield scrapy.Request(
                 url=property_item["url"],
@@ -160,7 +172,7 @@ class RightmoveSpider(scrapy.Spider):
         )
 
         yield property_item
-        yield image_item
+        # yield image_item
 
     async def parse_property_error(self, failure):
         # Handle the error here
@@ -293,17 +305,19 @@ class RightmoveSpider(scrapy.Spider):
         ]
         property_item["isRecent"] = property_data["isRecent"]
 
-        #### Assign the data to the imageItem ####
+        # #### Assign the data to the imageItem ####
 
-        images = property_data["propertyImages"].get("images")
-        if images:
-            for image in images:
-                image_item["id"] = property_data["id"]
-                image_item["imageUrl"] = (
-                    "https://media.rightmove.co.uk/dir/" + image["url"]
-                )
-                image_item["caption"] = image["caption"]
-                image_item["type"] = "search"
+        # images = property_data["propertyImages"].get("images")
+        # if images:
+        #     for image in images:
+        #         image_item["id"] = property_data["id"]
+        #         image_item["imageUrl"] = (
+        #             "https://media.rightmove.co.uk/dir/" + image.get("url")
+        #         )
+        #         image_item["caption"] = image["caption"]
+        #         image_item["type"] = "search"
+
+        #         yield image_item
 
     def assignAdvancedInfo(
         self,
