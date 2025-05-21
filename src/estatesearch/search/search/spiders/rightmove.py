@@ -81,6 +81,8 @@ class RightmoveSpider(scrapy.Spider):
 
             self.assignBasicPropertyInfo(property_data, property_item)
 
+            # yield images
+
             yield scrapy.Request(
                 url=property_item["url"],
                 callback=self.parse_property,
@@ -94,13 +96,19 @@ class RightmoveSpider(scrapy.Spider):
         data = response.xpath("//script[contains(.,'PAGE_MODEL = ')]/text()").get()
         # Extract the JSON data from the script tag
         data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
+
         # Assign the data to the propertyData
         self.assignAdvancedPropertyInfo(
             data,
             property_item,
         )
-
         yield property_item
+
+        # yield images
+
+        # yield rooms
+
+        # yield interest points
 
     async def parse_property_error(self, failure):
         # Handle the error here
