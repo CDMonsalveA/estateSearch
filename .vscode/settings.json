@@ -17,7 +17,7 @@
     "python.testing.unittestEnabled": true,
     "black-formatter.args": [
         "--line-length",
-        "80"
+        "120"
     ],
     "python.analysis.typeCheckingMode": "standard",
 }
