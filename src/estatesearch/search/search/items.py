@@ -24,9 +24,7 @@ class PropertyItem(scrapy.Item):
     price_frequency = scrapy.Field()
     price_currencyCode = scrapy.Field()
     contactTelephone = scrapy.Field()  # customer > contactTelephone
-    contact_branchDisplayName = (
-        scrapy.Field()
-    )  # customer > contactBranchDisplayName
+    contact_branchDisplayName = scrapy.Field()  # customer > contactBranchDisplayName
     commercial = scrapy.Field()  # commercial
     development = scrapy.Field()  # development
     residential = scrapy.Field()  # residential
@@ -40,12 +38,7 @@ class PropertyItem(scrapy.Item):
     # Location related fields
     latitude = scrapy.Field()
     longitude = scrapy.Field()
-    displayAddress = scrapy.Field()
-    countryCode = scrapy.Field()
-    countryName = scrapy.Field()
-    regionName = scrapy.Field()
-    districtName = scrapy.Field()
-    subDistrictName = scrapy.Field()
+
     # ----- FROM pageMODEL propertyData Per each property page-----
     status = scrapy.Field()  # .status .published
     price_displayPriceQualifier = scrapy.Field()
@@ -58,8 +51,15 @@ class PropertyItem(scrapy.Item):
     propertySubType = scrapy.Field()  # propertySubType
     pinType = scrapy.Field()  # location > pinType
 
+    # ----- FROM pageMODEL address Per each property page-----
+    displayAddress = scrapy.Field()
+    countryCode = scrapy.Field()
+    ukCountry = scrapy.Field()
+    outcode = scrapy.Field()
+    incode = scrapy.Field()
+
+    isAuthenticated = scrapy.Field()
     # ----- FROM pageMODEL analyticsInfo Per each property page-----
-    displayAddress = scrapy.Field()  # analyticsBranch .displayAddress
     postcode = scrapy.Field()  # analyticsProperty .postcode
     added = scrapy.Field()  # analyticsProperty .added
     auctionOnly = scrapy.Field()  # analyticsProperty .auctionOnly
@@ -80,12 +80,8 @@ class PropertyItem(scrapy.Item):
     councilTaxExempt = scrapy.Field()  # livingCosts > councilTaxExempt
     councilTaxIncluded = scrapy.Field()  # livingCosts > councilTaxIncluded
     annualGroundRent = scrapy.Field()  # livingCosts > annualGroundRent
-    groundRentReviewPeriodInYears = (
-        scrapy.Field()
-    )  # livingCosts > groundRentReviewPeriodInYears
-    groundRentPercentageIncrease = (
-        scrapy.Field()
-    )  # livingCosts > groundRentPercentageIncrease
+    groundRentReviewPeriodInYears = scrapy.Field()  # livingCosts > groundRentReviewPeriodInYears
+    groundRentPercentageIncrease = scrapy.Field()  # livingCosts > groundRentPercentageIncrease
     annualServiceCharge = scrapy.Field()  # livingCosts > annualServiceCharge
     councilTaxBand = scrapy.Field()  # livingCosts > councilTaxBand
     domesticRates = scrapy.Field()  # livingCosts > domesticRates
@@ -123,11 +119,7 @@ class PropertyRoomItem(scrapy.Item):
 class PropertyInterestPointItem(scrapy.Item):
     # summary of nearest points of interest
     id = scrapy.Field()
-    type = (
-        scrapy.Field()
-    )  # manually added from nearestAirports or nearestStations
+    type = scrapy.Field()  # manually added from nearestAirports or nearestStations
     name = scrapy.Field()  # nearestAirports > name or nearestStations > name
-    distance = (
-        scrapy.Field()
-    )  # nearestAirports > distance or nearestStations > distance
+    distance = scrapy.Field()  # nearestAirports > distance or nearestStations > distance
     unit = scrapy.Field()  # nearestAirports > unit or nearestStations > unit
