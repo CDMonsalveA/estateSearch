@@ -20,6 +20,7 @@ class PropertyItem(scrapy.Item):
     propertyType = scrapy.Field()  # propertySubType
     summary = scrapy.Field()
     listingUpdateReason = scrapy.Field()  # listingUpdate > listingUpdateReason
+    listingUpdateDate = scrapy.Field()  # listingUpdate > listingUpdateDate
     price = scrapy.Field()
     price_frequency = scrapy.Field()
     price_currencyCode = scrapy.Field()
@@ -100,7 +101,7 @@ class PropertyItem(scrapy.Item):
 
 class PropertyImageItem(scrapy.Item):
     id = scrapy.Field()
-    imageUrl = scrapy.Field()
+    url = scrapy.Field()
     caption = scrapy.Field()
     type = scrapy.Field()
 
