@@ -7,13 +7,9 @@ import requests
 import scrapy
 
 from ..items import (
-    PropertyFeatureItem,
     PropertyImageItem,
+    PropertyInterestPointItem,
     PropertyItem,
-    PropertyLivingCostItem,
-    PropertyLocationItem,
-    PropertyNearestAirportItem,
-    PropertyNearestStationItem,
     PropertyRoomItem,
 )
 
@@ -37,15 +33,9 @@ class RightmoveSpider(scrapy.Spider):
     search_min_price: int | None = None  # Minimum price of the property
     search_max_price: int | None = None  # Maximum price of the property
     search_min_bedrooms: int | None = None  # Minimum number of bedrooms
-    search_max_bedrooms: int | None = (
-        None  # Maximum number of bedrooms up to 5 or
-    )
-    search_max_days_since_added: int | None = (
-        None  # Maximum number of days since added Only allows 1, 3, 7, 14
-    )
-    search_include_sstc: bool | None = (
-        None  # Whether to include properties marked as SSTC (Sold Subject To Contract)
-    )
+    search_max_bedrooms: int | None = None  # Maximum number of bedrooms up to 5 or
+    search_max_days_since_added: int | None = None  # Maximum number of days since added Only allows 1, 3, 7, 14
+    search_include_sstc: bool | None = None  # Whether to include properties marked as SSTC (Sold Subject To Contract)
     search_must_have: list[str] | None = (
         None  # A list of features that the property must have. Only allows any combination of the following: "garden", "parking", "newHome", "retirement", "sharedOwnership", "auction".
     )
@@ -56,18 +46,13 @@ class RightmoveSpider(scrapy.Spider):
 
     # API attributes
     API_BASE_URL: str = "https://www.rightmove.co.uk/api/_search?"
-    API_PROPERTIES_PER_PAGE: int = (
-        499  # Number of properties per page in the API response numberOfPropertiesPerPage
-    )
+    API_PROPERTIES_PER_PAGE: int = 499  # Number of properties per page in the API response numberOfPropertiesPerPage
     API_LIMIT: int = 1247  # Maximum lower index for the API request
 
     def start_requests(self):
         """Start the search, and get all the search that the API can provide"""
         # Perform a first search to get the total number of results
-        api_url = (
-            self.search_url()
-            + f"&index=0&numberOfPropertiesPerPage={self.API_PROPERTIES_PER_PAGE}"
-        )
+        api_url = self.search_url() + f"&index=0&numberOfPropertiesPerPage={self.API_PROPERTIES_PER_PAGE}"
         response = scrapy.Request(url=api_url)
         # Parse the response to get the total number of results
         response = json.loads(requests.get(api_url).text)
@@ -81,10 +66,7 @@ class RightmoveSpider(scrapy.Spider):
                 break
             lower_index = i
             offset = self.API_PROPERTIES_PER_PAGE
-            api_url = (
-                self.search_url()
-                + f"&index={lower_index}&numberOfPropertiesPerPage={offset}"
-            )
+            api_url = self.search_url() + f"&index={lower_index}&numberOfPropertiesPerPage={offset}"
             urls.append(api_url)
             self.log(f"API URL: {api_url}")
             yield scrapy.Request(url=api_url, callback=self.parse)
@@ -96,91 +78,34 @@ class RightmoveSpider(scrapy.Spider):
 
         for property_data in properties_api_data:
             property_item = PropertyItem()
-            image_item = PropertyImageItem()
-            location_item = PropertyLocationItem()
-            room_item = PropertyRoomItem()
-            nearest_station_item = PropertyNearestStationItem()
-            nearest_airport_item = PropertyNearestAirportItem()
-            living_cost_item = PropertyLivingCostItem()
-            feature_item = PropertyFeatureItem()
-            self.assignBasicInfo(
-                property_data,
-                property_item,
-                image_item,
-                location_item,
-                room_item,
-                nearest_station_item,
-                nearest_airport_item,
-                living_cost_item,
-                feature_item,
-            )
-            # Assign the data to the ImageItem
-            images = property_data["propertyImages"].get("images")
-            if images:
-                for image in images:
-                    image_item["id"] = property_data["id"]
-                    image_item["imageUrl"] = (
-                        "https://media.rightmove.co.uk/dir/"
-                        + image.get("url")
-                    )
-                    image_item["caption"] = image["caption"]
-                    image_item["type"] = "search"
-                    yield image_item
+
+            self.assignBasicPropertyInfo(property_data, property_item)
 
             yield scrapy.Request(
                 url=property_item["url"],
                 callback=self.parse_property,
                 errback=self.parse_property_error,
-                meta={
-                    "property_item": property_item,
-                    "image_item": image_item,
-                    "location_item": location_item,
-                    "room_item": room_item,
-                    "nearest_station_item": nearest_station_item,
-                    "nearest_airport_item": nearest_airport_item,
-                    "living_cost_item": living_cost_item,
-                    "feature_item": feature_item,
-                },
+                meta={"property_item": property_item},
             )
 
     async def parse_property(self, response):
         property_item = response.meta["property_item"]
-        image_item = response.meta["image_item"]
-        location_item = response.meta["location_item"]
-        room_item = response.meta["room_item"]
-        nearest_station_item = response.meta["nearest_station_item"]
-        nearest_airport_item = response.meta["nearest_airport_item"]
-        living_cost_item = response.meta["living_cost_item"]
-        feature_item = response.meta["feature_item"]
 
-        data = response.xpath(
-            "//script[contains(.,'PAGE_MODEL = ')]/text()"
-        ).get()
+        data = response.xpath("//script[contains(.,'PAGE_MODEL = ')]/text()").get()
         # Extract the JSON data from the script tag
         data = json.JSONDecoder().raw_decode(data[data.index("{") :])[0]
         # Assign the data to the propertyData
-        self.assignAdvancedInfo(
+        self.assignAdvancedPropertyInfo(
             data,
             property_item,
-            image_item,
-            location_item,
-            room_item,
-            nearest_station_item,
-            nearest_airport_item,
-            living_cost_item,
-            feature_item,
         )
 
         yield property_item
-        # yield image_item
 
     async def parse_property_error(self, failure):
         # Handle the error here
-        self.logger.warning(
-            f"Failed to parse property: {failure.request.url} - {failure.value}"
-        )
+        self.logger.warning(f"Failed to parse property: {failure.request.url} - {failure.value}")
         yield failure.request.meta["property_item"]
-        yield failure.request.meta["image_item"]
 
     # ------ Functions to create the search URL ------
     def search_url(self) -> str:
@@ -209,9 +134,7 @@ class RightmoveSpider(scrapy.Spider):
             "viewport": "",
         }
         # Remove None values from the search parameters
-        search_params = {
-            k: v for k, v in search_params.items() if v is not None
-        }
+        search_params = {k: v for k, v in search_params.items() if v is not None}
         # Encode the search parameters
         # List are joined with %2C
         encoded_params = urlencode(search_params, doseq=True)
@@ -249,181 +172,106 @@ class RightmoveSpider(scrapy.Spider):
         return location
 
     # ------ Functions to improve readability ------
-    def assignBasicInfo(
-        self,
-        property_data,
-        property_item,
-        image_item,
-        location_item,
-        room_item,
-        nearest_station_item,
-        nearest_airport_item,
-        living_cost_item,
-        feature_item,
-    ):
-
+    def assignBasicPropertyInfo(self, data, property_item):
+        # Assign the data to the propertyItem using the structure from items.PropertyItem
         property_item["source"] = self.name
-        property_item["url"] = (
-            "https://www.rightmove.co.uk" + property_data["propertyUrl"]
-        )
-        property_item["id"] = property_data["id"]
-        property_item["transactionType"] = property_data["transactionType"]
-        property_item["bedrooms"] = property_data["bedrooms"]
-        property_item["bathrooms"] = property_data["bathrooms"]
-        property_item["numberOfImages"] = property_data["numberOfImages"]
-        property_item["numberOfFloorplans"] = property_data[
-            "numberOfFloorplans"
-        ]
-        property_item["displayAddress"] = property_data["displayAddress"]
-        property_item["propertyType"] = property_data["propertySubType"]
-        property_item["summary"] = property_data["summary"]
-        property_item["listingUpdateReason"] = property_data["listingUpdate"][
-            "listingUpdateReason"
-        ]
-        property_item["price"] = property_data["price"]["amount"]
-        property_item["price_frequency"] = property_data["price"]["frequency"]
-        property_item["price_currencyCode"] = property_data["price"][
-            "currencyCode"
-        ]
+        property_item["url"] = "https://www.rightmove.co.uk" + data.get("propertyUrl")
+        property_item["id"] = data.get("id")
+        property_item["transactionType"] = data.get("transactionType")
+        property_item["bedrooms"] = data.get("bedrooms")
+        property_item["bathrooms"] = data.get("bathrooms")
+        property_item["numberOfImages"] = data.get("numberOfImages")
+        property_item["numberOfFloorplans"] = data.get("numberOfFloorplans")
+        property_item["displayAddress"] = data.get("displayAddress").strip()
+        property_item["propertyType"] = data.get("propertySubType")
+        property_item["summary"] = data.get("summary")
+        property_item["listingUpdateReason"] = data.get("listingUpdate").get("listingUpdateReason")
+        property_item["price"] = data.get("price").get("amount")
+        property_item["price_frequency"] = data.get("price").get("frequency")
+        property_item["price_currencyCode"] = data.get("price").get("currencyCode")
+        property_item["contactTelephone"] = data.get("customer").get("contactTelephone")
+        property_item["contact_branchDisplayName"] = data.get("customer").get("contactBranchDisplayName")
+        property_item["commercial"] = data.get("commercial")
+        property_item["development"] = data.get("development")
+        property_item["residential"] = data.get("residential")
+        property_item["students"] = data.get("students")
+        property_item["auction"] = data.get("auction")
+        property_item["feesApply"] = data.get("feesApply")
+        property_item["displaySize"] = data.get("displaySize")
+        property_item["firstVisibleDate"] = data.get("firstVisibleDate")
+        property_item["propertyTypeFullDescription"] = data.get("propertyTypeFullDescription")
+        property_item["isRecent"] = data.get("isRecent")
+        property_item["latitude"] = data.get("location").get("latitude")
+        property_item["longitude"] = data.get("location").get("longitude")
 
-        property_item["contactTelephone"] = property_data["customer"][
-            "contactTelephone"
-        ]
-        property_item["contact_branchDisplayName"] = property_data[
-            "customer"
-        ].get("contactBranchDisplayName")
-        property_item["commercial"] = property_data["commercial"]
-        property_item["development"] = property_data["development"]
-        property_item["residential"] = property_data["residential"]
-        property_item["students"] = property_data["students"]
-        property_item["auction"] = property_data["auction"]
-        property_item["feesApply"] = property_data["feesApply"]
-        property_item["displaySize"] = property_data["displaySize"]
-        property_item["firstVisibleDate"] = property_data["firstVisibleDate"]
-        property_item["propertyTypeFullDescription"] = property_data[
-            "propertyTypeFullDescription"
-        ]
-        property_item["isRecent"] = property_data["isRecent"]
-
-        # #### Assign the data to the imageItem ####
-
-        # images = property_data["propertyImages"].get("images")
-        # if images:
-        #     for image in images:
-        #         image_item["id"] = property_data["id"]
-        #         image_item["imageUrl"] = (
-        #             "https://media.rightmove.co.uk/dir/" + image.get("url")
-        #         )
-        #         image_item["caption"] = image["caption"]
-        #         image_item["type"] = "search"
-
-        #         yield image_item
-
-    def assignAdvancedInfo(
-        self,
-        data,
-        property_item,
-        image_item,
-        location_item,
-        room_item,
-        nearest_station_item,
-        nearest_airport_item,
-        living_cost_item,
-        feature_item,
-    ):
-
-        property_item["status"] = data["propertyData"].get("status")
-        property_item["price_displayPriceQualifier"] = data["propertyData"][
-            "prices"
-        ].get("displayPriceQualifier")
+    def assignAdvancedPropertyInfo(self, data, property_item):
+        # Assign the data from the propertyData
+        propertyData = data.get("propertyData")
+        property_item["status"] = propertyData.get("status")
+        property_item["price_displayPriceQualifier"] = propertyData.get("prices").get("displayPriceQualifier")
         property_item["brochure_url"] = (
-            data["propertyData"].get("brochures")[0].get("url")
-            if data["propertyData"].get("brochures")
-            else None
+            propertyData.get("brochures")[0].get("url") if propertyData.get("brochures") else None
         )
         property_item["epcGraph"] = (
-            data["propertyData"]["epcGraphs"][0].get("url")
-            if data["propertyData"].get("epcGraphs")
-            else None
+            propertyData.get("epcGraphs")[0].get("url") if propertyData.get("epcGraphs") else None
         )
-        property_item["feesApply"] = data["propertyData"].get("feesApply")
-        property_item["lettings"] = data["propertyData"].get("lettings")
-        property_item["tenure_type"] = data["propertyData"]["tenure"].get(
-            "tenureType"
-        )
-        property_item["tenure_years"] = data["propertyData"]["tenure"].get(
-            "yearsRemainingOnLease"
-        )
-        property_item["propertySubType"] = data["propertyData"].get(
-            "propertySubType"
-        )
+        property_item["feesApply"] = propertyData.get("feesApply")
+        property_item["lettings"] = propertyData.get("lettings")
+        property_item["tenure_type"] = propertyData.get("tenure").get("tenureType")
+        property_item["tenure_years"] = propertyData.get("tenure").get("yearsRemainingOnLease")
+        property_item["propertySubType"] = propertyData.get("propertySubType")
+        property_item["pinType"] = propertyData.get("location").get("pinType")
+        property_item["displayAddress"] = propertyData.get("address").get("displayAddress")
+        property_item["countryCode"] = propertyData.get("address").get("countryCode")
+        property_item["ukCountry"] = propertyData.get("address").get("ukCountry")
+        property_item["outcode"] = propertyData.get("address").get("outcode")
+        property_item["incode"] = propertyData.get("address").get("incode")
 
-        # Assign the data to the analyticsInfo
-        property_item["displayAddress"] = data["analyticsInfo"][
-            "analyticsBranch"
-        ].get("displayAddress")
-        property_item["postcode"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("postcode")
-        property_item["added"] = data["analyticsInfo"]["analyticsProperty"].get(
-            "added"
-        )
-        property_item["auctionOnly"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("auctionOnly")
-        property_item["businessForSale"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("businessForSale")
-        property_item["letAgreed"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("letAgreed")
-        property_item["lettingType"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("lettingType")
-        property_item["ownership"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("ownership")
-        property_item["preOwned"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("preOwned")
-        property_item["price_pageModel"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("price")
-        property_item["priceQualifier"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("priceQualifier")
-        property_item["propertyType"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("propertyType")
-        property_item["propertySubType"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("propertySubType")
-        property_item["retirement"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("retirement")
-        property_item["soldSTC"] = data["analyticsInfo"][
-            "analyticsProperty"
-        ].get("soldSTC")
+        # Assign the data related to livingCosts
+        livingCosts = propertyData.get("livingCosts")
 
-        #### Assign the date to the imageItem ####
-        images = data["propertyData"].get("images")
-        if images:
-            for image in images:
-                image_item["id"] = data["propertyData"]["id"]
-                image_item["imageUrl"] = image.get("url")
-                image_item["caption"] = image.get("caption")
-                image_item["type"] = "image"
-        floorplans = data["propertyData"].get("floorplans")
-        if floorplans:
-            for floorplan in floorplans:
-                image_item["id"] = data["propertyData"]["id"]
-                image_item["imageUrl"] = floorplan.get("url")
-                image_item["caption"] = floorplan.get("caption")
-                image_item["type"] = "floorplan"
-        virtualTours = data["propertyData"].get("virtualTours")
-        if virtualTours:
-            for virtualTour in virtualTours:
-                image_item["id"] = data["propertyData"]["id"]
-                image_item["imageUrl"] = virtualTour.get("url")
-                image_item["caption"] = virtualTour.get("caption")
-                image_item["type"] = "virtualTour"
+        property_item["councilTaxExempt"] = livingCosts.get("councilTaxExempt")
+        property_item["councilTaxIncluded"] = livingCosts.get("councilTaxIncluded")
+        property_item["annualGroundRent"] = livingCosts.get("annualGroundRent")
+        property_item["groundRentReviewPeriodInYears"] = livingCosts.get("groundRentReviewPeriodInYears")
+        property_item["groundRentPercentageIncrease"] = livingCosts.get("groundRentPercentageIncrease")
+        property_item["annualServiceCharge"] = livingCosts.get("annualServiceCharge")
+        property_item["councilTaxBand"] = livingCosts.get("councilTaxBand")
+        property_item["domesticRates"] = livingCosts.get("domesticRates")
+        del livingCosts
+
+        # Assign the data related to features
+        features = propertyData.get("features")
+        property_item["electricity"] = features.get("electricity")
+        property_item["broadband"] = features.get("broadband")
+        property_item["water"] = features.get("water")
+        property_item["sewarage"] = features.get("sewage")
+        property_item["heating"] = features.get("heating")
+        property_item["accessibility"] = features.get("accessibility")
+        property_item["parking"] = features.get("parking")
+        property_item["garden"] = features.get("garden")
+        property_item["risks"] = features.get("risks")
+        property_item["obligations"] = features.get("obligations")
+        del features
+
+        del propertyData
+
+        property_item["isAuthenticated"] = data.get("isAuthenticated")
+
+        # Assign the data from the analyticsInfo
+        analyticsproperty = data.get("analyticsInfo").get("analyticsProperty")
+        property_item["postcode"] = analyticsproperty.get("postcode")
+        property_item["added"] = analyticsproperty.get("added")
+        property_item["auctionOnly"] = analyticsproperty.get("auctionOnly")
+        property_item["businessForSale"] = analyticsproperty.get("businessForSale")
+        property_item["letAgreed"] = analyticsproperty.get("letAgreed")
+        property_item["lettingType"] = analyticsproperty.get("lettingType")
+        property_item["ownership"] = analyticsproperty.get("ownership")
+        property_item["preOwned"] = analyticsproperty.get("preOwned")
+        property_item["price_pageModel"] = analyticsproperty.get("price")
+        property_item["priceQualifier"] = analyticsproperty.get("priceQualifier")
+        property_item["propertyType"] = analyticsproperty.get("propertyType")
+        property_item["propertySubType"] = analyticsproperty.get("propertySubType")
+        property_item["retirement"] = analyticsproperty.get("retirement")
+        property_item["soldSTC"] = analyticsproperty.get("soldSTC")
+        del analyticsproperty
