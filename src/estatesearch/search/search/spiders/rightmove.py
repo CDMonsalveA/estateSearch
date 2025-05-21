@@ -81,7 +81,15 @@ class RightmoveSpider(scrapy.Spider):
 
             self.assignBasicPropertyInfo(property_data, property_item)
 
-            # yield images
+            images = property_data.get("propertyImages").get("images")
+            if images:
+                for image in images:
+                    image_item = PropertyImageItem()
+                    image_item["id"] = property_item["id"]
+                    image_item["url"] = "https://media.rightmove.co.uk/dir/" + image.get("url")
+                    image_item["caption"] = image.get("caption")
+                    image_item["type"] = "search_image"
+                    yield image_item
 
             yield scrapy.Request(
                 url=property_item["url"],
@@ -105,10 +113,65 @@ class RightmoveSpider(scrapy.Spider):
         yield property_item
 
         # yield images
+        images = data.get("propertyData").get("images")
+        if images:
+            for image in images:
+                image_item = PropertyImageItem()
+                image_item["id"] = property_item["id"]
+                image_item["url"] = image.get("url")
+                image_item["caption"] = image.get("caption")
+                image_item["type"] = "property_image"
+                yield image_item
+        del images
+        floorplans = data.get("propertyData").get("floorPlans")
+        if floorplans:
+            for floorplan in floorplans:
+                image_item = PropertyImageItem()
+                image_item["id"] = property_item["id"]
+                image_item["url"] = floorplan.get("url")
+                image_item["caption"] = floorplan.get("caption")
+                image_item["type"] = "floorplan_image"
+                yield image_item
+        del floorplans
 
         # yield rooms
+        rooms = data.get("propertyData").get("rooms")
+        if rooms:
+            for room in rooms:
+                room_item = PropertyRoomItem()
+                room_item["id"] = property_item["id"]
+                room_item["name"] = room.get("name")
+                room_item["description"] = room.get("description")
+                room_item["width"] = room.get("width")
+                room_item["length"] = room.get("length")
+                room_item["unit"] = room.get("unit")
+                room_item["dimension"] = room.get("dimension")
+                yield room_item
+        del rooms
 
         # yield interest points
+        nearest_airports = data.get("propertyData").get("nearestAirports")
+        if nearest_airports:
+            for airport in nearest_airports:
+                interest_point_item = PropertyInterestPointItem()
+                interest_point_item["id"] = property_item["id"]
+                interest_point_item["type"] = "nearestAirports"
+                interest_point_item["name"] = airport.get("name")
+                interest_point_item["distance"] = airport.get("distance")
+                interest_point_item["unit"] = airport.get("unit")
+                yield interest_point_item
+        del nearest_airports
+        nearest_stations = data.get("propertyData").get("nearestStations")
+        if nearest_stations:
+            for station in nearest_stations:
+                interest_point_item = PropertyInterestPointItem()
+                interest_point_item["id"] = property_item["id"]
+                interest_point_item["type"] = "nearestStations"
+                interest_point_item["name"] = station.get("name")
+                interest_point_item["distance"] = station.get("distance")
+                interest_point_item["unit"] = station.get("unit")
+                yield interest_point_item
+        del nearest_stations
 
     async def parse_property_error(self, failure):
         # Handle the error here
@@ -194,6 +257,7 @@ class RightmoveSpider(scrapy.Spider):
         property_item["propertyType"] = data.get("propertySubType")
         property_item["summary"] = data.get("summary")
         property_item["listingUpdateReason"] = data.get("listingUpdate").get("listingUpdateReason")
+        property_item["listingUpdateDate"] = data.get("listingUpdate").get("listingUpdateDate")
         property_item["price"] = data.get("price").get("amount")
         property_item["price_frequency"] = data.get("price").get("frequency")
         property_item["price_currencyCode"] = data.get("price").get("currencyCode")
